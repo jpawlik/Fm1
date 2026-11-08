@@ -1,6 +1,6 @@
 {
  "id": "ravel",
- "resume": "Groovebox de huit pistes pour la conception sonore : treize moteurs de synthèse, percussions frappées et 33 boîtes à rythmes d'après la Machinedrum, avec une grille d'influence où chaque piste peut en déclencher, exciter ou moduler une autre.",
+ "resume": "Eight-track sound-design groovebox with FM, physical modeling, modeled percussion, a PPG/Waldorf-inspired WAVE wavetable synthesizer, and a modular WEFT patcher for interlinked sounds and modulations.",
  "commandes": [
   {
    "commande": "OCT-",
@@ -85,12 +85,12 @@
  ],
  "modes": [],
  "a_savoir": [
-  "Chaque effet démarre à zéro : un nouveau projet n'envoie rien dans les bus.",
-  "Le T8 peut devenir le compresseur de bus (HOME, TRACKS, KIND = COMP)."
+  "The WAVE synthesis engine has scanning wavetables and PPG/Microwave-inspired character; it does not distribute original PPG or Waldorf ROMs.",
+  "The 1.27.0 release adds new WEFT blocks. CPU load may increase with complex patches."
  ],
  "source": {
-  "url": "https://github.com/De-Pattern/Ravel_FM1/blob/6a7696d75ae4ffaeff21827f973abf2b93771326/README.md",
-  "commit": "6a7696d75ae4ffaeff21827f973abf2b93771326"
+  "url": "https://github.com/De-Pattern/Ravel_FM1/blob/407276ca17e8b2941967d21981542f4001f9d32a/README.md",
+  "commit": "407276ca17e8b2941967d21981542f4001f9d32a"
  },
  "d_apres_le_code": false
 }
