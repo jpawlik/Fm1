@@ -12,6 +12,12 @@ on:
       - "firmwares/**"
       - "tools/**"
       - ".github/workflows/pages.yml"
+  # Test emulator/firmware updates on pull requests without deploying or publishing releases.
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/pages.yml"
+      - "tools/**"
   workflow_dispatch:
     inputs:
       mode:
@@ -35,8 +41,8 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  FM1_EMU_COMMIT: 93cb7ee3f7008b27959ba73073b864e37efd7289
-  RUNTIME_TAG: runtime-93cb7ee
+  FM1_EMU_COMMIT: a0e9a88cba72a6de7368273c82e26867848e281d
+  RUNTIME_TAG: runtime-a0e9a88
   EMSDK_VERSION: 3.1.64
   NATIF_TAG: natif
 
@@ -55,6 +61,7 @@ jobs:
           EVENT: ${{ github.event_name }}
           MODE: ${{ inputs.mode }}
           BEFORE: ${{ github.event.before }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
         run: |
           set -euo pipefail
           native=false
@@ -71,13 +78,17 @@ jobs:
               site) ;;
               *) echo "::error::Unknown build mode: $MODE"; exit 1 ;;
             esac
-          elif [ -z "$BEFORE" ] || [[ "$BEFORE" =~ ^0+$ ]]; then
-            native=true
-            runtime=true
           else
-            # Fetch just the previous pushed commit, without the full history.
-            if ! git fetch --no-tags --depth=1 origin "$BEFORE"; then
-              echo "::warning::Previous commit unavailable; rebuilding all assets"
+            # For a PR compare the generated merge commit to the base branch.
+            # This avoids treating each PR as a new fork and rebuilding every native firmware.
+            DIFF_BASE="$BEFORE"
+            if [ "$EVENT" = "pull_request" ]; then DIFF_BASE="$PR_BASE"; fi
+            if [ -z "$DIFF_BASE" ] || [[ "$DIFF_BASE" =~ ^0+$ ]]; then
+              # New repository/branch: existing release assets will be checked below.
+              native=false
+              runtime=false
+            elif ! git fetch --no-tags --depth=1 origin "$DIFF_BASE"; then
+              echo "::warning::Previous commit unavailable; rebuild both asset families"
               native=true
               runtime=true
             else
@@ -85,9 +96,9 @@ jobs:
                 case "$path" in
                   tools/fm1emu_vert.py) runtime=true ;;
                   tools/*) native=true ;;
-                  .github/workflows/pages.yml) ;; # Reuse pinned releases for CI-only edits; changing pin+tag forces a rebuild.
+                  .github/workflows/pages.yml) ;; # Pin/tag is checked by matching release availability below.
                 esac
-              done < <(git diff --name-only "$BEFORE" "$GITHUB_SHA")
+              done < <(git diff --name-only "$DIFF_BASE" "$GITHUB_SHA")
             fi
           fi
           # Bootstrap a new fork, or self-heal deleted release assets.
