@@ -26,3 +26,9 @@ This is a modified fork of **[Ninjathune-Human/Fm1](https://github.com/Ninjathun
 The panel is adapted from [sbegueria's DUB-1 emulator](https://github.com/sbegueria/fm1-dub) (GPL-3.0); `index.html` remains under **GPL-3.0**. Joakim's `fm1-emu` is MIT licensed. The repository is otherwise MIT licensed except for the GPL-3.0 files identified in the [upstream license notes](https://github.com/Ninjathune-Human/Fm1#licences-et-cr%C3%A9dits); bundled fonts use OFL-1.1. Each firmware retains its author's license; see [firmware license texts](firmwares/licences/) and the [catalogue](firmwares/catalogue.json).
 
 Independent community project, not affiliated with M-VAVE.
+
+## Deployment
+
+GitHub Pages deploys automatically from `main` when the website changes. The [Site workflow](.github/workflows/pages.yml) normally reuses versioned emulator and native-firmware builds from GitHub Releases; documentation and test-only changes do not deploy.
+
+Emulator source/patch changes rebuild the runtime only. Changes in `tools/` that affect native firmware rebuild the native versions. To force a build, open **Actions → Site → Run workflow** and select **site**, **runtime**, or **full**. Keep `FM1_EMU_COMMIT` and `RUNTIME_TAG` paired when upgrading Joakim's emulator.
