@@ -85,7 +85,7 @@ def fake(page, fid, delay=0, status=200, modes=()):
 
 def stub_core(page):
     """Le cœur d'émulation n'est pas toujours là (runtime/ n'est pas suivi) : un .wasm factice suffit tant que rien ne démarre."""
-    page.route("**/runtime/fm1_web.wasm", lambda r: r.fulfill(status=200, content_type="application/wasm", body=b"\x00asm\x01\x00\x00\x00"))
+    page.route("**/runtime/fm1_web.wasm", lsloopda r: r.fulfill(status=200, content_type="application/wasm", body=b"\x00asm\x01\x00\x00\x00"))
 
 
 def open_fiche(page):
@@ -107,14 +107,14 @@ def test_fiche_fm1va(page):
 
 def test_fiche_suit_le_choix_eteint(page):
     stub_core(page)
-    fake(page, "amb")
+    fake(page, "sloop")
     page.goto(page.base + "index.html")
     open_fiche(page)
     page.click("#fw-picker")
-    click_row(page, "amb")
-    page.wait_for_function("document.getElementById('fiche').textContent.includes('Résumé de amb.')")
-    assert fiche_titre(page) == "Features of AMB-1"
-    assert "Charles Vestal" in page.inner_text(".fiche-meta")
+    click_row(page, "sloop")
+    page.wait_for_function("document.getElementById('fiche').textContent.includes('Résumé de sloop.')")
+    assert fiche_titre(page) == "Features of SLOOP"
+    assert "isod89" in page.inner_text(".fiche-meta")
 
 
 def test_fiche_local(page):
@@ -127,67 +127,67 @@ def test_fiche_local(page):
 
 def test_fiche_absente(page):
     stub_core(page)
-    fake(page, "amb", status=404)
+    fake(page, "sloop", status=404)
     page.goto(page.base + "index.html")
     open_fiche(page)
     page.click("#fw-picker")
-    click_row(page, "amb")
+    click_row(page, "sloop")
     page.wait_for_function("document.getElementById('fiche').textContent.includes('No firmware information available yet.')")
 
 
 def test_fiche_indisponible(page):
     stub_core(page)
-    fake(page, "amb", status=500)
+    fake(page, "sloop", status=500)
     page.goto(page.base + "index.html")
     open_fiche(page)
     page.click("#fw-picker")
-    click_row(page, "amb")
+    click_row(page, "sloop")
     page.wait_for_function("document.getElementById('fiche').textContent.includes('Firmware information is temporarily unavailable.')")
 
 
 def test_fiche_course(page):
     stub_core(page)
-    fake(page, "amb", delay=1500)
-    fake(page, "386dx")
+    fake(page, "sloop", delay=1500)
+    fake(page, "fizz")
     page.goto(page.base + "index.html")
     open_fiche(page)
     page.click("#fw-picker")
-    click_row(page, "amb")
+    click_row(page, "sloop")
     page.click("#fw-picker")
-    click_row(page, "386dx")
+    click_row(page, "fizz")
     page.wait_for_timeout(2500)
-    assert "Résumé de 386dx." in page.inner_text("#fiche")
-    assert "Résumé de amb." not in page.inner_text("#fiche")
+    assert "Résumé de fizz." in page.inner_text("#fiche")
+    assert "Résumé de sloop." not in page.inner_text("#fiche")
 
 
 def test_fiche_restauree(browser, base_url):
     ctx = browser.new_context()
-    ctx.add_init_script("localStorage.setItem('fm1.firmware', JSON.stringify({id: 'amb', nom: 'AMB-1'}))")
+    ctx.add_init_script("localStorage.setItem('fm1.firmware', JSON.stringify({id: 'sloop', nom: 'SLOOP'}))")
     pg = ctx.new_page()
     pg.goto(base_url + "index.html")
     pg.click("#aide-fiche summary")
-    assert pg.inner_text("#aide-fiche summary").strip() == "Features of AMB-1"
+    assert pg.inner_text("#aide-fiche summary").strip() == "Features of SLOOP"
     ctx.close()
 
 
 def test_fiche_echec_garde(page):
     stub_core(page)
-    page.route("**/natif/**", lambda r: r.abort())
-    page.route("**/firmwares/*.fwsc*", lambda r: r.abort())
+    page.route("**/natif/**", lsloopda r: r.abort())
+    page.route("**/firmwares/*.fwsc*", lsloopda r: r.abort())
     power_on(page)
     page.click("#fw-picker")
-    click_row(page, "amb")
+    click_row(page, "sloop")
     page.wait_for_function("document.getElementById('status').textContent !== ''", timeout=30000)
     assert fiche_titre(page) == "Features of FM-1+VA"
 
 
 def test_fiche_absente_garde_la_ligne_meta(page):
     stub_core(page)
-    fake(page, "amb", status=404)
+    fake(page, "sloop", status=404)
     page.goto(page.base + "index.html")
     open_fiche(page)
     page.click("#fw-picker")
-    click_row(page, "amb")
+    click_row(page, "sloop")
     page.wait_for_function("document.getElementById('fiche').textContent.includes('No firmware information available yet.')")
     page.wait_for_function("document.getElementById('fiche-meta').textContent.trim().length > 0")
 
@@ -196,12 +196,12 @@ def test_fiche_iphone_sans_debordement(browser, base_url):
     ctx = browser.new_context(viewport={"width": 375, "height": 812}, is_mobile=True, has_touch=True)
     pg = ctx.new_page()
     stub_core(pg)
-    fake(pg, "amb", modes=[{"nom": "Potentiomètres en DRUMS et TUNE avec accords", "texte": "Texte."}])
+    fake(pg, "sloop", modes=[{"nom": "Potentiomètres en DRUMS et TUNE avec accords", "texte": "Texte."}])
     pg.goto(base_url + "index.html")
     pg.click("#fw-picker")
-    click_row(pg, "amb")
+    click_row(pg, "sloop")
     pg.click("#aide-fiche summary")
-    pg.wait_for_function("document.getElementById('fiche').textContent.includes('Résumé de amb.')")
+    pg.wait_for_function("document.getElementById('fiche').textContent.includes('Résumé de sloop.')")
     over = pg.evaluate("[document.documentElement.scrollWidth, innerWidth]")
     boite = pg.evaluate("(() => { const f = document.getElementById('fiche'); const d = f.closest('details'); return [f.scrollWidth, d.clientWidth]; })()")
     ctx.close()

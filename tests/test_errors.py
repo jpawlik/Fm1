@@ -9,18 +9,20 @@ def test_core_missing(page):
     page.route("**/runtime/fm1_web.wasm", lambda r: r.fulfill(status=404, body="absent"))
     power_on(page)
     page.click("#fw-picker")
-    page.wait_for_selector('.fw-item[data-id="gator"][aria-disabled="true"]', state="attached")
+    page.wait_for_selector('.fw-item[data-id="fizz"][aria-disabled="true"]', state="attached")
     assert page.get_attribute('.fw-item[data-id="fm1va"]', "aria-disabled") is None
     assert page.is_visible("text=Emulation core unavailable")
-    click_row(page, "gator")
+    click_row(page, "fizz")
     assert page.evaluate("window.__engine() === window.__fw")
 
 
 def test_online_package_unreachable(page):
+    # The retained native Skiff becomes an online .fwsc without native artifacts.
+    page.route("**/natif/manifest.json", lambda r: r.fulfill(status=200, body="{}", content_type="application/json"))
     page.route("https://thefirmwarehub.com/**", lambda r: r.fulfill(status=503, body="indisponible"))
     power_on(page)
-    nom = page.evaluate("window.__catalogue.find((e) => e.id === 'kawa').nom")
-    click_row(page, "kawa")
+    nom = page.evaluate("window.__catalogue.find((e) => e.id === 'skiff').nom")
+    click_row(page, "skiff")
     wait_status(page, f"{nom} : firmware package unavailable.")
     assert page.evaluate("window.__engine() === window.__fw")
 
@@ -37,9 +39,9 @@ def test_truncated_package(page):
 def test_storage_unavailable(page):
     page.add_init_script("Object.defineProperty(window, 'indexedDB', { value: undefined })")
     power_on(page)
-    click_row(page, "gator")
+    click_row(page, "fizz")
     page.wait_for_function("document.getElementById('status').textContent.includes('Saves are unavailable in this browser.')", timeout=30000)
-    assert page.evaluate("window.__engine().name") == "GATOR"
+    assert page.evaluate("window.__engine().name") == "FIZZ"
 
 
 def test_invalid_local_file(page, tmp_path):
@@ -54,13 +56,13 @@ def test_invalid_local_file(page, tmp_path):
 
 def test_halted_restart(page):
     power_on(page)
-    click_row(page, "gator")
-    ready(page, "GATOR")
+    click_row(page, "fizz")
+    ready(page, "FIZZ")
     page.evaluate("""() => { const e = window.__engine();
       e.onWorklet({ data: { type: 'frame', seq: e.seq, halted: 1, lcd: null, leds: new Float32Array(41) } }); }""")
-    wait_status(page, "GATOR stopped.")
+    wait_status(page, "FIZZ stopped.")
     assert page.is_visible("#fw-restart")
     page.click("#fw-restart")
-    ready(page, "GATOR")
+    ready(page, "FIZZ")
     assert not page.is_visible("#fw-restart")
     assert page.evaluate("window.__engine().halted") == 0

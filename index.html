@@ -5980,7 +5980,15 @@ function buildPanel(fw) {
       const n = natifs[e.id];
       if (n) Object.assign(e, { natif: "natif/" + e.id + "/", natif_wasm: n.wasm, natif_processeur: n.processeur, natif_dialecte: n.dialecte, natif_echantillons: n.echantillons });
     }
-    catalogue = d.firmwares; renderSections();
+    catalogue = d.firmwares;
+    // If a user previously selected a removed firmware, show a valid engine
+    // instead of leaving a stale name in the panel. Saved project data is untouched.
+    if (active.id !== "fm1va" && active.id !== "local" && !catalogue.some((e) => e.id === active.id)) {
+      active = { id: "fm1va", nom: "FM-1+VA" };
+      nameEl.textContent = active.nom;
+      try { localStorage.setItem(SKEY(LAST), JSON.stringify(active)); } catch { /* storage disabled */ }
+    }
+    renderSections();
   }).catch(() => {});
   let coreError = null, switchFailure = null;
   async function loadWasm() {
