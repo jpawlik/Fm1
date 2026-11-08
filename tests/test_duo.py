@@ -102,6 +102,76 @@ def test_native_follows(page):
     assert got.count(0xF8) >= 10                                        # l'horloge de FM1-B
 
 
+def test_unlink_sends_stop_and_relink_restarts_playing_master(page):
+    """A stops when the link is disabled; linking during B playback starts A again."""
+    a, b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    b.evaluate("window.__fw.seqOn(true)")
+    a.evaluate("window.__fw.seqOn(true)")
+    page.click(".duo-link")
+    b.evaluate("window.__fw.seqPlay()")
+    a.wait_for_function("window.__fw.S.playing", timeout=5000)
+    page.click(".duo-link")
+    a.wait_for_function("!window.__fw.S.playing", timeout=5000)
+    assert not a.evaluate("window.__fw.mi.follow")
+    assert not b.evaluate("window.__fw.mi.lead")
+    # B is still running. The newly connected A must get Start, not just clocks.
+    page.click(".duo-link")
+    a.wait_for_function("window.__fw.S.playing", timeout=5000)
+    b.evaluate("window.__fw.seqPlay()")
+    a.wait_for_function("!window.__fw.S.playing", timeout=5000)
+
+
+def test_source_poweroff_stops_follower(page):
+    """Powering off B drops the clock link and explicitly stops A's sequencer."""
+    a, b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    a.evaluate("window.__fw.seqOn(true)")
+    b.evaluate("window.__fw.seqOn(true)")
+    page.click(".duo-link")
+    b.evaluate("window.__fw.seqPlay()")
+    a.wait_for_function("window.__fw.S.playing", timeout=5000)
+    b.evaluate("document.getElementById('power').click()")
+    a.wait_for_function("!window.__fw.S.playing", timeout=5000)
+    assert not a.evaluate("window.__fw.mi.follow")
+    assert page.get_attribute(".duo-link", "aria-checked") == "false"
+
+
+def test_native_hortator_follows_transport_and_stops_on_unlink(page):
+    """Hortator's actual native sequencer, set to CLK USB, follows B's Start/Stop.
+    This observes the firmware's PLAY LED after its WebAssembly worklet renders,
+    not only the host sending MIDI messages to the worklet.
+    """
+    a, b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    a.wait_for_function("window.__catalogue && window.__catalogue.some(e => e.id === 'hortator' && e.natif)")
+    assert a.evaluate("() => window.__useEngine(window.__catalogue.find(e => e.id === 'hortator'))")
+    a.wait_for_function("window.__engine().kind === 'natif'")
+    # Hortator: tap GLO for GLOBAL; the third knob edits CLK (INT -> USB).
+    a.evaluate("window.__engine().press('GLO')")
+    a.wait_for_timeout(130)
+    a.evaluate("window.__engine().release('GLO')")
+    a.wait_for_timeout(140)
+    a.evaluate("window.__engine().turn('KNOB3', 1)")
+    a.wait_for_timeout(200)
+    # A's sequencer must not start until B sends Start.
+    assert a.evaluate("window.__engine().playLight()") != "green"
+    page.click(".duo-link")
+    b.evaluate("window.__fw.seqOn(true); window.__fw.seqPlay()")
+    # A's green PLAY LED blinks while its own sequencer runs.
+    a.wait_for_function("window.__engine().playLight() === 'green'", timeout=5000)
+    page.click(".duo-link")
+    a.wait_for_timeout(250)
+    assert a.evaluate("window.__engine().playLight()") != "green"
+    # Reconnect while B is still playing: newly linked A gets Start immediately.
+    page.click(".duo-link")
+    a.wait_for_function("window.__engine().playLight() === 'green'", timeout=5000)
+    b.evaluate("window.__fw.seqPlay()")
+
+
 def test_native_on_b_cannot_claim_clock_master(page):
     """A native firmware on B receives MIDI but does not expose clock output."""
     a, b = open_duo(page, 1600, 900)
