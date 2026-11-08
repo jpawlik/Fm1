@@ -9,14 +9,14 @@ def titles(page):
 
 def test_titres(page):
     page.goto(page.base + "index.html")
-    assert titles(page)[:2] == ["Manuel d'utilisation", "Raccourcis clavier"]
+    assert titles(page)[:2] == ["User guide", "Keyboard shortcuts"]
 
 
 def test_manuel_rubriques(page):
     page.goto(page.base + "index.html")
     assert page.eval_on_selector_all("#aide-manuel dt", "d => d.map(x => x.textContent)") == [
-        "Allumer", "Firmwares", "Boutons propres à un firmware", "Coloris", "Solo et Duo", "MIDI", "Plein écran",
-        "Ce que le navigateur garde", "Crédits et licences"]
+        "Power on", "Firmware", "Firmware-specific controls", "Colors", "Solo and Duo", "MIDI", "Full screen",
+        "Browser storage", "Credits and licenses"]
 
 
 def test_clavier_dessine(page):
@@ -100,7 +100,7 @@ def test_fiche_fm1va(page):
     page.goto(page.base + "index.html")
     open_fiche(page)
     page.wait_for_selector("#fiche dt")
-    assert fiche_titre(page) == "Fonctions de FM-1+VA"
+    assert fiche_titre(page) == "Features of FM-1+VA"
     assert "SEL" in page.eval_on_selector_all("#fiche dt", "d => d.map(x => x.textContent)")
     assert "baudgirl.com" in page.get_attribute("#fiche a", "href")
 
@@ -113,7 +113,7 @@ def test_fiche_suit_le_choix_eteint(page):
     page.click("#fw-picker")
     click_row(page, "amb")
     page.wait_for_function("document.getElementById('fiche').textContent.includes('Résumé de amb.')")
-    assert fiche_titre(page) == "Fonctions de AMB-1"
+    assert fiche_titre(page) == "Features of AMB-1"
     assert "Charles Vestal" in page.inner_text(".fiche-meta")
 
 
@@ -122,7 +122,7 @@ def test_fiche_local(page):
     page.goto(page.base + "index.html")
     open_fiche(page)
     page.set_input_files("#fw-file", files=[{"name": "perso.fwsc", "mimeType": "application/octet-stream", "buffer": b"x" * 64}])
-    page.wait_for_function("document.getElementById('fiche').textContent.includes('Pas de fiche pour ce firmware.')")
+    page.wait_for_function("document.getElementById('fiche').textContent.includes('No information sheet for this firmware.')")
 
 
 def test_fiche_absente(page):
@@ -132,7 +132,7 @@ def test_fiche_absente(page):
     open_fiche(page)
     page.click("#fw-picker")
     click_row(page, "amb")
-    page.wait_for_function("document.getElementById('fiche').textContent.includes('Pas de fiche pour ce firmware pour')")
+    page.wait_for_function("document.getElementById('fiche').textContent.includes('No firmware information available yet.')")
 
 
 def test_fiche_indisponible(page):
@@ -142,7 +142,7 @@ def test_fiche_indisponible(page):
     open_fiche(page)
     page.click("#fw-picker")
     click_row(page, "amb")
-    page.wait_for_function("document.getElementById('fiche').textContent.includes('Fiche indisponible pour le moment.')")
+    page.wait_for_function("document.getElementById('fiche').textContent.includes('Firmware information is temporarily unavailable.')")
 
 
 def test_fiche_course(page):
@@ -166,7 +166,7 @@ def test_fiche_restauree(browser, base_url):
     pg = ctx.new_page()
     pg.goto(base_url + "index.html")
     pg.click("#aide-fiche summary")
-    assert pg.inner_text("#aide-fiche summary").strip() == "Fonctions de AMB-1"
+    assert pg.inner_text("#aide-fiche summary").strip() == "Features of AMB-1"
     ctx.close()
 
 
@@ -178,7 +178,7 @@ def test_fiche_echec_garde(page):
     page.click("#fw-picker")
     click_row(page, "amb")
     page.wait_for_function("document.getElementById('status').textContent !== ''", timeout=30000)
-    assert fiche_titre(page) == "Fonctions de FM-1+VA"
+    assert fiche_titre(page) == "Features of FM-1+VA"
 
 
 def test_fiche_absente_garde_la_ligne_meta(page):
@@ -188,7 +188,7 @@ def test_fiche_absente_garde_la_ligne_meta(page):
     open_fiche(page)
     page.click("#fw-picker")
     click_row(page, "amb")
-    page.wait_for_function("document.getElementById('fiche').textContent.includes('Pas de fiche pour ce firmware pour')")
+    page.wait_for_function("document.getElementById('fiche').textContent.includes('No firmware information available yet.')")
     page.wait_for_function("document.getElementById('fiche-meta').textContent.trim().length > 0")
 
 

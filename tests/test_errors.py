@@ -11,7 +11,7 @@ def test_core_missing(page):
     page.click("#fw-picker")
     page.wait_for_selector('.fw-item[data-id="gator"][aria-disabled="true"]', state="attached")
     assert page.get_attribute('.fw-item[data-id="fm1va"]', "aria-disabled") is None
-    assert page.is_visible("text=Cœur d'émulation indisponible")
+    assert page.is_visible("text=Emulation core unavailable")
     click_row(page, "gator")
     assert page.evaluate("window.__engine() === window.__fw")
 
@@ -21,7 +21,7 @@ def test_online_package_unreachable(page):
     power_on(page)
     nom = page.evaluate("window.__catalogue.find((e) => e.id === 'kawa').nom")
     click_row(page, "kawa")
-    wait_status(page, f"{nom} : paquet injoignable.")
+    wait_status(page, f"{nom} : firmware package unavailable.")
     assert page.evaluate("window.__engine() === window.__fw")
 
 
@@ -30,7 +30,7 @@ def test_truncated_package(page):
     page.route("**/firmwares/sloop.fwsc", lambda r: r.fulfill(status=200, body=data, content_type="application/octet-stream"))
     power_on(page)
     click_row(page, "sloop")
-    wait_status(page, "SLOOP n'a pas démarré.")
+    wait_status(page, "SLOOP could not start.")
     assert page.evaluate("window.__engine() === window.__fw")
 
 
@@ -38,7 +38,7 @@ def test_storage_unavailable(page):
     page.add_init_script("Object.defineProperty(window, 'indexedDB', { value: undefined })")
     power_on(page)
     click_row(page, "gator")
-    page.wait_for_function("document.getElementById('status').textContent.includes('Sauvegardes indisponibles dans ce navigateur.')", timeout=30000)
+    page.wait_for_function("document.getElementById('status').textContent.includes('Saves are unavailable in this browser.')", timeout=30000)
     assert page.evaluate("window.__engine().name") == "GATOR"
 
 
@@ -47,7 +47,7 @@ def test_invalid_local_file(page, tmp_path):
     f.write_text("ceci n'est pas un firmware")
     power_on(page)
     page.set_input_files("#fw-file", str(f))
-    wait_status(page, "Ce fichier n'est pas un paquet FM-1.")
+    wait_status(page, "This is not an FM-1 firmware package.")
     assert page.evaluate("window.__engine() === window.__fw")
     assert page.inner_text("#fw-name") == "FM-1+VA"
 
@@ -58,7 +58,7 @@ def test_halted_restart(page):
     ready(page, "GATOR")
     page.evaluate("""() => { const e = window.__engine();
       e.onWorklet({ data: { type: 'frame', seq: e.seq, halted: 1, lcd: null, leds: new Float32Array(41) } }); }""")
-    wait_status(page, "GATOR s'est arrêté.")
+    wait_status(page, "GATOR stopped.")
     assert page.is_visible("#fw-restart")
     page.click("#fw-restart")
     ready(page, "GATOR")

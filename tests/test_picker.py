@@ -50,7 +50,7 @@ def test_search(page):
     page.fill("#fw-search", "bubba")
     assert "bubba machine" not in page.inner_text("#fw-sheet").lower()
     page.fill("#fw-search", "sloop zzzzqq")
-    assert page.is_visible("text=Résultats approchants")
+    assert page.is_visible("text=Closest matches")
     page.click("#fw-clear")
     assert page.input_value("#fw-search") == ""
     assert page.is_visible(".fw-sec-head")
@@ -63,7 +63,7 @@ def test_search(page):
 def test_pick(page):
     power_on(page)
     click_row(page, "sloop")
-    assert status(page) == "Démarrage de SLOOP…"
+    assert status(page) == "Starting SLOOP…"
     ready(page, "SLOOP")
     assert page.inner_text("#fw-name") == "SLOOP"
     assert not page.is_visible("#fw-sheet")
@@ -120,8 +120,8 @@ def test_optimised_first(page):
     page.wait_for_selector('.fw-item[data-id="x0x"]', state="attached")
     order = page.evaluate("""() => [...document.querySelectorAll('#fw-sections > .fw-tier, #fw-sections > .fw-sec')]
       .map((n) => n.classList.contains('fw-tier') ? 'T:' + n.textContent : n.dataset.tier)""")
-    assert order[0] == "T:Optimisés"
-    k = order.index("T:Non optimisés")
+    assert order[0] == "T:Optimized"
+    k = order.index("T:Emulated")
     assert set(order[1:k]) == {"optimise"} and set(order[k + 1:]) == {"emule"}
     tier = lambda i: page.evaluate("(id) => document.querySelector(`.fw-item[data-id=\"${id}\"]`).closest('.fw-sec').dataset.tier", i)
     assert tier("fm1va") == "optimise" and tier("x0x") == "optimise" and tier("felucca") == "optimise"
@@ -181,7 +181,7 @@ def test_tag_no_boot(page):
     page.route("**/firmwares/catalogue.json", lambda r: r.fulfill(status=200, body=json.dumps(cat), content_type="application/json"))
     page.goto(page.base + "index.html")
     page.wait_for_selector('.fw-item[data-id="x0x"]', state="attached")
-    assert "ne démarre pas" in page.eval_on_selector('.fw-item[data-id="x0x"]', "e => e.textContent")
+    assert "does not boot" in page.eval_on_selector('.fw-item[data-id="x0x"]', "e => e.textContent")
 
 
 def test_no_dead_zone_between_keys(page):
