@@ -321,6 +321,12 @@ html.embed .duo-tabs { margin-left: auto; }                              /* FM1-
 .duo-link[aria-checked="true"] .track { background: var(--accent); }
 .duo-link[aria-checked="true"] .track::after { transform: translateX(14px); }
 .duo-link[aria-disabled="true"] { opacity: 0.5; }
+.duo-tempo { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font: 500 .85rem var(--body); }
+.duo-bpm { width: 68px; min-height: 40px; box-sizing: border-box; padding: 4px; border: 1px solid var(--rule); border-radius: 9px; background: var(--surface); color: var(--ink); text-align: center; font: 600 1rem var(--body); }
+.duo-bpm:disabled, .duo-play:disabled { opacity: .5; }
+.duo-play { min-width: 64px; min-height: 40px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); color: var(--ink); font: 600 .9375rem var(--body); touch-action: manipulation; }
+.duo-play[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.duo-sync-state { color: var(--muted); font: 400 .75rem var(--body); max-width: 110px; }
 .duo-stage { flex: 1 1 0; min-height: 0; display: grid; }
 .duo-stage iframe { width: 100%; height: 100%; border: 0; min-height: 0; background: var(--bg); }
 .duo-stage[data-layout="stack"] { grid-template-rows: 1fr 1fr; }
@@ -6440,10 +6446,10 @@ function buildPanel(fw) {
   bind(); window.__bindFullscreen = bind;
 })();
 </script>
+<script src="./duo-sync.js"></script>
 <script>
 // Duo: two FM-1 instances with separate firmware and saved settings.
-// MIDI clock is one-way: FM1-B (FM-1+VA) leads; FM1-A follows when its firmware accepts clock.
-// Native/CPU-emulated firmware cannot currently act as a clock source in this app.
+// The shared host MIDI clock drives both engines; firmware-specific external-clock support still applies.
 "use strict";
 (function () {
   if (!DUO_SHELL) return;
@@ -6459,7 +6465,10 @@ function buildPanel(fw) {
         <button type="button" role="radio" data-v="side">Side by side</button>
         <button type="button" role="radio" data-v="one">One at a time</button>
       </div>
-      <button type="button" class="duo-link" role="switch" aria-checked="false">MIDI clock<span class="dir"> · B → A</span><span class="track"></span></button>
+      <button type="button" class="duo-link" role="switch" aria-checked="false">Duo sync<span class="track"></span></button>
+      <label class="duo-tempo">BPM <input class="duo-bpm" aria-label="Duo BPM" inputmode="numeric" type="number" min="40" max="240" value="120"></label>
+      <button type="button" class="duo-play" aria-pressed="false">Play</button>
+      <span class="duo-sync-state" role="status" aria-live="polite">Sync off</span>
       <nav class="seg" aria-label="One or two FM-1s"><a href="./">Solo</a><a href="?duo" aria-current="page">Duo</a></nav>
     </div>
     <div class="duo-stage"><iframe name="a" title="FM1-A" src="?fm1=a" allow="midi; autoplay"></iframe><iframe name="b" title="FM1-B" src="?fm1=b" allow="midi; autoplay"></iframe></div>`;
@@ -6513,61 +6522,14 @@ function buildPanel(fw) {
   addEventListener("blur", () => setTimeout(() => { const f = document.activeElement; if (f && f.tagName === "IFRAME" && stage.dataset.layout !== "one") midiTo(f.name); }));
   for (const f of Object.values(frames)) f.addEventListener("load", () => midiTo(active));
 
-  // Clock/transport only, from FM1-B to FM1-A. FM1-B must run FM-1+VA because
-  // native/CPU-emulated firmwares do not expose their outgoing MIDI clock yet.
-  linkBtn.addEventListener("click", () => {
-    if (linkBtn.getAttribute("aria-disabled") === "true") {
-      return window.__tip(linkBtn, "MIDI clock B → A requires both devices on and FM1-B running FM-1+VA. Native firmware cannot transmit clock yet.");
-    }
-    linked = !linked; keep("link", linked ? "1" : "0"); tick();
+  // The standalone host clock must not depend on any selected firmware's MIDI output.
+  window.__duo = window.setupDuoHost({
+    frames, tabsOf, show, keep, linkBtn,
+    tempoBox: root.querySelector(".duo-bpm"),
+    playBtn: root.querySelector(".duo-play"),
+    state: root.querySelector(".duo-sync-state"),
+    initialLinked: linked
   });
-  const engOf = (k) => {
-    try { const w = frames[k].contentWindow, e = w.__engine && w.__engine(); return e && e.on ? (e === w.__fw ? { va: e } : e.kind === "natif" ? { natif: e } : e.kind === "emu" ? { emu: e } : null) : null; } catch { return null; }
-  };
-  const fwOf = (k) => { const e = engOf(k); return e && e.va ? e.va : null; };
-  let was = { a: null, b: null }, clockFrom = null, clockTo = null;
-  function tick() {
-    const E = { a: engOf("a"), b: engOf("b") };
-    const lead = E.b && E.b.va && E.a ? "b" : null, other = "a";
-    const source = lead ? E.b.va : null;
-    const target = E.a && (E.a.va || E.a.natif || E.a.emu);
-    const on = linked && !!source && !!target;
-    const changed = clockFrom !== (on ? source : null) || clockTo !== (on ? target : null);
-    // Stop the previous follower BEFORE removing its clock. Applies to unlink,
-    // a power-off, or either firmware changing; otherwise it could keep playing.
-    if (changed && clockTo && clockTo.on) clockTo.midiIn(Uint8Array.of(0xFC));
-    linkBtn.setAttribute("aria-checked", on);
-    linkBtn.setAttribute("aria-disabled", !lead);
-    linkBtn.querySelector(".dir").textContent = " · B → A";
-    linkBtn.title = lead ? "FM1-B supplies MIDI clock and transport to FM1-A" : "FM1-B must run FM-1+VA to send MIDI clock to FM1-A";
-    for (const k of ["a", "b"]) {                     // ce que chacun doit être maintenant
-      const e = E[k] && (E[k].va || E[k].natif || E[k].emu), isLead = on && k === lead, isFollow = on && k === other;
-      if (was[k] && was[k] !== e && was[k].mi) { was[k].mi.lead = false; was[k].mi.follow = false; was[k].mi.link = null; was[k].sendGlobal(); }
-      was[k] = e;
-      if (!e || !e.mi) continue;
-      const to = E[other] && (E[other].va || E[other].natif || E[other].emu);
-      if (!!e.mi.lead !== isLead || (isLead && e.mi.linkTo !== to)) {
-        e.mi.lead = isLead; e.mi.linkTo = isLead ? to : null;
-        e.mi.link = isLead ? (bytes) => { if (to && to.on) to.midiIn(Uint8Array.from(bytes)); } : null;
-        e.sendGlobal();
-      }
-      if (!!e.mi.follow !== isFollow) { e.mi.follow = isFollow; e.sendGlobal(); }
-      e.mi.tempo = isFollow && E[lead].va ? E[lead].va.G.tempo : 0;
-    }
-    // Joining an already-playing master needs its own Start; otherwise the new
-    // receiver gets Clock pulses forever but never starts its sequencer.
-    if (changed && on && source.S.playing) target.midiIn(Uint8Array.of(0xFA));
-    clockFrom = on ? source : null;
-    clockTo = on ? target : null;
-    // le battement de chaque FM-1, sur ses pastilles FM1-A | FM1-B
-    const beat = { a: fwOf("a"), b: fwOf("b") };
-    for (const k of ["a", "b"]) {
-      const t = tabsOf(k);
-      if (t) for (const b of t.children) { const f = beat[b.dataset.k]; b.querySelector(".beat").classList.toggle("on", !!(f && f.S && f.S.playing && f.beatPhase() < 0.3)); }
-    }
-  }
-  setInterval(tick, 120);
-  window.__duo = { frames, show, tick, get linked() { return linked; } };   // pour les tests
 })();
 </script>
 
