@@ -42,9 +42,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible, .file:focus-within
 .device:focus { outline: none; }
 .device:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 5.85% / 9.7%; }
 .device > svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
-.device canvas { position: absolute; left: 28.476%; top: 11.616%; width: 18.293%; height: 30.303%; background: #000; border-radius: 0.4%; }
+.device canvas { position: absolute; left: 26.1585%; top: 8.5859%; width: 22.6829%; height: 37.5758%; background: #000; border-radius: 0.4%; }
 /* the screen's glass: a hard diagonal reflection and a polished rim, over the picture */
-.glass { position: absolute; left: 25.732%; top: 7.071%; width: 23.78%; height: 39.394%; border-radius: 12.82%; pointer-events: none;
+.glass { position: absolute; left: 23.7805%; top: 4.5455%; width: 27.439%; height: 45.4545%; border-radius: 12.82%; pointer-events: none;
   background:
     linear-gradient(141deg, rgb(255 255 255 / 0.17) 0%, rgb(255 255 255 / 0.075) 35%, rgb(255 255 255 / 0) 35.3%),
     radial-gradient(85% 50% at 22% 0%, rgb(255 255 255 / 0.12), transparent 70%),
@@ -5505,11 +5505,11 @@ function buildPanel(fw) {
   for (let i = 0; i < 16; i++) key(WHITE_K[i], 123 + 93 * i, 825, 152, 781, 85, null);
   BLACK_AFTER.forEach((a, k) => key(BLACK_K[k], 123 + 93 * (a + 0.5), 659, 150, 621, 43, BLACK_LABELS[k]));
   // the screen: a glass square in a polished black frame
-  el("rect", { x: 426, y: 82, width: 390, height: 390, rx: 52, fill: "#000000", opacity: 0.9, filter: "url(#fShadow)" }, base);
-  el("rect", { x: 422, y: 70, width: 390, height: 390, rx: 50, fill: "url(#gBezel)" }, base);
-  el("rect", { x: 423, y: 71, width: 388, height: 388, rx: 49, fill: "none", stroke: "url(#gBezelEdge)", "stroke-width": 2 }, base);
-  el("rect", { x: 434, y: 82, width: 366, height: 366, rx: 40, fill: "#060607" }, base);
-  el("rect", { x: 465, y: 113, width: 304, height: 304, rx: 8, fill: "#000000" }, base);
+  el("rect", { x: 394, y: 57, width: 450, height: 450, rx: 60, fill: "#000000", opacity: 0.9, filter: "url(#fShadow)" }, base);
+  el("rect", { x: 390, y: 45, width: 450, height: 450, rx: 58, fill: "url(#gBezel)" }, base);
+  el("rect", { x: 391, y: 46, width: 448, height: 448, rx: 57, fill: "none", stroke: "url(#gBezelEdge)", "stroke-width": 2 }, base);
+  el("rect", { x: 402, y: 57, width: 426, height: 426, rx: 46, fill: "#060607" }, base);
+  el("rect", { x: 429, y: 85, width: 372, height: 372, rx: 9, fill: "#000000" }, base);
 
   // ---------------------------------------------------------------- the colourways, after M-VAVE's photographs
   // every surface derives from four colours: the body, the mint (or other) rubber, the print on the body, the
