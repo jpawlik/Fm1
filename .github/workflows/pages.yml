@@ -60,7 +60,7 @@ env:
   FM1_EMU_COMMIT: a0e9a88cba72a6de7368273c82e26867848e281d
   RUNTIME_TAG: runtime-a0e9a88
   EMSDK_VERSION: 3.1.64
-  NATIF_TAG: natif-curated-v1
+  NATIF_TAG: natif-curated-v2
 
 jobs:
   plan:

@@ -15,13 +15,13 @@ Presets and settings are stored in your browser. **Turning the FM-1 off resets t
 
 ## Curated firmware collection
 
-The main picker includes **18 curated firmware entries**, plus FM-1+VA, in just three categories:
+The main picker includes **21 curated firmware entries**, plus FM-1+VA, in just three categories:
 
-- **Drums & Samplers:** Hortator, PIGEON, FOMAJAM.
-- **Grooveboxes:** Skiff, MONO2K, X0X, Chipbox, LOOM-8, Ravel, SLOOP, FIZZ, ORBIT, Loom FM-1.
+- **Drums & Samplers:** Hortator, Elixir, PIGEON, FOMAJAM.
+- **Grooveboxes:** Skiff, MONO2K, MNM-1, JIANT FM, X0X, Chipbox, LOOM-8, Ravel, SLOOP, FIZZ, ORBIT, Loom FM-1.
 - **System & Tools:** stock M-VAVE V15, Felucca, Dinghy, fm1-dock, CTL-1.
 
-Eleven of these have **native WebAssembly builds**; the others use the CPU emulator. The native archive `natif-curated-v1` contains only these 11 builds. The earlier `natif` release remains available for rollback. Original authors, exact pinned revisions and licences remain recorded in the catalogue. Firmware versions are not upgraded as part of this cleanup.
+Fourteen of these have **native WebAssembly builds**; the others use the CPU emulator. The native archive `natif-curated-v2` contains all 14 builds. The earlier `natif-curated-v1` and `natif` release archives remain available for rollback. MNM-1 1.0.1, Elixir 0.25.2, JIANT FM public V10.6z2 and Ravel 1.27.0 are pinned to upstream source commits. Other firmware versions remain unchanged. Browser storage persistence still needs repair; Power Off currently resets saved data.
 
 ## Engines
 

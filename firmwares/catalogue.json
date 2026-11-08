@@ -25,6 +25,27 @@
    "provenance_paquet": "gh-pages firmware/felucca-drum-0.26.0-4e40f27-ble.fwsc"
   },
   {
+   "id": "elixir",
+   "nom": "Elixir",
+   "version": "0.25.2",
+   "auteur": "dmajka",
+   "categories": [
+    "Drums & Samplers"
+   ],
+   "licence": "GPL-3.0",
+   "beta": false,
+   "fichier": null,
+   "sha256": null,
+   "taille": null,
+   "depot": "https://github.com/dmajka/elixir",
+   "commit_source": "088b055c507ad4dd83a90fb7e648c211d58148da",
+   "description": "Erica Synths LXR-02-inspired drum machine with seven sequencer tracks, a direct 16-step grid, four-bar patterns, per-step locks, rolls, probability, morphing kits, effects and song mode.",
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/dmajka/elixir/releases/download/v0.25.2/elixir-0.25.2.fwsc",
+   "provenance_paquet": "Official GitHub release v0.25.2; native browser build from matching tag",
+   "natif_seulement": true
+  },
+  {
    "id": "skiff",
    "nom": "Skiff",
    "version": "1.4",
@@ -66,6 +87,48 @@
    "emulateur_fm1emu": "vérifié",
    "paquet_en_ligne": "https://thefirmwarehub.com/fw/mono2k-1.1.fwsc",
    "provenance_paquet": "dans le dépôt web/firmware/mono2k.fwsc",
+   "natif_seulement": true
+  },
+  {
+   "id": "mnm1",
+   "nom": "MNM-1",
+   "version": "1.0.1",
+   "auteur": "Veff",
+   "categories": [
+    "Grooveboxes"
+   ],
+   "licence": "GPL-3.0",
+   "beta": false,
+   "fichier": null,
+   "sha256": null,
+   "taille": null,
+   "depot": "https://github.com/galfaroth/mnm1",
+   "commit_source": "2c7aee4c277bb642404c4638dbc77a360d36cf55",
+   "description": "Six-track monophonic synth groovebox derived from Hortator, with direct 16-key step programming, FM and effect machines, per-track filters and tape delay, parameter locks, slides and three LFOs.",
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/galfaroth/mnm1/releases/download/v1.0.1/mnm1-1.0.1.fwsc",
+   "provenance_paquet": "Official GitHub release v1.0.1; native browser build from matching tag",
+   "natif_seulement": true
+  },
+  {
+   "id": "jiant",
+   "nom": "JIANT FM",
+   "version": "V10.6z2",
+   "auteur": "juanjiant-bit",
+   "categories": [
+    "Grooveboxes"
+   ],
+   "licence": "GPL-3.0",
+   "beta": false,
+   "fichier": null,
+   "sha256": null,
+   "taille": null,
+   "depot": "https://github.com/juanjiant-bit/JIANT",
+   "commit_source": "cac23c6d0bb9a7f6986eb79bbe42ae710805ce98",
+   "description": "Six-track bio-synthetic groovebox with several voice engines, drum-step and piano-roll sequencing, parameter locks, four song sections, live macros, Euclidean pattern tools and performance effects.",
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": null,
+   "provenance_paquet": "Upstream web/STABLE and web/PUBLIC_RELEASE.json public pin V10.6z2; native browser build only",
    "natif_seulement": true
   },
   {
@@ -158,23 +221,23 @@
   {
    "id": "ravel",
    "nom": "Ravel",
-   "version": "0.9.0",
+   "version": "1.27.0",
    "auteur": "De-Pattern",
    "categories": [
     "Grooveboxes"
    ],
    "licence": "GPL-3.0",
-   "beta": true,
+   "beta": false,
    "fichier": null,
-   "sha256": "7a4751e584630089effa07870631faca5c6f00ab0bc34a3a62f57dce2508f6d2",
-   "taille": 609684,
+   "sha256": null,
+   "taille": null,
    "depot": "https://github.com/De-Pattern/Ravel_FM1",
-   "commit_source": "6a7696d75ae4ffaeff21827f973abf2b93771326",
+   "commit_source": "407276ca17e8b2941967d21981542f4001f9d32a",
    "source_c": 66,
-   "description": "Eight-track experimental groovebox with synth, modeled percussion and struck voices. Direct step layers, parameter locks, graph-based playback and track-to-track modulation.",
-   "emulateur_fm1emu": "vérifié",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/ravel-0.9.0.fwsc",
-   "provenance_paquet": "release download/v0.9.0/Ravel-FM1.fwsc",
+   "description": "Eight-track sound-design groovebox with a PPG Wave/Waldorf Microwave-inspired wavetable engine, FM, physical modeling and Machinedrum-style percussion; deep step sequencing, modular WEFT patches and track-to-track modulation.",
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/De-Pattern/Ravel_FM1/releases/download/v1.27.0/Ravel-FM1.fwsc",
+   "provenance_paquet": "Official GitHub release v1.27.0; native browser build from matching tag",
    "natif_seulement": true
   },
   {
