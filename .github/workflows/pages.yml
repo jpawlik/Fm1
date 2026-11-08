@@ -7,6 +7,8 @@ on:
     branches: [main, natif]
     paths:
       - "index.html"
+      - "duo-clock.js"
+      - "duo-sync.js"
       - "engine.js"
       - "assets/**"
       - "firmwares/**"
@@ -18,6 +20,8 @@ on:
     paths:
       - ".github/workflows/pages.yml"
       - "index.html"
+      - "duo-clock.js"
+      - "duo-sync.js"
       - "backup.js"
       - "tests/test_duo.py"
       - "tests/test_backup.py"
@@ -224,7 +228,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site/runtime _site/natif
-          cp index.html engine.js backup.js _site/
+          cp index.html engine.js backup.js duo-clock.js duo-sync.js _site/
           for d in firmwares assets; do [ -d "$d" ] && cp -r "$d" _site/; done
 
           if [ "$REBUILD_RUNTIME" = "true" ]; then
@@ -247,6 +251,8 @@ jobs:
           fi
 
           test -s _site/backup.js
+          test -s _site/duo-clock.js
+          test -s _site/duo-sync.js
           test -s _site/runtime/fm1_web.wasm
           test -s _site/runtime/worklet.js
           test -s _site/runtime/persistence.js
