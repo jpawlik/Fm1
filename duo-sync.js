@@ -162,6 +162,7 @@
     tick();
     return { frames, show, tick,
       get linked() { return linked; }, get playing() { return playing; }, get bpm() { return bpm; },
+      get sampleRate() { return ctx?.sampleRate || 0; },
       get stats() { return { ...stats, frames: [...stats.frames], arrivals: [...stats.arrivals] }; }
     };
   };
