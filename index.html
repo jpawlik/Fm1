@@ -2217,7 +2217,7 @@ class NativeFirmware {
     this.perKey = this.dialect === "sim" || this.dialect === "monk" || this.m2k;
     this.dinghy = this.dialect === "sim" || this.dialect === "mel";
     this.basePixels = this.dialect === "base";  // fm1-base publishes host-order RGB565 pixels
-    this.potMax = this.x0x ? 4096 : 1023;
+    this.potMax = this.x0x || this.dialect === "base" ? 4096 : 1023;
     this.pot = Math.round((va.G.master ?? 0.88) * 1023);
     this.off = document.createElement("canvas"); this.off.width = this.off.height = 240;
     this.img = this.off.getContext("2d").createImageData(240, 240);
