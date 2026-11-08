@@ -7,6 +7,8 @@ on:
     branches: [main, natif]
     paths:
       - "index.html"
+      - "duo-clock.js"
+      - "duo-sync.js"
       - "engine.js"
       - "assets/**"
       - "firmwares/**"
@@ -18,8 +20,13 @@ on:
     paths:
       - ".github/workflows/pages.yml"
       - "index.html"
+      - "duo-clock.js"
+      - "duo-sync.js"
       - "backup.js"
       - "tests/test_duo.py"
+      - "tests/test_duo_host.py"
+      - "tests/test_duo_webkit.py"
+      - "tests/conftest.py"
       - "tests/test_backup.py"
       - "tools/**"
   workflow_dispatch:
@@ -224,7 +231,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site/runtime _site/natif
-          cp index.html engine.js backup.js _site/
+          cp index.html engine.js backup.js duo-clock.js duo-sync.js _site/
           for d in firmwares assets; do [ -d "$d" ] && cp -r "$d" _site/; done
 
           if [ "$REBUILD_RUNTIME" = "true" ]; then
@@ -247,6 +254,8 @@ jobs:
           fi
 
           test -s _site/backup.js
+          test -s _site/duo-clock.js
+          test -s _site/duo-sync.js
           test -s _site/runtime/fm1_web.wasm
           test -s _site/runtime/worklet.js
           test -s _site/runtime/persistence.js
@@ -296,7 +305,9 @@ jobs:
     needs: [plan, build]
     if: ${{ !cancelled() && needs.build.result == 'success' && (github.event_name == 'pull_request' || needs.plan.outputs.native == 'true' || needs.plan.outputs.runtime == 'true') }}
     runs-on: ubuntu-latest
-    continue-on-error: true
+    # A failing sync/backup regression must block merging the PR; retain the
+    # historical non-blocking firmware-compatibility annotations on main.
+    continue-on-error: ${{ github.event_name != 'pull_request' }}
     defaults:
       run:
         shell: bash
@@ -312,13 +323,13 @@ jobs:
       - name: Browser test dependencies
         run: |
           pip install pytest playwright
-          python -m playwright install --with-deps chromium
+          python -m playwright install --with-deps chromium webkit
       - name: Prepare native firmwares for browser tests
         if: github.event_name == 'pull_request' || needs.plan.outputs.native == 'true'
         run: tar -xzf natif.tar.gz
       - name: Duo MIDI clock and regression tests
         if: github.event_name == 'pull_request'
-        run: python -m pytest -q tests/test_duo.py tests/test_backup.py
+        run: python -m pytest -q tests/test_duo.py tests/test_duo_host.py tests/test_backup.py tests/test_duo_webkit.py
       - name: Démarrage des firmwares natifs
         if: needs.plan.outputs.native == 'true'
         run: |

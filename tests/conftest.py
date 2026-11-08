@@ -15,11 +15,18 @@ def base_url():
 
 
 @pytest.fixture(scope="session")
-def browser():
+def playwright_runtime():
+    # One shared event loop for Chromium and WebKit: nesting sync_playwright()
+    # inside an already-running Sync API fixture raises an asyncio-loop error.
     with sync_playwright() as p:
-        b = p.chromium.launch(args=["--autoplay-policy=no-user-gesture-required"])
-        yield b
-        b.close()
+        yield p
+
+
+@pytest.fixture(scope="session")
+def browser(playwright_runtime):
+    b = playwright_runtime.chromium.launch(args=["--autoplay-policy=no-user-gesture-required"])
+    yield b
+    b.close()
 
 
 @pytest.fixture
