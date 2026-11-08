@@ -119,6 +119,37 @@ def test_x0x_store_kept(page):
     assert page.evaluate("window.__engine().lastLoadSectors[3][0]") == 9
 
 
+
+def test_granular_natives_make_sound(page):
+    """ECHOFIELD and GRAINE must make actual audio, not merely display a boot splash."""
+    power_on(page)
+    page.set_default_timeout(30000)
+    for fid in ("echofield", "graine"):
+        assert use(page, fid) is True
+        assert page.evaluate("window.__engine().kind") == "natif"
+        page.wait_for_timeout(2000)
+        assert lit_pixels(page) > 500, fid
+        page.evaluate("window.__host.keyDown(12, 'granular')")
+        page.wait_for_timeout(900)
+        level = rms(page)
+        page.evaluate("window.__host.keyUp('granular')")
+        assert level > 0.0002, (fid, level)
+
+
+def test_base_native_capture_area_restored(page):
+    """The optional fm1-base data part is stored independently of preset objects."""
+    power_on(page)
+    page.set_default_timeout(30000)
+    assert use(page, "graine") is True
+    page.evaluate("""() => window.__engine().onWorklet({
+        data: { type: 'app', part: 'data', data: Uint8Array.of(17, 34, 51).buffer }
+    })""")
+    page.wait_for_function("window.__engine().pendingSave === null", timeout=5000)
+    power_on(page)
+    assert use(page, "graine") is True
+    assert page.evaluate("new Uint8Array(window.__engine().extraData)[0]") == 17
+
+
 def test_every_native_boots(page):
     """Chaque firmware de natif/manifest.json démarre et dessine son écran."""
     import json, os
@@ -133,7 +164,11 @@ def test_every_native_boots(page):
         for _ in range(10):                         # jusqu'à 5 s : un écran de démarrage sombre (386DX) s'allume plus tard
             page.wait_for_timeout(500)
             if lit_pixels(page) >= 500: break
-        else: bad.append((i, "écran"))
+        else:
+            diag = page.evaluate("""() => { const e = window.__engine();
+              return { node: !!e.node, on: e.on, failure: e.failure, fb: e.fb?.length || 0,
+                context: e.ac?.state, load: e.load, error: String(e.bootError || "") }; }""")
+            bad.append((i, "écran", diag))
     assert not bad, bad
 
 

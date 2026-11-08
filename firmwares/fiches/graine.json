@@ -1,0 +1,102 @@
+{
+ "id": "graine",
+ "resume": "Six-voice granular instrument with synthesized sources, captured samples, LFO/envelope modulation, pitch and time shifting, rhythmic gestures, delay and reverb. SEQ is a performance TAPIS, not a conventional note sequencer.",
+ "commandes": [
+  {
+   "commande": "OCT-",
+   "role": "Lower keyboard octave or cancel a confirmation."
+  },
+  {
+   "commande": "OCT+",
+   "role": "Raise octave or confirm a save."
+  },
+  {
+   "commande": "FX",
+   "role": "Filter, echo, space, halo and texture pages."
+  },
+  {
+   "commande": "SEL",
+   "role": "Select sources and playhead sweep."
+  },
+  {
+   "commande": "ENV",
+   "role": "Envelope pages; hold while turning a knob to add envelope modulation."
+  },
+  {
+   "commande": "LFO",
+   "role": "LFO pages; hold while turning a knob to add LFO modulation."
+  },
+  {
+   "commande": "EDIT",
+   "role": "Grain, texture, drone and chaos pages."
+  },
+  {
+   "commande": "GLO",
+   "role": "Global tempo and clock, capture and randomization controls."
+  },
+  {
+   "commande": "HOME",
+   "role": "Cloud view and performance; hold to freeze the playhead."
+  },
+  {
+   "commande": "SAVE",
+   "role": "Save the current patch into a chosen preset slot."
+  },
+  {
+   "commande": "ARP",
+   "role": "Arpeggiator and rhythmic rain modes."
+  },
+  {
+   "commande": "SEQ",
+   "role": "Toggle TAPIS, making white keys sample positions and black keys performance pads."
+  },
+  {
+   "commande": "PLAY",
+   "role": "Start or stop the clock used for rhythmic effects."
+  },
+  {
+   "commande": "REC",
+   "role": "Capture the sound; hold and turn a knob to record a looping gesture."
+  },
+  {
+   "commande": "MASTER",
+   "role": "Overall output level."
+  },
+  {
+   "commande": "SELECT",
+   "role": "Choose a sound source."
+  },
+  {
+   "commande": "PRESETS",
+   "role": "Choose among available factory and user presets."
+  },
+  {
+   "commande": "ALGORITHM",
+   "role": "Adjust playback speed, including reverse and frozen-position settings."
+  },
+  {
+   "commande": "Touches",
+   "role": "Play notes or, in TAPIS, select sample positions and temporary granular effects."
+  }
+ ],
+ "gestes": [
+  "Hold LFO or ENV and turn one of the four knobs to modulate that destination.",
+  "Toggle SEQ: sixteen white keys become sample positions and eleven black keys become performance effects.",
+  "Press REC to capture the current output or hold REC while turning a knob to record its movement."
+ ],
+ "modes": [
+  {
+   "nom": "TAPIS",
+   "texte": "The keyboard acts as a playable sample map and performance pad bank, rather than an ordinary step sequencer."
+  }
+ ],
+ "a_savoir": [
+  "This build pins the public 0.2 development snapshot; upstream has not published a tagged stable 0.2 release.",
+  "Captured sound and other saved data may be affected by the FM-1 app's known Power Off persistence bug."
+ ],
+ "source": {
+  "url": "https://github.com/Omnipotard/Granular-FM1/blob/40a9a99abfbd03b3c837c98fdea2fab50c169ed3/app/docs/MANUAL.md",
+  "commit": "40a9a99abfbd03b3c837c98fdea2fab50c169ed3"
+ },
+ "d_apres_le_code": false
+}

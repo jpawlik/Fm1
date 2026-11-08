@@ -69,6 +69,11 @@ else echec "protocole du worklet inconnu ($(basename "$WORKLET"))"; fi
 D="$OUT/$ID"; mkdir -p "$D"
 cp "$WASM" "$D/"
 cp "$WORKLET" "$D/worklet.js"
+# LOOM uses an upstream fm1-base worklet with no app-specific callbacks.
+# Avoid inheriting callbacks left by another firmware in the AudioWorkletGlobalScope.
+if [ "$ID" = "loom" ]; then
+  sed -i '1i globalThis.fm1App = {};' "$D/worklet.js"
+fi
 # les modules que le worklet importe à côté de lui (import … from "./x.js"), sur deux niveaux
 for f in "$WORKLET" $(grep -oE "from \"\./[^\"]+\.js\"" "$WORKLET" | sed -E 's/from "\.\/(.*)"/\1/' | sed "s#^#$(dirname "$WORKLET")/#"); do
   for m in $(grep -oE "from \"\./[^\"]+\.js\"" "$f" | sed -E 's/from "\.\/(.*)"/\1/'); do

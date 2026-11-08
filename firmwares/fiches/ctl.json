@@ -88,8 +88,8 @@
   "Le fichier ctl-usb a le même contenu sans le Bluetooth."
  ],
  "source": {
-  "url": "https://github.com/charlesvestal/fm1-ctl/blob/c3c2a7e51f3d14dd7a94f8b3775e838f097ec367/README.md",
-  "commit": "c3c2a7e51f3d14dd7a94f8b3775e838f097ec367"
+  "url": "https://github.com/charlesvestal/fm1-ctl/blob/9bb5abcc6ef6e0af803a868ecda166e76e90d8d6/README.md",
+  "commit": "9bb5abcc6ef6e0af803a868ecda166e76e90d8d6"
  },
  "d_apres_le_code": false
 }

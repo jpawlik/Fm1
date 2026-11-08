@@ -90,8 +90,8 @@
   "Une deuxième voie de calcul (2ND CORE) est en bêta et désactivée par défaut : MENU > SYSTEM > 2ND CORE."
  ],
  "source": {
-  "url": "https://github.com/hugelton/Felucca/blob/a53ecf428c29c780108fd70a31b71a32a6b5c313/README.md",
-  "commit": "a53ecf428c29c780108fd70a31b71a32a6b5c313"
+  "url": "https://github.com/hugelton/Felucca/blob/d7b1b7c4099bba28854869ddb256b3d9f634cee8/README.md",
+  "commit": "d7b1b7c4099bba28854869ddb256b3d9f634cee8"
  },
  "d_apres_le_code": false
 }

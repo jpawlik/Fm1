@@ -2,24 +2,78 @@
  "id": "mono2k",
  "resume": "Petit Monomachine : six machines mono, un séquenceur de 64 pas avec verrouillage de paramètres, conditions de déclenchement et ratchets, et un bus lo-fi qui casse le son. L'écran est en 1 bit.",
  "commandes": [
-  { "commande": "OCT-", "role": "Octave de la track affichée ; en GRID, la page de pas. Dans une question, répond non." },
-  { "commande": "OCT+", "role": "Octave de la track affichée ; en GRID, la page de pas. Dans une question, répond oui." },
-  { "commande": "FX", "role": "Page FX ; maintenu, PERFORM : les effets du bus sur les touches noires." },
-  { "commande": "SEL", "role": "Page FILT : les filtres." },
-  { "commande": "ENV", "role": "Page AMP : enveloppe d'amplitude, distorsion, volume, pan, portamento." },
-  { "commande": "LFO", "role": "Trois LFO ; maintenu, les boutons reviennent à leur valeur au relâchement." },
-  { "commande": "EDIT", "role": "Page SYN : la machine de la track ; maintenu, le son de la track." },
-  { "commande": "GLO", "role": "Page GLO ; maintenu, fonctions d'édition (copier, coller, effacer, recharger, mutes)." },
-  { "commande": "HOME", "role": "Le motif en six lignes ; maintenu, choisit les patterns et les banques." },
-  { "commande": "SAVE", "role": "Garde le pattern ; maintenu, garde le projet." },
-  { "commande": "ARP", "role": "Arpégiateur de la track." },
-  { "commande": "SEQ", "role": "GRID : les touches deviennent les pas ; maintenu, outils de pas." },
-  { "commande": "PLAY", "role": "Lance et arrête." },
-  { "commande": "REC", "role": "Arme l'enregistrement (en direct pendant la lecture, pas à pas à l'arrêt) ; maintenu, FILL." },
-  { "commande": "MASTER", "role": "Volume ; avec un pas maintenu en GRID, son type de déclenchement." },
-  { "commande": "SELECT", "role": "Choisit la track (1 à 6) ; avec un pas maintenu, sa note." },
-  { "commande": "PRESETS", "role": "Choisit le pattern (mis en file jusqu'à la fin de la mesure en lecture) ; avec un pas maintenu, sa condition." },
-  { "commande": "ALGORITHM", "role": "Sur EDIT, change la machine de la track ; ailleurs, change de page ; avec un pas maintenu, accent et glissando." }
+  {
+   "commande": "OCT-",
+   "role": "Octave de la track affichée ; en GRID, la page de pas. Dans une question, répond non."
+  },
+  {
+   "commande": "OCT+",
+   "role": "Octave de la track affichée ; en GRID, la page de pas. Dans une question, répond oui."
+  },
+  {
+   "commande": "FX",
+   "role": "Page FX ; maintenu, PERFORM : les effets du bus sur les touches noires."
+  },
+  {
+   "commande": "SEL",
+   "role": "Page FILT : les filtres."
+  },
+  {
+   "commande": "ENV",
+   "role": "Page AMP : enveloppe d'amplitude, distorsion, volume, pan, portamento."
+  },
+  {
+   "commande": "LFO",
+   "role": "Trois LFO ; maintenu, les boutons reviennent à leur valeur au relâchement."
+  },
+  {
+   "commande": "EDIT",
+   "role": "Page SYN : la machine de la track ; maintenu, le son de la track."
+  },
+  {
+   "commande": "GLO",
+   "role": "Page GLO ; maintenu, fonctions d'édition (copier, coller, effacer, recharger, mutes)."
+  },
+  {
+   "commande": "HOME",
+   "role": "Le motif en six lignes ; maintenu, choisit les patterns et les banques."
+  },
+  {
+   "commande": "SAVE",
+   "role": "Garde le pattern ; maintenu, garde le projet."
+  },
+  {
+   "commande": "ARP",
+   "role": "Arpégiateur de la track."
+  },
+  {
+   "commande": "SEQ",
+   "role": "GRID : les touches deviennent les pas ; maintenu, outils de pas."
+  },
+  {
+   "commande": "PLAY",
+   "role": "Lance et arrête."
+  },
+  {
+   "commande": "REC",
+   "role": "Arme l'enregistrement (en direct pendant la lecture, pas à pas à l'arrêt) ; maintenu, FILL."
+  },
+  {
+   "commande": "MASTER",
+   "role": "Volume ; avec un pas maintenu en GRID, son type de déclenchement."
+  },
+  {
+   "commande": "SELECT",
+   "role": "Choisit la track (1 à 6) ; avec un pas maintenu, sa note."
+  },
+  {
+   "commande": "PRESETS",
+   "role": "Choisit le pattern (mis en file jusqu'à la fin de la mesure en lecture) ; avec un pas maintenu, sa condition."
+  },
+  {
+   "commande": "ALGORITHM",
+   "role": "Sur EDIT, change la machine de la track ; ailleurs, change de page ; avec un pas maintenu, accent et glissando."
+  }
  ],
  "gestes": [
   "REC copie, PLAY colle, SEQ efface ; le bouton maintenu dit quoi (GLO le pattern, HOME les patterns choisis, EDIT le son de la track).",
@@ -32,8 +86,8 @@
   "Il ne lit pas les projets, presets ou échantillons des autres firmwares, et sa première sauvegarde écrase ce qu'un autre firmware gardait dans cette zone."
  ],
  "source": {
-  "url": "https://github.com/InigoHernandez/mono2k/blob/b52d67703d4728c176c685c27d213f0c4da52232/web/manual.html",
-  "commit": "b52d67703d4728c176c685c27d213f0c4da52232"
+  "url": "https://github.com/InigoHernandez/mono2k/blob/b443b00ae5b6f15b01eda3e0ad7d5292761a0b53/web/manual.html",
+  "commit": "b443b00ae5b6f15b01eda3e0ad7d5292761a0b53"
  },
  "d_apres_le_code": false
 }

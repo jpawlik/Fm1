@@ -1,50 +1,119 @@
 {
-  "id": "chipbox",
-  "resume": "Groovebox chiptune qui reproduit plus de 35 puces sonores (NES, Game Boy, Master System, Mega Drive, SID et d'autres). Jusqu'à 16 canaux, des pages de 16 pas, des batteries propres à chaque puce, un mode chanson, des effets en direct et 12 emplacements de projet.",
-  "commandes": [
-    { "commande": "OCT-", "role": "Descend les touches d'une octave (deux octaves au plus). Dans le choix d'une console, revient d'un cran ; dans SONG, supprime la case ; dans les projets, revient en arrière." },
-    { "commande": "OCT+", "role": "Monte les touches d'une octave (deux au plus). Ajoute un canal sur la ligne +, ajoute une case dans SONG, ouvre un projet dans la vue des projets." },
-    { "commande": "FX", "role": "Transforme les 16 touches blanches en pads d'effets (TAPE, RPT, LPF, HPF, ECHO, VERB, CRSH, DECI, GATE, DIVE, WOB, SOLO, KILL, HOLD)." },
-    { "commande": "SEL", "role": "Ouvre la fiche d'une console au choix d'un canal. Maintenu sur un canal, le copie (le patch seul, ou le patch et les notes) ; maintenu sur un projet, le copie dans la première case vide." },
-    { "commande": "ENV", "role": "Sur les lignes de batterie, maintenu en appuyant sur une touche blanche, pose un accent (coup plus fort) ; sur un coup déjà posé, l'accent s'allume ou s'éteint." },
-    { "commande": "LFO", "role": "Annule le dernier changement (six annulations au plus, pas de rétablissement)." },
-    { "commande": "EDIT", "role": "Efface le bloc sous le curseur en saisie par pas, ou la batterie choisie sur la page. Maintenu sur un canal, le supprime ; maintenu en enregistrement, efface les notes que la tête de lecture croise ; dans SONG, un appui ouvre la page de la case, maintenu la copie ; maintenu sur un projet, le supprime." },
-    { "commande": "GLO", "role": "Affiche l'aide de la vue en cours. GLO + HOME ouvre le menu (qui contient Factory Reset)." },
-    { "commande": "HOME", "role": "Passe d'une vue à l'autre : RACK, CHIP, SONG. Revient en arrière dans un sous-menu. Maintenu, ouvre la vue des projets." },
-    { "commande": "SAVE", "role": "Force la sauvegarde. Les projets se sauvent seuls quand rien ne joue ; le voyant SAVE reste allumé tant que des changements ne sont pas gardés." },
-    { "commande": "ARP", "role": "Dans le RACK, montre ou cache les queues de notes (la ligne sous une note longue)." },
-    { "commande": "SEQ", "role": "Ouvre la saisie par pas d'un canal : la page en 16 blocs, ou les lignes de batterie pour un canal de batterie." },
-    { "commande": "PLAY", "role": "Joue la chanson à partir de la page en cours ; maintenu, boucle seulement la page. Dans SONG, joue à partir de la case. En saisie par pas, boucle la page." },
-    { "commande": "REC", "role": "Boucle la page et lance l'enregistrement : une touche tombe sur le pas le plus proche de la tête de lecture, et la maintenir donne la longueur de la note. La batterie ne s'enregistre pas en direct." },
-    { "commande": "SELECT", "role": "Dans le RACK, c'est le cadran de bande : à droite on joue (demi-vitesse, vitesse normale, double), à gauche on joue à l'envers, au milieu c'est la pause. Bande arrêtée, il déplace le curseur. Dans SONG et la saisie par pas, il déplace le curseur ; sur le pad TAPE, il pilote la bande." },
-    { "commande": "PRESETS", "role": "Choisit le canal dans RACK, CHIP et STEP. Sur la ligne + du RACK, prépare l'ajout d'un canal. Dans SONG, change la page de la case. Dans les projets, déplace entre les cases." },
-    { "commande": "ALGORITHM", "role": "Dans le RACK, tourne les pages ; dans CHIP, tourne les pages de cartes." },
-    { "commande": "Touches", "role": "Écrivent la note sous le curseur quand la bande est arrêtée (la même touche la retire). Dans les lignes de batterie, les 16 touches blanches sont les 16 pas et les touches noires changent la batterie du kit. Les molettes 1 à 4 règlent les quatre cartes de CHIP ; dans le RACK, la molette 1 règle le tempo (40 à 240) et la molette 2 la longueur d'une note." }
-  ],
-  "gestes": [
-    "HOME maintenu : vue des projets.",
-    "GLO + HOME : menu.",
-    "PLAY maintenu : boucle la page en cours.",
-    "SEQ puis une touche : pose le bloc et avance d'un pas.",
-    "ENV maintenu + une touche blanche (lignes de batterie) : accent.",
-    "SEL maintenu sur un canal : copie. EDIT maintenu sur un canal : suppression.",
-    "LFO : annule."
-  ],
-  "modes": [
-    { "nom": "RACK, CHIP, SONG", "texte": "Trois vues, que HOME fait défiler. RACK montre les canaux de la page (une page = 16 pas = une mesure). CHIP règle le patch du canal choisi, en pages de quatre cartes : le son, l'enveloppe ATK DEC SUS REL, l'arpège, et pour les canaux à onde SHAPE FOLD STEP TWIST. SONG est la suite des pages, jusqu'à 128 cases." },
-    { "nom": "Ajouter un canal", "texte": "Dans le RACK, choisir la ligne + avec PRESETS, appuyer sur OCT+, choisir une console puis un canal. Jouer sur les touches fait entendre la console avant de l'ajouter. La molette 1 groupe les consoles par type, année, fabricant ou pays." },
-    { "nom": "Saisie par pas", "texte": "SEQ ouvre la page en 16 blocs. Une touche pose le bloc sous le curseur et passe au suivant ; SELECT déplace le curseur pour laisser des silences ; la molette 2 règle la longueur de la note." },
-    { "nom": "Effets (FX)", "texte": "Les pads agissent tant qu'on les tient ; HOLD les garde allumés après relâchement. SOLO joue seulement le canal choisi, KILL coupe tout." },
-    { "nom": "Projets", "texte": "HOME maintenu ouvre douze cases : les deux premières sont des démos qui ne se sauvent pas, il faut les copier avant de les modifier. Une case vide ouvre un nouveau projet." }
-  ],
-  "a_savoir": [
-    "Limites annoncées : 16 canaux, 64 pages, 128 cases de chanson, 10 projets en plus des 2 démos, environ 2000 notes par projet.",
-    "Le bouton LFO sert ici d'annulation et le bouton FX d'effets en direct, pas aux fonctions imprimées sur le panneau.",
-    "Pour réparer un FM-1 bloqué, la doc dit de maintenir OCT- au branchement et d'utiliser la page d'installation."
-  ],
-  "source": {
-    "url": "https://github.com/pbarilla/chipbox/blob/48510318cffe4db2a5ceccfc153a65dcd6c8d6ff/site/guide/index.html",
-    "commit": "48510318cffe4db2a5ceccfc153a65dcd6c8d6ff"
+ "id": "chipbox",
+ "resume": "Groovebox chiptune qui reproduit plus de 35 puces sonores (NES, Game Boy, Master System, Mega Drive, SID et d'autres). Jusqu'à 16 canaux, des pages de 16 pas, des batteries propres à chaque puce, un mode chanson, des effets en direct et 12 emplacements de projet.",
+ "commandes": [
+  {
+   "commande": "OCT-",
+   "role": "Descend les touches d'une octave (deux octaves au plus). Dans le choix d'une console, revient d'un cran ; dans SONG, supprime la case ; dans les projets, revient en arrière."
   },
-  "d_apres_le_code": false
+  {
+   "commande": "OCT+",
+   "role": "Monte les touches d'une octave (deux au plus). Ajoute un canal sur la ligne +, ajoute une case dans SONG, ouvre un projet dans la vue des projets."
+  },
+  {
+   "commande": "FX",
+   "role": "Transforme les 16 touches blanches en pads d'effets (TAPE, RPT, LPF, HPF, ECHO, VERB, CRSH, DECI, GATE, DIVE, WOB, SOLO, KILL, HOLD)."
+  },
+  {
+   "commande": "SEL",
+   "role": "Ouvre la fiche d'une console au choix d'un canal. Maintenu sur un canal, le copie (le patch seul, ou le patch et les notes) ; maintenu sur un projet, le copie dans la première case vide."
+  },
+  {
+   "commande": "ENV",
+   "role": "Sur les lignes de batterie, maintenu en appuyant sur une touche blanche, pose un accent (coup plus fort) ; sur un coup déjà posé, l'accent s'allume ou s'éteint."
+  },
+  {
+   "commande": "LFO",
+   "role": "Annule le dernier changement (six annulations au plus, pas de rétablissement)."
+  },
+  {
+   "commande": "EDIT",
+   "role": "Efface le bloc sous le curseur en saisie par pas, ou la batterie choisie sur la page. Maintenu sur un canal, le supprime ; maintenu en enregistrement, efface les notes que la tête de lecture croise ; dans SONG, un appui ouvre la page de la case, maintenu la copie ; maintenu sur un projet, le supprime."
+  },
+  {
+   "commande": "GLO",
+   "role": "Affiche l'aide de la vue en cours. GLO + HOME ouvre le menu (qui contient Factory Reset)."
+  },
+  {
+   "commande": "HOME",
+   "role": "Passe d'une vue à l'autre : RACK, CHIP, SONG. Revient en arrière dans un sous-menu. Maintenu, ouvre la vue des projets."
+  },
+  {
+   "commande": "SAVE",
+   "role": "Force la sauvegarde. Les projets se sauvent seuls quand rien ne joue ; le voyant SAVE reste allumé tant que des changements ne sont pas gardés."
+  },
+  {
+   "commande": "ARP",
+   "role": "Dans le RACK, montre ou cache les queues de notes (la ligne sous une note longue)."
+  },
+  {
+   "commande": "SEQ",
+   "role": "Ouvre la saisie par pas d'un canal : la page en 16 blocs, ou les lignes de batterie pour un canal de batterie."
+  },
+  {
+   "commande": "PLAY",
+   "role": "Joue la chanson à partir de la page en cours ; maintenu, boucle seulement la page. Dans SONG, joue à partir de la case. En saisie par pas, boucle la page."
+  },
+  {
+   "commande": "REC",
+   "role": "Boucle la page et lance l'enregistrement : une touche tombe sur le pas le plus proche de la tête de lecture, et la maintenir donne la longueur de la note. La batterie ne s'enregistre pas en direct."
+  },
+  {
+   "commande": "SELECT",
+   "role": "Dans le RACK, c'est le cadran de bande : à droite on joue (demi-vitesse, vitesse normale, double), à gauche on joue à l'envers, au milieu c'est la pause. Bande arrêtée, il déplace le curseur. Dans SONG et la saisie par pas, il déplace le curseur ; sur le pad TAPE, il pilote la bande."
+  },
+  {
+   "commande": "PRESETS",
+   "role": "Choisit le canal dans RACK, CHIP et STEP. Sur la ligne + du RACK, prépare l'ajout d'un canal. Dans SONG, change la page de la case. Dans les projets, déplace entre les cases."
+  },
+  {
+   "commande": "ALGORITHM",
+   "role": "Dans le RACK, tourne les pages ; dans CHIP, tourne les pages de cartes."
+  },
+  {
+   "commande": "Touches",
+   "role": "Écrivent la note sous le curseur quand la bande est arrêtée (la même touche la retire). Dans les lignes de batterie, les 16 touches blanches sont les 16 pas et les touches noires changent la batterie du kit. Les molettes 1 à 4 règlent les quatre cartes de CHIP ; dans le RACK, la molette 1 règle le tempo (40 à 240) et la molette 2 la longueur d'une note."
+  }
+ ],
+ "gestes": [
+  "HOME maintenu : vue des projets.",
+  "GLO + HOME : menu.",
+  "PLAY maintenu : boucle la page en cours.",
+  "SEQ puis une touche : pose le bloc et avance d'un pas.",
+  "ENV maintenu + une touche blanche (lignes de batterie) : accent.",
+  "SEL maintenu sur un canal : copie. EDIT maintenu sur un canal : suppression.",
+  "LFO : annule."
+ ],
+ "modes": [
+  {
+   "nom": "RACK, CHIP, SONG",
+   "texte": "Trois vues, que HOME fait défiler. RACK montre les canaux de la page (une page = 16 pas = une mesure). CHIP règle le patch du canal choisi, en pages de quatre cartes : le son, l'enveloppe ATK DEC SUS REL, l'arpège, et pour les canaux à onde SHAPE FOLD STEP TWIST. SONG est la suite des pages, jusqu'à 128 cases."
+  },
+  {
+   "nom": "Ajouter un canal",
+   "texte": "Dans le RACK, choisir la ligne + avec PRESETS, appuyer sur OCT+, choisir une console puis un canal. Jouer sur les touches fait entendre la console avant de l'ajouter. La molette 1 groupe les consoles par type, année, fabricant ou pays."
+  },
+  {
+   "nom": "Saisie par pas",
+   "texte": "SEQ ouvre la page en 16 blocs. Une touche pose le bloc sous le curseur et passe au suivant ; SELECT déplace le curseur pour laisser des silences ; la molette 2 règle la longueur de la note."
+  },
+  {
+   "nom": "Effets (FX)",
+   "texte": "Les pads agissent tant qu'on les tient ; HOLD les garde allumés après relâchement. SOLO joue seulement le canal choisi, KILL coupe tout."
+  },
+  {
+   "nom": "Projets",
+   "texte": "HOME maintenu ouvre douze cases : les deux premières sont des démos qui ne se sauvent pas, il faut les copier avant de les modifier. Une case vide ouvre un nouveau projet."
+  }
+ ],
+ "a_savoir": [
+  "Limites annoncées : 16 canaux, 64 pages, 128 cases de chanson, 10 projets en plus des 2 démos, environ 2000 notes par projet.",
+  "Le bouton LFO sert ici d'annulation et le bouton FX d'effets en direct, pas aux fonctions imprimées sur le panneau.",
+  "Pour réparer un FM-1 bloqué, la doc dit de maintenir OCT- au branchement et d'utiliser la page d'installation."
+ ],
+ "source": {
+  "url": "https://github.com/pbarilla/chipbox/blob/6fdbc9855361d15ce44065c4e2ef6308de568587/site/guide/index.html",
+  "commit": "6fdbc9855361d15ce44065c4e2ef6308de568587"
+ },
+ "d_apres_le_code": false
 }

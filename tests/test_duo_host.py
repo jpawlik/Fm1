@@ -103,10 +103,12 @@ def test_cpu_emulator_receives_host_clock_via_virtual_trs(page):
     power(a)
     power(b)
     native(b, "felucca")
-    a.wait_for_function("window.__catalogue && window.__catalogue.some(e => e.id === 'hortator')")
+    a.wait_for_function("window.__catalogue && window.__catalogue.some(e => e.id === 'sloop' && e.fichier)")
+    # SLOOP remains an actual CPU-emulated .fwsc. Hortator is native-only in
+    # the curated catalogue and no longer ships a bundled .fwsc package.
     ok = a.evaluate("""() => {
-      const e = window.__catalogue.find(e => e.id === 'hortator');
-      return window.__useEngine({ ...e, natif: null, natif_wasm: null });
+      const e = window.__catalogue.find(e => e.id === 'sloop');
+      return window.__useEngine(e);
     }""")
     assert ok
     a.wait_for_function("window.__engine().kind === 'emu'", timeout=20000)

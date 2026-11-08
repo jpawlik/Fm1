@@ -1,59 +1,146 @@
 {
-  "id": "sloop",
-  "resume": "Groove box de jeu en direct à quatre pistes : trois synthés et une piste de batterie de seize sons. Chaque bouton a deux vies : un appui ouvre ses pages, un appui maintenu ouvre une couche où les touches et les boutons changent de rôle.",
-  "commandes": [
-    { "commande": "OCT-", "role": "Piste synthé : descend d'une octave (de moins 3 à plus 3). Piste de batterie : maintenu, joue des coups fantômes. Avec EDIT maintenu, annule." },
-    { "commande": "OCT+", "role": "Piste synthé : monte d'une octave. Piste de batterie : maintenu, joue des coups forts. Avec EDIT maintenu, rétablit. Les deux ensemble : octave 0." },
-    { "commande": "FX", "role": "Appui : pages d'effets (FX, FILTER, SLICER, DLY, REV/CHO). Maintenu : couche punch, un effet joue tant que la touche est tenue." },
-    { "commande": "SEL", "role": "Appui : pages SEL et SEL 2. Maintenu : couche tonalité et accords (touche = tonalité du morceau). Ce n'est pas le bouton rotatif SELECT." },
-    { "commande": "ENV", "role": "Ouvre les pages ENV et ENV DEST. Pas de couche." },
-    { "commande": "LFO", "role": "Ouvre les pages LFO et LFO DEST. Pas de couche." },
-    { "commande": "EDIT", "role": "Appui : pages du moteur (EDIT 1, EDIT 2, VOICE, VOICE 2) ; sur TRACKS avec la batterie, écran DRUMS. Maintenu : couche d'effacement." },
-    { "commande": "GLO", "role": "Appui : pages globales (GLOBAL, MASTER, SYSTEM, DRUMS). Maintenu : couche mix." },
-    { "commande": "HOME", "role": "Appui : écran TRACKS ; sur TRACKS, le visualiseur. Maintenu 0,7 s : le menu. Appuyé pendant qu'une couche est tenue, la verrouille ouverte." },
-    { "commande": "SAVE", "role": "Appui : sur TRACKS ou DRUMS, l'écran SONG ; ailleurs, les pages de sauvegarde. Maintenu : couche morceau." },
-    { "commande": "ARP", "role": "Appui : pages ARP et ARP 2 (arpégiateur). Maintenu : couche de répétition de note." },
-    { "commande": "SEQ", "role": "Appui : pages STEP, PATTERN, SONG ; avec la batterie, écran DRUMS. Maintenu : couche des pas." },
-    { "commande": "PLAY", "role": "Lance et arrête les quatre pistes (en mode morceau, joue le morceau). Marche aussi dans toutes les couches." },
-    { "commande": "REC", "role": "À l'arrêt, arme ; en lecture, enregistre ou arrête l'enregistrement. Maintenu environ 2 s, efface la piste choisie." },
-    { "commande": "MASTER", "role": "Volume de sortie (casque et ligne)." },
-    { "commande": "SELECT", "role": "Sur TRACKS, dans une couche et sur l'écran REC : le tempo. Sur une page : page précédente ou suivante du bouton." },
-    { "commande": "PRESETS", "role": "Change le son de la piste choisie ; sur la piste de batterie, change le kit." },
-    { "commande": "ALGORITHM", "role": "Choisit la piste 1 à 4, sur tous les écrans." },
-    { "commande": "Touches", "role": "Pistes 1 à 3 : jouent le synthé, avec les réglages KEYS (OFF, SNAP, WHITE) et le mode CHORD. Piste 4 : seize sons de batterie, un par touche blanche. Les touches ne jouent pas quand FX est tenu." },
-    { "commande": "Touches blanches", "role": "Synthé : avec KEYS sur WHITE, parcourent la gamme depuis Do (Do est la fondamentale) ; avec CHORD actif, jouent les accords de la gamme (Do est l'accord I). Batterie : un son par touche. Dans une couche : seize tuiles." },
-    { "commande": "Touches noires", "role": "Batterie : jouent le son de la touche blanche à leur gauche. Avec CHORD actif, changent l'accord : Fa dièse majeur ou mineur, Sol dièse septième, La dièse sus4, Do dièse neuvième, Ré dièse renversement. Couche FX : onze effets de plus. Couche GLO : Fa dièse 3 lance MIDI LEARN." }
-  ],
-  "gestes": [
-    "Un bouton de fonction maintenu, puis HOME : verrouille la couche ouverte ; PLAY, REC, OCT- et OCT+ y marchent encore.",
-    "HOME maintenu : le menu (SCREEN, LIGHTS, AUDIO, SYSTEM).",
-    "REC maintenu environ 2 s : efface la piste choisie.",
-    "OCT- et OCT+ ensemble : octave 0.",
-    "EDIT maintenu + OCT- ou OCT+ : annule ou rétablit.",
-    "GLO maintenu + touche 1 à 4 : coupe une piste ; touche 5 à 8 : solo ; touche 9 : fill tant qu'elle est tenue ; touche 16 : tap tempo.",
-    "SEQ maintenu + un pas tenu + PRESETS : verrou de paramètre sur ce pas ; + ALGORITHM : choisit le paramètre ; + OCT+ : condition de fill ; + OCT- : efface nudge, verrous et condition.",
-    "SAVE maintenu + touche 1 à 4 : joue la section A à D ; plusieurs touches enchaînent. SAVE maintenu + touche 5 à 8 : range la boucle dans la section A à D.",
-    "Allumage avec OCT- tenu : secours USB. Allumage avec OCT- et OCT+ tenus : calibrage du matériel."
-  ],
-  "modes": [
-    { "nom": "Couche FX (punch)", "texte": "Un effet agit sur tout le mix tant que la touche est tenue. KNOB 1 : FILTER général (à gauche un passe-bas, à droite un passe-haut). KNOB 2 : DUST. KNOB 3 : DUCK. KNOB 4 : filtre de la piste choisie. OCT- tenu : REV THROW ; OCT+ tenu : ECHO THROW." },
-    { "nom": "Couche EDIT (effacement)", "texte": "En lecture, une touche tenue efface son son ou sa note de chaque pas que la tête de lecture passe. À l'arrêt, elle l'efface de tout le pattern. KNOB 1 : SHIFT des pas ; KNOB 2 : LENGTH fois 2 ou moitié ; KNOB 3 : TRANSPOSE. Sur la batterie, une touche noire passe en mode MUTE." },
-    { "nom": "Couche ARP (roulement)", "texte": "Une touche tenue se répète sur la grille, calée sur le tempo. KNOB 1 : RATE (1/8, 1/16, 1/32, 32T, 1/64). Ce n'est pas l'arpégiateur, qui est dans les pages d'ARP." },
-    { "nom": "Couche SEQ (pas)", "texte": "Les seize touches blanches sont les seize pas de la page ; un pas vide se pose, un pas posé se retape pour l'effacer. KNOB 1 : son ou note ; KNOB 2 : DIV ; KNOB 3 : SWING ; KNOB 4 : LENGTH (1 à 64). Page de pas suivante : touches noires 1 à 4 ou OCT-/OCT+. Avec un pas tenu : KNOB 2 niveau ou VEL, KNOB 3 RATCHET, KNOB 4 NUDGE." },
-    { "nom": "Couche SEL", "texte": "Une touche donne la tonalité du morceau. KNOB 1 : CHORD (OFF, TRIAD, 7TH, 9TH, SUS4, POWER) ; KNOB 2 : SCALE (16 gammes) ; KNOB 3 : KEYS (OFF, SNAP, WHITE) ; KNOB 4 : TRANSPOSE de la piste." },
-    { "nom": "Couche GLO (mix)", "texte": "KNOB 1 à 4 : niveaux des pistes 1 à 4. SELECT règle le tempo." },
-    { "nom": "Couche SAVE (morceau)", "texte": "Quatre sections A à D. Touche 13 : boucle ou morceau ; touche 14 : SONG REC ; touche 16 : écran SONG." },
-    { "nom": "Moteurs", "texte": "Douze moteurs : ANALOG, DIGITAL, PHASE, LOFI, SAMPLE, VOICE, TRIO, WHEEL, GRAIN, FM6, PHYS, NOISE. Huit paramètres sur EDIT 1 et EDIT 2 (appui une fois puis deux fois sur EDIT, KNOB 1 à 4)." }
-  ],
-  "a_savoir": [
-    "ALGORITHM, ENV et LFO n'ont pas de couche : ENV et LFO n'ouvrent que leurs pages.",
-    "Trois pistes de synthé se partagent huit voix.",
-    "Le FM-1 n'a pas de vélocité : sur la batterie, chaque coup a l'un des quatre niveaux GHOST, SOFT, NORM, HARD.",
-    "Les valeurs GO (LOAD, SAVE, ERASE, NEW, CLRSQ, INIT) demandent deux pressions en 1,5 s environ."
-  ],
-  "source": {
-    "url": "https://github.com/isod89/sloop-fm1/blob/d89364253b79a5c6002c0d90c5f16b3c3c16ea9d/GUIDE.md",
-    "commit": "d89364253b79a5c6002c0d90c5f16b3c3c16ea9d"
+ "id": "sloop",
+ "resume": "Groove box de jeu en direct à quatre pistes : trois synthés et une piste de batterie de seize sons. Chaque bouton a deux vies : un appui ouvre ses pages, un appui maintenu ouvre une couche où les touches et les boutons changent de rôle.",
+ "commandes": [
+  {
+   "commande": "OCT-",
+   "role": "Piste synthé : descend d'une octave (de moins 3 à plus 3). Piste de batterie : maintenu, joue des coups fantômes. Avec EDIT maintenu, annule."
   },
-  "d_apres_le_code": false
+  {
+   "commande": "OCT+",
+   "role": "Piste synthé : monte d'une octave. Piste de batterie : maintenu, joue des coups forts. Avec EDIT maintenu, rétablit. Les deux ensemble : octave 0."
+  },
+  {
+   "commande": "FX",
+   "role": "Appui : pages d'effets (FX, FILTER, SLICER, DLY, REV/CHO). Maintenu : couche punch, un effet joue tant que la touche est tenue."
+  },
+  {
+   "commande": "SEL",
+   "role": "Appui : pages SEL et SEL 2. Maintenu : couche tonalité et accords (touche = tonalité du morceau). Ce n'est pas le bouton rotatif SELECT."
+  },
+  {
+   "commande": "ENV",
+   "role": "Ouvre les pages ENV et ENV DEST. Pas de couche."
+  },
+  {
+   "commande": "LFO",
+   "role": "Ouvre les pages LFO et LFO DEST. Pas de couche."
+  },
+  {
+   "commande": "EDIT",
+   "role": "Appui : pages du moteur (EDIT 1, EDIT 2, VOICE, VOICE 2) ; sur TRACKS avec la batterie, écran DRUMS. Maintenu : couche d'effacement."
+  },
+  {
+   "commande": "GLO",
+   "role": "Appui : pages globales (GLOBAL, MASTER, SYSTEM, DRUMS). Maintenu : couche mix."
+  },
+  {
+   "commande": "HOME",
+   "role": "Appui : écran TRACKS ; sur TRACKS, le visualiseur. Maintenu 0,7 s : le menu. Appuyé pendant qu'une couche est tenue, la verrouille ouverte."
+  },
+  {
+   "commande": "SAVE",
+   "role": "Appui : sur TRACKS ou DRUMS, l'écran SONG ; ailleurs, les pages de sauvegarde. Maintenu : couche morceau."
+  },
+  {
+   "commande": "ARP",
+   "role": "Appui : pages ARP et ARP 2 (arpégiateur). Maintenu : couche de répétition de note."
+  },
+  {
+   "commande": "SEQ",
+   "role": "Appui : pages STEP, PATTERN, SONG ; avec la batterie, écran DRUMS. Maintenu : couche des pas."
+  },
+  {
+   "commande": "PLAY",
+   "role": "Lance et arrête les quatre pistes (en mode morceau, joue le morceau). Marche aussi dans toutes les couches."
+  },
+  {
+   "commande": "REC",
+   "role": "À l'arrêt, arme ; en lecture, enregistre ou arrête l'enregistrement. Maintenu environ 2 s, efface la piste choisie."
+  },
+  {
+   "commande": "MASTER",
+   "role": "Volume de sortie (casque et ligne)."
+  },
+  {
+   "commande": "SELECT",
+   "role": "Sur TRACKS, dans une couche et sur l'écran REC : le tempo. Sur une page : page précédente ou suivante du bouton."
+  },
+  {
+   "commande": "PRESETS",
+   "role": "Change le son de la piste choisie ; sur la piste de batterie, change le kit."
+  },
+  {
+   "commande": "ALGORITHM",
+   "role": "Choisit la piste 1 à 4, sur tous les écrans."
+  },
+  {
+   "commande": "Touches",
+   "role": "Pistes 1 à 3 : jouent le synthé, avec les réglages KEYS (OFF, SNAP, WHITE) et le mode CHORD. Piste 4 : seize sons de batterie, un par touche blanche. Les touches ne jouent pas quand FX est tenu."
+  },
+  {
+   "commande": "Touches blanches",
+   "role": "Synthé : avec KEYS sur WHITE, parcourent la gamme depuis Do (Do est la fondamentale) ; avec CHORD actif, jouent les accords de la gamme (Do est l'accord I). Batterie : un son par touche. Dans une couche : seize tuiles."
+  },
+  {
+   "commande": "Touches noires",
+   "role": "Batterie : jouent le son de la touche blanche à leur gauche. Avec CHORD actif, changent l'accord : Fa dièse majeur ou mineur, Sol dièse septième, La dièse sus4, Do dièse neuvième, Ré dièse renversement. Couche FX : onze effets de plus. Couche GLO : Fa dièse 3 lance MIDI LEARN."
+  }
+ ],
+ "gestes": [
+  "Un bouton de fonction maintenu, puis HOME : verrouille la couche ouverte ; PLAY, REC, OCT- et OCT+ y marchent encore.",
+  "HOME maintenu : le menu (SCREEN, LIGHTS, AUDIO, SYSTEM).",
+  "REC maintenu environ 2 s : efface la piste choisie.",
+  "OCT- et OCT+ ensemble : octave 0.",
+  "EDIT maintenu + OCT- ou OCT+ : annule ou rétablit.",
+  "GLO maintenu + touche 1 à 4 : coupe une piste ; touche 5 à 8 : solo ; touche 9 : fill tant qu'elle est tenue ; touche 16 : tap tempo.",
+  "SEQ maintenu + un pas tenu + PRESETS : verrou de paramètre sur ce pas ; + ALGORITHM : choisit le paramètre ; + OCT+ : condition de fill ; + OCT- : efface nudge, verrous et condition.",
+  "SAVE maintenu + touche 1 à 4 : joue la section A à D ; plusieurs touches enchaînent. SAVE maintenu + touche 5 à 8 : range la boucle dans la section A à D.",
+  "Allumage avec OCT- tenu : secours USB. Allumage avec OCT- et OCT+ tenus : calibrage du matériel."
+ ],
+ "modes": [
+  {
+   "nom": "Couche FX (punch)",
+   "texte": "Un effet agit sur tout le mix tant que la touche est tenue. KNOB 1 : FILTER général (à gauche un passe-bas, à droite un passe-haut). KNOB 2 : DUST. KNOB 3 : DUCK. KNOB 4 : filtre de la piste choisie. OCT- tenu : REV THROW ; OCT+ tenu : ECHO THROW."
+  },
+  {
+   "nom": "Couche EDIT (effacement)",
+   "texte": "En lecture, une touche tenue efface son son ou sa note de chaque pas que la tête de lecture passe. À l'arrêt, elle l'efface de tout le pattern. KNOB 1 : SHIFT des pas ; KNOB 2 : LENGTH fois 2 ou moitié ; KNOB 3 : TRANSPOSE. Sur la batterie, une touche noire passe en mode MUTE."
+  },
+  {
+   "nom": "Couche ARP (roulement)",
+   "texte": "Une touche tenue se répète sur la grille, calée sur le tempo. KNOB 1 : RATE (1/8, 1/16, 1/32, 32T, 1/64). Ce n'est pas l'arpégiateur, qui est dans les pages d'ARP."
+  },
+  {
+   "nom": "Couche SEQ (pas)",
+   "texte": "Les seize touches blanches sont les seize pas de la page ; un pas vide se pose, un pas posé se retape pour l'effacer. KNOB 1 : son ou note ; KNOB 2 : DIV ; KNOB 3 : SWING ; KNOB 4 : LENGTH (1 à 64). Page de pas suivante : touches noires 1 à 4 ou OCT-/OCT+. Avec un pas tenu : KNOB 2 niveau ou VEL, KNOB 3 RATCHET, KNOB 4 NUDGE."
+  },
+  {
+   "nom": "Couche SEL",
+   "texte": "Une touche donne la tonalité du morceau. KNOB 1 : CHORD (OFF, TRIAD, 7TH, 9TH, SUS4, POWER) ; KNOB 2 : SCALE (16 gammes) ; KNOB 3 : KEYS (OFF, SNAP, WHITE) ; KNOB 4 : TRANSPOSE de la piste."
+  },
+  {
+   "nom": "Couche GLO (mix)",
+   "texte": "KNOB 1 à 4 : niveaux des pistes 1 à 4. SELECT règle le tempo."
+  },
+  {
+   "nom": "Couche SAVE (morceau)",
+   "texte": "Quatre sections A à D. Touche 13 : boucle ou morceau ; touche 14 : SONG REC ; touche 16 : écran SONG."
+  },
+  {
+   "nom": "Moteurs",
+   "texte": "Douze moteurs : ANALOG, DIGITAL, PHASE, LOFI, SAMPLE, VOICE, TRIO, WHEEL, GRAIN, FM6, PHYS, NOISE. Huit paramètres sur EDIT 1 et EDIT 2 (appui une fois puis deux fois sur EDIT, KNOB 1 à 4)."
+  }
+ ],
+ "a_savoir": [
+  "ALGORITHM, ENV et LFO n'ont pas de couche : ENV et LFO n'ouvrent que leurs pages.",
+  "Trois pistes de synthé se partagent huit voix.",
+  "Le FM-1 n'a pas de vélocité : sur la batterie, chaque coup a l'un des quatre niveaux GHOST, SOFT, NORM, HARD.",
+  "Les valeurs GO (LOAD, SAVE, ERASE, NEW, CLRSQ, INIT) demandent deux pressions en 1,5 s environ."
+ ],
+ "source": {
+  "url": "https://github.com/isod89/sloop-fm1/blob/bac9c05ea7627449405aa10e48da21d75b6c8c56/GUIDE.md",
+  "commit": "bac9c05ea7627449405aa10e48da21d75b6c8c56"
+ },
+ "d_apres_le_code": false
 }
