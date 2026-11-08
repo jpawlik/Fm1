@@ -2251,6 +2251,10 @@ class NativeFirmware {
       let sectors = null;
       try { sectors = await nativeFlash.get(this.entry.id); } catch (err) { this.storageError = err; }
       this.lastLoadSectors = sectors;
+      // fm1-base's optional data-area part holds sample captures separately
+      // from regular store objects; restore it before WebAssembly boots.
+      if (this.dialect === "base") try { this.extraData = await nativeFlash.get(this.entry.id + "/data"); }
+      catch (err) { this.storageError = err; }
       if (this.entry.natif_echantillons) try { this.bank = await nativeFlash.get(this.entry.id + "/banque"); } catch { /* sans banque */ }
       if (this.entry.id === "fmdj") try { this.cart = await nativeFlash.get("fmdj/cartouche"); } catch { /* sans ROM */ }
       this.ac = ac;
@@ -2284,7 +2288,7 @@ class NativeFirmware {
   loadMessage(wasm, saved, master) {
     switch (this.dialect) {
       case "sim": return null;                 // tout passe par les options du processeur
-      case "base": return { type: "load", wasm, store: saved || {}, master };
+      case "base": return { type: "load", wasm, store: saved || {}, master, parts: this.extraData instanceof ArrayBuffer ? { data: this.extraData } : {} };
       case "x0x": case "monk": return { type: "load", wasm, store: saved || {}, master };
       case "m2k": return { t: "wasm", bytes: wasm, seed: (Math.random() * 4294967295) >>> 0, store: saved instanceof Uint8Array ? saved : null };
       case "choralroot": return { type: "load", wasm, flash: saved instanceof ArrayBuffer ? saved : null, master };
@@ -2310,7 +2314,8 @@ class NativeFirmware {
   }
   onWorklet(e) {
     const m = e.data, t = m.type || m.t;
-    if (t === "flash" || t === "store") { this.save(m.data || m.bytes); return; }   // ChoralRoot, sim, mono2k : la mémoire entière
+    if (t === "flash" || t === "store") { this.save(m.data || m.bytes); return; }
+    if (t === "app" && m.part === "data" && m.data instanceof ArrayBuffer) { this.save(m.data, this.entry.id + "/data"); return; }   // ChoralRoot, sim, mono2k : la mémoire entière
     if (t === "zp12-done") {                                              // zp12 : réponse à une opération de son lien
       const w = this.waits && this.waits.get(m.id);
       if (w) { this.waits.delete(m.id); clearTimeout(w.timer); m.error ? w.ko(new Error(m.error)) : w.ok(m.value); }
