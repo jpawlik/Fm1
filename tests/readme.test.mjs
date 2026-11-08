@@ -9,7 +9,7 @@ const cat = JSON.parse(readFileSync(join(ROOT, "firmwares/catalogue.json"), "utf
 const readme = readFileSync(join(ROOT, "README.md"), "utf8");
 
 test("the catalogue preserves each firmware author's source revision and license", () => {
-  for (const e of cat.filter((e) => e.id !== "bubba")) {
+  for (const e of cat) {
     assert.ok(e.nom && e.auteur && e.licence, `${e.id}: missing metadata`);
     assert.match(e.depot || "", /^https:\/\/github\.com\//, `${e.id}: missing source`);
     assert.match(e.commit_source || "", /^[0-9a-f]{7,40}$/, `${e.id}: missing source revision`);
