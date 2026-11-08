@@ -190,11 +190,15 @@ def test_every_native_reacts(page):
         page.evaluate("window.__host.turn('SELECT', 3)")
         page.wait_for_timeout(400)
         page.evaluate("window.__host.keyDown(12, 't')")
-        page.wait_for_timeout(500)
+        # Granular voices are quiet and can fade in: use the same note hold and
+        # measured RMS floor as the dedicated granular-native sound test.
+        granular = i in ("echofield", "graine")
+        page.wait_for_timeout(900 if granular else 500)
         level = rms(page)
         page.evaluate("window.__host.keyUp('t')")
-        if page.evaluate(shot) == before and level <= 0.001:
-            mute.append((i, "aucune réaction"))
+        floor = 0.0002 if granular else 0.001
+        if page.evaluate(shot) == before and level <= floor:
+            mute.append((i, "aucune réaction", {"rms": level, "floor": floor}))
     assert not mute, mute
 
 
