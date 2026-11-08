@@ -5,6 +5,8 @@ from pathlib import Path
 
 from conftest import ROOT
 
+ROOT = Path(ROOT)
+
 
 def test_base_worklet_bundle_follows_nested_imports_and_preserves_parts(tmp_path):
     (tmp_path / "parts").mkdir()
