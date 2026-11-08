@@ -181,7 +181,7 @@ def test_pigeon_echantillons(page, tmp_path):
     assert page.is_visible("#samples-box") and page.is_hidden(".file >> nth=0")
     _wav(tmp_path / "chanson.wav", 4, 220); _wav(tmp_path / "coup.wav", 0.3, 880)
     page.set_input_files("#samples", [str(tmp_path / "chanson.wav"), str(tmp_path / "coup.wav")])
-    page.wait_for_function("document.getElementById('status').textContent.includes('chargé')", timeout=20000)
+    page.wait_for_function("document.getElementById('status').textContent.includes('Samples loaded')", timeout=20000)
     level = 0
     for k in (0, 2, 4, 5, 7, 12):
         page.evaluate(f"window.__host.keyDown({k}, 't')")
@@ -266,8 +266,8 @@ def test_zp12_samples(page, tmp_path):
     assert page.is_visible("#samples-box")
     _wav(tmp_path / "bip.wav", 0.4, 660); _wav(tmp_path / "boum.wav", 0.6, 110)
     page.set_input_files("#samples", [str(tmp_path / "bip.wav"), str(tmp_path / "boum.wav")])
-    page.wait_for_function("document.getElementById('status').textContent.startsWith('zp12 : 2 sons')", timeout=30000)
-    assert "C1 à C2" in page.inner_text("#status")
+    page.wait_for_function("document.getElementById('status').textContent.startsWith('zp12 : 2 samples')", timeout=30000)
+    assert "C1 to C2" in page.inner_text("#status")
     page.wait_for_timeout(1500)                                         # (ASSIGN fait entendre le son tout de suite : qu'il finisse)
     quiet = rms(page)
     level = _note(page, "[0x90, 52, 120]", 150)

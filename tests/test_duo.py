@@ -49,7 +49,7 @@ def test_b_takes_no_emulated_firmware(page):
       document.getElementById('fw-search').value = e.nom; document.getElementById('fw-search').dispatchEvent(new Event('input'));
       const btn = document.querySelector(`#fw-results .fw-item[data-id='${e.id}']`); const d = btn.getAttribute('aria-disabled'); btn.click(); return d; }""")
     assert dis == "true"
-    assert b.evaluate("document.getElementById('status').textContent") == "En Duo, FM1-B prend FM-1+VA ou un firmware natif."
+    assert b.evaluate("document.getElementById('status').textContent") == "In Duo, FM1-B supports FM-1+VA or native firmware."
     assert b.evaluate("window.__engine() === window.__fw")
 
 

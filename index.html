@@ -1,7 +1,7 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="FM-1"><link rel="apple-touch-icon" href="assets/icone.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="FM-1"><link rel="apple-touch-icon" href="assets/icone.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>FM-1+VA</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Le firmware FM-1+VA de Baud Girl pour le M-VAVE FM-1, réimplémenté dans le navigateur d'après son manuel.">
+<meta name="description" content="FM-1 browser emulator with Joakim’s CPU engine, multiple firmware options and a two-instrument Duo mode.">
 <style>
 /* M PLUS Rounded 1c and Barlow Semi Condensed: SIL Open Font License 1.1, embedded (latin subset) */
 @font-face { font-family: 'M PLUS Rounded 1c'; font-style: normal; font-weight: 700; font-display: swap; src: url(data:font/woff2;base64,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) format('woff2'); }
@@ -42,9 +42,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible, .file:focus-within
 .device:focus { outline: none; }
 .device:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 5.85% / 9.7%; }
 .device > svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
-.device canvas { position: absolute; left: 28.476%; top: 11.616%; width: 18.293%; height: 30.303%; background: #000; border-radius: 0.4%; }
+.device canvas { position: absolute; left: 26.1585%; top: 8.5859%; width: 22.6829%; height: 37.5758%; background: #000; border-radius: 0.4%; }
 /* the screen's glass: a hard diagonal reflection and a polished rim, over the picture */
-.glass { position: absolute; left: 25.732%; top: 7.071%; width: 23.78%; height: 39.394%; border-radius: 12.82%; pointer-events: none;
+.glass { position: absolute; left: 23.7805%; top: 4.5455%; width: 27.439%; height: 45.4545%; border-radius: 12.82%; pointer-events: none;
   background:
     linear-gradient(141deg, rgb(255 255 255 / 0.17) 0%, rgb(255 255 255 / 0.075) 35%, rgb(255 255 255 / 0) 35.3%),
     radial-gradient(85% 50% at 22% 0%, rgb(255 255 255 / 0.12), transparent 70%),
@@ -329,20 +329,20 @@ html.embed .duo-tabs { margin-left: auto; }                              /* FM1-
 <main>
   <header class="mast">
     <h1 class="mark">FM-1<span>+VA</span></h1>
-    <p class="eyebrow">M-VAVE FM-1 · Émulateur · Version 102</p>
-    <div class="mode"><button type="button" class="fs" aria-label="Plein écran" title="Plein écran" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5V3h4.5M12.5 3H17v4.5M17 12.5V17h-4.5M7.5 17H3v-4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><nav class="seg" aria-label="Un ou deux FM-1"><a href="./" aria-current="page">Solo</a><a href="?duo">Duo</a></nav></div>
+    <p class="eyebrow">M-VAVE FM-1 · Emulator · Version 102</p>
+    <div class="mode"><button type="button" class="fs" aria-label="Full screen" title="Full screen" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5V3h4.5M12.5 3H17v4.5M17 12.5V17h-4.5M7.5 17H3v-4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><nav class="seg" aria-label="Un ou deux FM-1"><a href="./" aria-current="page">Solo</a><a href="?duo">Duo</a></nav></div>
   </header>
 
-  <section class="stage" aria-label="Le FM-1">
-    <p class="turn">Tournez le téléphone pour des commandes plus grandes.</p>
+  <section class="stage" aria-label="The FM-1">
+    <p class="turn">Rotate your device for larger controls.</p>
     <div class="frame">
       <div class="device" id="device" tabindex="-1" role="group" aria-label="FM-1">
         <svg id="panel-base" viewBox="0 0 1640 990" aria-hidden="true" focusable="false"></svg>
-        <canvas id="screen" width="720" height="720" role="img" aria-label="L'écran du FM-1"></canvas>
+        <canvas id="screen" width="720" height="720" role="img" aria-label="FM-1 screen"></canvas>
         <div class="glass"></div>
         <svg id="panel" viewBox="0 0 1640 990" aria-hidden="true" focusable="false"></svg>
         <div class="controls" id="controls" inert></div>
-        <div class="start" id="start"><button id="go" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M4.4 3.9a5.5 5.5 0 1 0 7.2 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span>Allumer</span></button></div>
+        <div class="start" id="start"><button id="go" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M4.4 3.9a5.5 5.5 0 1 0 7.2 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span>Power on</span></button></div>
       </div>
     </div>
     <div class="deck">
@@ -351,74 +351,74 @@ html.embed .duo-tabs { margin-left: auto; }                              /* FM1-
           <span class="picker-k">Firmware</span><span id="fw-name">FM-1+VA</span><span class="notch" aria-hidden="true"></span>
         </button>
         <div class="scrim" id="fw-scrim" hidden></div>
-        <div class="sheet" id="fw-sheet" role="dialog" aria-label="Choisir un firmware" hidden>
+        <div class="sheet" id="fw-sheet" role="dialog" aria-label="Choose firmware" hidden>
           <div class="sheet-grip" aria-hidden="true"></div>
           <div class="search">
             <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.6" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M10.4 10.4 14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-            <input id="fw-search" type="search" placeholder="Rechercher un firmware" aria-label="Rechercher un firmware" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go">
-            <button id="fw-clear" type="button" aria-label="Effacer la recherche" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+            <input id="fw-search" type="search" placeholder="Search firmware" aria-label="Search firmware" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go">
+            <button id="fw-clear" type="button" aria-label="Clear search" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
           </div>
           <div class="sheet-body">
             <div id="fw-sections"></div>
             <div id="fw-results" hidden></div>
           </div>
-          <label class="open-local" for="fw-file"><input type="file" id="fw-file" accept=".fwsc,application/octet-stream">Ouvrir un .fwsc…</label>
+          <label class="open-local" for="fw-file"><input type="file" id="fw-file" accept=".fwsc,application/octet-stream">Open .fwsc file…</label>
         </div>
       </div>
       <div class="skins" role="radiogroup" aria-labelledby="skin-name">
-        <span class="skin-name" id="skin-name">Coloris</span>
+        <span class="skin-name" id="skin-name">Colors</span>
         <div class="swatches" id="swatches"></div>
       </div>
       <span id="status" role="status"></span>
       <div class="bar">
-        <button id="fw-restart" type="button" hidden>Redémarrer</button>
+        <button id="fw-restart" type="button" hidden>Restart</button>
         <div class="midi" id="midi-box" hidden>
-          <button id="midi-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="midi-pop" title="L'entrée MIDI et son canal, pour tous les firmwares">MIDI<span class="rxdot" aria-hidden="true"></span><span class="notch" aria-hidden="true"></span></button>
+          <button id="midi-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="midi-pop" title="MIDI input and channel for all firmware">MIDI<span class="rxdot" aria-hidden="true"></span><span class="notch" aria-hidden="true"></span></button>
           <div class="midi-pop" id="midi-pop" role="dialog" aria-label="MIDI" hidden>
-            <label>Entrée<select id="midi-in"><option value="">Toutes</option><option value="-">Aucune</option></select></label>
-            <label>Canal<select id="midi-ch"><option value="0">Tel quel</option></select></label>
-            <p>Les firmwares émulés reçoivent tout, horloge comprise : Felucca et les siens la suivent avec CLK sur TRS. Ce choix vaut pour ce FM-1 seul.</p>
+            <label>Input<select id="midi-in"><option value="">All</option><option value="-">None</option></select></label>
+            <label>Channel<select id="midi-ch"><option value="0">As received</option></select></label>
+            <p>Emulated firmware receives all MIDI messages, including clock. Felucca-based firmware can follow it using TRS CLK. This setting applies only to this FM-1.</p>
           </div>
         </div>
-        <label class="file" for="syx" title="Un fichier .syx de Yamaha DX7 (un son ou une banque de 32), pris dans Fichiers : sur l'iPad ou dans iCloud Drive"><input type="file" id="syx" accept=".syx,application/octet-stream,application/x-sysex"><span class="long">Importer un son DX7…</span><span class="short" aria-label="Importer un son DX7">Importer…</span></label>
-        <label class="file" id="samples-box" for="samples" hidden title="Un son long devient la chanson, les sons courts les pads (16 au plus) ; ou une banque .kob."><input type="file" id="samples" accept=".kob,.wav,.wave,.aif,.aiff,.mp3,.m4a,.aac,.caf,.flac,application/octet-stream" multiple>Échantillons…</label>
-        <button id="power" type="button" role="switch" aria-checked="false" aria-label="Marche / arrêt" title="Marche / arrêt. Éteindre efface les réglages du firmware actif."><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M4.4 3.9a5.5 5.5 0 1 0 7.2 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span class="track" aria-hidden="true"></span></button>
+        <label class="file" for="syx" title="A Yamaha DX7 .syx file (one patch or bank of 32) from Files on your iPad or iCloud Drive"><input type="file" id="syx" accept=".syx,application/octet-stream,application/x-sysex"><span class="long">Import DX7 patch…</span><span class="short" aria-label="Import DX7 patch">Import…</span></label>
+        <label class="file" id="samples-box" for="samples" hidden title="A long sample becomes the song; shorter samples fill up to 16 pads, or import a .kob bank."><input type="file" id="samples" accept=".kob,.wav,.wave,.aif,.aiff,.mp3,.m4a,.aac,.caf,.flac,application/octet-stream" multiple>Samples…</label>
+        <button id="power" type="button" role="switch" aria-checked="false" aria-label="Power on/off" title="Power on/off. Turning off resets the active firmware's saved settings."><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M4.4 3.9a5.5 5.5 0 1 0 7.2 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span class="track" aria-hidden="true"></span></button>
       </div>
     </div>
   </section>
 
-  <section class="notes" aria-label="Mode d'emploi">
+  <section class="notes" aria-label="Instructions">
     <details id="aide-manuel">
-      <summary>Manuel d'utilisation</summary>
+      <summary>User guide</summary>
       <div class="note">
         <dl>
-          <dt>Allumer</dt><dd>Allumer, sur le FM-1, lance le son et le firmware choisi ; l'interrupteur sous le FM-1 aussi. Éteindre par l'interrupteur remet le firmware actif en réglages d'usine (ses presets, patterns et réglages sont effacés), puis recharge la page.</dd>
-          <dt>Firmwares</dt><dd>Le bouton Firmware ouvre la liste : d'abord les optimisés (FM-1+VA et les firmwares compilés pour le navigateur), puis les émulés, qui font tourner le paquet d'origine sur une puce émulée et demandent plus à l'appareil. La recherche lit le nom, l'auteur et la description. Ouvrir un .fwsc charge un paquet à soi. Un firmware qui s'arrête se relance par Redémarrer.</dd>
-          <dt>Boutons propres à un firmware</dt><dd>Certains firmwares ajoutent un bouton sous le FM-1 : Importer un son DX7 avec FM-1+VA, Échantillons avec Pigeon et zp12. Le volet de leurs fonctions l'explique.</dd>
-          <dt>Coloris</dt><dd>Les six coloris du FM-1, en pastilles sous le FM-1. Avec FM-1+VA, l'écran prend le thème assorti.</dd>
-          <dt>Solo et Duo</dt><dd>Solo et Duo, en haut de la page. Deux FM-1 à la fois, FM1-A et FM1-B, chacun avec son firmware, sa mémoire et son allumage : l'un au-dessus de l'autre en portrait, l'un ou l'autre en paysage, côte à côte au choix sur un grand écran. Tempo lié : un FM-1+VA mène (FM1-A s'il en est un), l'autre suit son horloge et démarre avec lui ; un firmware natif ou émulé la reçoit aussi, et la suit s'il sait suivre une horloge MIDI (émulés de la famille Felucca : CLK sur TRS). FM1-B prend FM-1+VA ou un firmware natif.</dd>
-          <dt>MIDI</dt><dd>Quand le navigateur gère le MIDI, le bouton MIDI choisit l'entrée et le canal, pour tous les firmwares et pour ce FM-1 seul ; son voyant clignote quand des messages arrivent. Un clavier MIDI branché joue le firmware chargé.</dd>
-          <dt>Plein écran</dt><dd>Le bouton en haut à droite. Là où le navigateur ne le permet pas (iPhone), ajouter la page à l'écran d'accueil, par Partager puis Sur l'écran d'accueil, l'ouvre sans barre.</dd>
-          <dt>Ce que le navigateur garde</dt><dd>Les presets, patterns et réglages de chaque firmware, le dernier firmware choisi, le coloris et le choix MIDI, dans ce navigateur seulement. Éteindre efface ceux du firmware actif ; avec FM-1+VA, le coloris revient aussi à Menthe.</dd>
-          <dt>Crédits et licences</dt><dd>FM-1+VA n'est pas le code de Baud Girl : son firmware compilé ne tourne que sur la puce JieLi du FM-1. Tout est réécrit d'après le <a href="https://baudgirl.com/work/FM-1+VA/manual" target="_blank" rel="noopener">manuel FM-1+VA</a>. Le panneau vient de l'<a href="https://sbegueria.github.io/fm1-dub/emu/" target="_blank" rel="noopener">émulateur DUB-1</a>, sous licence GPL-3.0, comme cette page. Les firmwares émulés tournent sur le cœur <a href="https://github.com/joakimeriksson/fm1-emu" target="_blank" rel="noopener">fm1-emu</a> de Joakim Eriksson, sous licence MIT. Chaque firmware garde sa licence, rappelée dans le volet de ses fonctions ; leurs textes sont dans le dossier <a href="https://github.com/Ninjathune-Human/Fm1/tree/main/firmwares/licences" target="_blank" rel="noopener">firmwares/licences</a> du dépôt.</dd>
+          <dt>Power on</dt><dd>Press Power on the FM-1 or use the switch below the panel to start the chosen firmware and audio. Turning the switch off resets the active firmware to factory settings (including its presets, patterns and settings), then reloads the page.</dd>
+          <dt>Firmware</dt><dd>Open the Firmware picker to choose optimized versions (FM-1+VA and firmware compiled for the browser) or original packages running on the emulated CPU. Search by name, author or description. You can also open your own .fwsc package. If a firmware stops, press Restart.</dd>
+          <dt>Firmware-specific controls</dt><dd>Some firmware adds a control below the FM-1, such as Import DX7 patch for FM-1+VA or Samples for Pigeon and zp12. The firmware features panel explains these options.</dd>
+          <dt>Colors</dt><dd>Choose one of the six panel colors beneath the FM-1. In FM-1+VA, the screen uses a matching theme.</dd>
+          <dt>Solo and Duo</dt><dd>Run two separate FM-1 instances, each with its own firmware, memory and power. Portrait mode stacks them; landscape lets you show one at a time or, on a large screen, side by side. Linked Tempo uses FM-1+VA as the leader (FM1-A if available). The other device receives MIDI clock and Start/Stop and follows if its firmware supports MIDI sync. FM1-B supports FM-1+VA or native browser firmware.</dd>
+          <dt>MIDI</dt><dd>Where supported by the browser, MIDI lets you choose an input and channel for this FM-1. The indicator blinks when MIDI arrives; a connected keyboard plays the selected firmware.</dd>
+          <dt>Full screen</dt><dd>Use the button at top right where browser fullscreen is available. On iPad, use Share → Add to Home Screen and launch the installed web app to avoid Safari's swipe-down-to-exit-fullscreen gesture.</dd>
+          <dt>Browser storage</dt><dd>Presets, patterns, settings, last selected firmware, panel color and MIDI choice are stored in this browser. Powering off clears the active firmware's saved data. FM-1+VA also resets the panel color to Mint.</dd>
+          <dt>Credits and licenses</dt><dd>FM-1+VA is an independent reimplementation based on Baud Girl's <a href="https://baudgirl.com/work/FM-1+VA/manual" target="_blank" rel="noopener">FM-1+VA manual</a>, not her compiled firmware. The panel is adapted from the GPL-3.0 <a href="https://sbegueria.github.io/fm1-dub/emu/" target="_blank" rel="noopener">DUB-1 emulator</a>, as is this page. Emulated firmware runs on Joakim Eriksson's MIT-licensed <a href="https://github.com/joakimeriksson/fm1-emu" target="_blank" rel="noopener">fm1-emu</a>. Each firmware retains its original license, with links in the <a href="https://github.com/Ninjathune-Human/Fm1/tree/main/firmwares/licences" target="_blank" rel="noopener">firmware licenses</a> folder.</dd>
         </dl>
       </div>
     </details>
     <details id="aide-clavier">
-      <summary>Raccourcis clavier</summary>
+      <summary>Keyboard shortcuts</summary>
       <div class="note">
         <div class="clavier-scroll"><svg id="clavier" role="img"></svg></div>
-        <p class="legende"><span class="l-note">Notes</span><span class="l-bouton">Boutons</span><span class="l-molette">Molettes</span></p>
+        <p class="legende"><span class="l-note">Notes</span><span class="l-bouton">Buttons</span><span class="l-molette">Encoders</span></p>
         <dl>
-          <dt>Clavier</dt><dd>Il joue dès que la page a le focus, FM-1 allumé ; un champ ou un bouton de la page garde ses propres touches. C'est la place des touches qui compte : le piano reste un piano en AZERTY.</dd>
-          <dt>Touches</dt><dd>Clic ou doigt, plusieurs à la fois.</dd>
-          <dt>Molettes</dt><dd>Glisser vers le haut ou la droite, ou la molette de la souris. Lentement, un cran change la valeur d'une unité ; plus vite, le pas s'accélère. <kbd>Maj</kbd> garde un pas d'une unité, à la souris comme au clavier.</dd>
-          <dt>Maintenir</dt><dd>Maj+clic ou clic droit garde un bouton enfoncé. Au doigt, maintenir d'une main et tourner de l'autre.</dd>
+          <dt>Keyboard</dt><dd>With the FM-1 on, the computer keyboard plays whenever the page has focus. Form fields keep their own shortcuts. Key positions stay consistent across QWERTY and AZERTY layouts.</dd>
+          <dt>Keys</dt><dd>Use a mouse or multiple fingers to play notes and press controls at the same time.</dd>
+          <dt>Encoders</dt><dd>Drag upward or rightward, or use the mouse wheel. Slow movement changes one detent at a time; fast movement accelerates. Hold <kbd>Shift</kbd> for single-step adjustment with a mouse or keyboard.</dd>
+          <dt>Hold</dt><dd>Shift-click or right-click to latch a button. On touch screens, keep one finger pressed while using another finger to turn a knob.</dd>
         </dl>
       </div>
     </details>
     <details id="aide-fiche">
-      <summary><span>Fonctions de <span id="fiche-nom">FM-1+VA</span></span></summary>
+      <summary><span>Features of <span id="fiche-nom">FM-1+VA</span></span></summary>
       <div class="note">
         <p class="fiche-meta" id="fiche-meta"></p>
         <div id="fiche"></div>
@@ -1818,9 +1818,9 @@ Object.assign(KEYMAP, { Space: { btn: "PLAY" }, KeyR: { btn: "REC" }, KeyZ: { bt
 const ENCMAP = { ArrowLeft: ["SELECT", -1], ArrowRight: ["SELECT", 1], ArrowDown: ["PRESETS", -1], ArrowUp: ["PRESETS", 1], Comma: ["ALGORITHM", -1], Period: ["ALGORITHM", 1] };
 
 // L'aide dessine ce clavier : le nom des notes (la touche 0 est Fa 3), les lettres de la disposition, la géométrie.
-const keyNoteName = (i) => ["Do", "Do♯", "Ré", "Ré♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si"][(i + 5) % 12] + " " + (3 + Math.floor((i + 5) / 12));
+const keyNoteName = (i) => ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"][(i + 5) % 12] + " " + (3 + Math.floor((i + 5) / 12));
 const isAzerty = (lang) => /^fr(-(fr|be))?$/i.test(lang || "");
-const KB_NAMED = { Escape: "Échap", Backspace: "⌫", Tab: "⇥", CapsLock: "⇪", Enter: "Entrée", ShiftLeft: "⇧", ShiftRight: "⇧", Space: "Espace",
+const KB_NAMED = { Escape: "Esc", Backspace: "⌫", Tab: "⇥", CapsLock: "⇪", Enter: "Enter", ShiftLeft: "⇧", ShiftRight: "⇧", Space: "Space",
   ArrowLeft: "←", ArrowRight: "→", ArrowUp: "↑", ArrowDown: "↓" };
 const KB_QWERTY = { Backquote: "`", Minus: "-", Equal: "=", BracketLeft: "[", BracketRight: "]", Backslash: "\\", Semicolon: ";", Quote: "'",
   Comma: ",", Period: ".", Slash: "/" };
@@ -1941,7 +1941,7 @@ class EmuFirmware {
         package: bytes, url: entry.fichier || entry.paquet_en_ligne || null, sectors, revision: record?.revision || 0 } };
     this.sessions.set(seq, session);
     const ready = new Promise((resolve, reject) => {
-      const timer = setTimeout(() => { this.bootWaiters.delete(seq); this.send({ type: "cancel-boot", seq }); reject(new Error("délai dépassé")); }, 30000);
+      const timer = setTimeout(() => { this.bootWaiters.delete(seq); this.send({ type: "cancel-boot", seq }); reject(new Error("Timed out")); }, 30000);
       this.bootWaiters.set(seq, { resolve, reject, timer });
     });
     this.send({ type: "boot", seq, wasm: this.wasm.slice(0), package: bytes.slice().buffer,
@@ -1961,7 +1961,7 @@ class EmuFirmware {
     if (!s || !this.node) return;
     const request = ++this.requestId;
     const done = new Promise((resolve, reject) => {
-      const timer = setTimeout(() => { this.snapshotWaiters.delete(request); this.send({ type: "cancel-snapshot", request }); reject(new Error("sauvegarde : délai dépassé")); }, 10000);
+      const timer = setTimeout(() => { this.snapshotWaiters.delete(request); this.send({ type: "cancel-snapshot", request }); reject(new Error("Save timed out")); }, 10000);
       this.snapshotWaiters.set(request, { seq: s.seq, resolve, reject, timer });
     });
     this.send({ type: "snapshot", seq: s.seq, request, pause });
@@ -2087,8 +2087,8 @@ class EmuFirmware {
     if (lv.some((v) => v > 0.04 && v < 0.8)) this.midUntil = now + 300;
     return now < (this.midUntil || 0) ? lv.map(Math.sqrt) : null;
   }
-  takePatch() { throw new Error("Réservé à FM-1+VA"); }
-  askBank() { throw new Error("Réservé à FM-1+VA"); }
+  takePatch() { throw new Error("Available only in FM-1+VA"); }
+  askBank() { throw new Error("Available only in FM-1+VA"); }
 }
 
 // Un firmware compilé depuis ses sources pour le navigateur (son propre web/emu, GPL-3.0 de son auteur) :
@@ -2224,7 +2224,7 @@ class NativeFirmware {
       this.node = new AudioWorkletNode(ac, this.entry.natif_processeur, this.nodeOptions(wasm, sectors, master));
       this.an = ac.createAnalyser(); this.an.fftSize = 2048; this.an.connect(ac.destination);
       const ready = new Promise((ok, ko) => {
-        const timer = setTimeout(() => ko(new Error("délai dépassé")), 20000);
+        const timer = setTimeout(() => ko(new Error("Timed out")), 20000);
         this.node.port.onmessage = (e) => {
           const t = e.data.type || e.data.t;
           if (t === "ready") { clearTimeout(timer); this.node.port.onmessage = (ev) => this.onWorklet(ev); ok(); }
@@ -2306,7 +2306,7 @@ class NativeFirmware {
     return new Promise((ok, ko) => {
       this.waits ||= new Map();
       const id = this.reqId = (this.reqId || 0) + 1;
-      this.waits.set(id, { ok, ko, timer: setTimeout(() => { this.waits.delete(id); ko(new Error("délai dépassé")); }, 10000) });
+      this.waits.set(id, { ok, ko, timer: setTimeout(() => { this.waits.delete(id); ko(new Error("Timed out")); }, 10000) });
       this.send({ ...m, id });
     });
   }
@@ -2318,21 +2318,21 @@ class NativeFirmware {
     const Z = window.ZP12Link, call = (op, o = {}) => this.ask({ type: "zp12", op, ...o });
     const link = { info: { proto: 5, kit: await call("kit") }, hold: async () => {}, reboot: async () => {},
       erase: (a) => call("erase", { a }), write: (a, data) => call("write", { a, data }), read: (a, n) => call("read", { a, n }),
-      reload: () => call("reload"), assign: async (pad, wave) => { if (await call("assign", { a: (pad & 31) | (wave & 63) << 8 })) throw new Error("pad refusé"); } };
+      reload: () => call("reload"), assign: async (pad, wave) => { if (await call("assign", { a: (pad & 31) | (wave & 63) << 8 })) throw new Error("Pad assignment rejected"); } };
     const d = await Z.readDir(link), names = [];
     for (const f of files.slice(0, 16)) {
-      const buf = await ac.decodeAudioData(await f.arrayBuffer()).catch(() => { throw new Error(`« ${f.name} » n'est pas un son que ce navigateur sait lire`); });
+      const buf = await ac.decodeAudioData(await f.arrayBuffer()).catch(() => { throw new Error(`“${f.name}” is not a supported audio file`); });
       const x = new Float32Array(buf.length);
       for (let c = 0; c < buf.numberOfChannels; c++) { const ch = buf.getChannelData(c); for (let i = 0; i < x.length; i++) x[i] += ch[i] / buf.numberOfChannels; }
       const s = { y: Z.encode(x, buf.sampleRate), rate: Z.RATES[0], name: f.name.replace(/\.[^.]*$/, "") };
       let slot;
       try { slot = await Z.upload(link, d, s); }
-      catch (err) { if (names.length) break; throw new Error(/room|places/.test(err.message) ? "plus de place dans sa mémoire" : err.message); }
+      catch (err) { if (names.length) break; throw new Error(/room|places/.test(err.message) ? "No free sample storage" : err.message); }
       await link.assign(16 + names.length, link.info.kit + slot);
       names.push(Z.cleanName(s.name));
     }
     const pad = (i) => "CD"[i >> 3] + ((i & 7) + 1);
-    return `zp12 : ${names.length} son${names.length > 1 ? "s" : ""} sur ${names.length > 1 ? `les pads ${pad(0)} à ${pad(names.length - 1)}` : "le pad C1"} (${names.join(", ")}).`;
+    return `zp12 : ${names.length} sample${names.length !== 1 ? "s" : ""} on ${names.length > 1 ? `pads ${pad(0)} to ${pad(names.length - 1)}` : "pad C1"} (${names.join(", ")}).`;
   }
   // FMDj : la ROM de l'utilisateur (LSDj ou DMGo!) devient sa cartouche par l'outil de sa propre page (lsdjinstall.js
   // makeCart : le premier démarrage du programme, la chanson de démo tapée, un essai d'écoute), gardée dans ce
@@ -2342,22 +2342,22 @@ class NativeFirmware {
     const L = await import(base + "lsdjinstall.js");
     const [w, demo] = await Promise.all([fetch(base + "lsdj_emu.wasm").then((r) => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }),
       fetch(base + "demo.json").then((r) => (r.ok ? r.json() : null), () => null)]);
-    const steps = { "LSDj's first start": "premier démarrage de LSDj", "typing the demo song": "la chanson de démo",
-      "playing it": "écoute", "DMGo's first start": "premier démarrage de DMGo!", "playing a step": "écoute d'un pas" };
+    const steps = { "LSDj's first start": "starting LSDj", "typing the demo song": "entering the demo song",
+      "playing it": "playing", "DMGo's first start": "starting DMGo!", "playing a step": "playing a step" };
     const cart = await L.makeCart(await L.loadEmu(w), new Uint8Array(await f.arrayBuffer()), demo, 1 << 20,
       (what, done, total) => { st.textContent = `ROM : ${steps[what] || what}, ${Math.round((100 * done) / total)} %`; },
       () => new Promise((r) => setTimeout(r)));
     this.cart = cart;
     this.save(cart, "fmdj/cartouche");
     this.send({ type: "cart", cart: cart.slice() });
-    return `FMDj : ${L.cartProg(cart) === "dmgo" ? "DMGo!" : "LSDj"} est prêt, « ${f.name} » est gardé dans ce navigateur. PLAY le lance.`;
+    return `FMDj: ${L.cartProg(cart) === "dmgo" ? "DMGo!" : "LSDj"} is ready. “${f.name}” is saved in this browser. Press PLAY to start.`;
   }
   async takeSamples(files, ac) {
     if (this.entry.id === "zp12") return this.takeZp12(files, ac);
     if (this.entry.id === "fmdj") return this.takeRom(files);
     let image, what;
     if (files.length === 1 && /\.kob$/i.test(files[0].name)) {
-      image = new Uint8Array(await files[0].arrayBuffer()); what = `banque « ${files[0].name} »`;
+      image = new Uint8Array(await files[0].arrayBuffer()); what = `bank “${files[0].name}”`;
     } else {
       const L = await import(new URL(this.entry.natif + this.entry.natif_echantillons, location.href).href), all = [];
       for (const f of files) all.push(await L.decodeSample(f, ac));
@@ -2365,19 +2365,19 @@ class NativeFirmware {
       const pads = all.filter((x) => !songs.includes(x)).slice(0, 16);
       if (!songs.length) songs.push(pads.shift());
       try { image = L.buildBank(songs, pads, false); } catch (err) { if (!/500 KiB/.test(err.message)) throw err; image = L.buildBank(songs, pads, true); }
-      what = (songs.length > 1 ? "chansons " : "chanson ") + songs.map((x) => `« ${x.name} »`).join(" et ") +
-        (pads.length ? ` et ${pads.length} pad${pads.length > 1 ? "s" : ""}` : "");
+      what = (songs.length > 1 ? "songs " : "song ") + songs.map((x) => `“${x.name}”`).join(" and ") +
+        (pads.length ? ` and ${pads.length} pad${pads.length > 1 ? "s" : ""}` : "");
     }
     const unlimited = new DataView(image.buffer, image.byteOffset).getUint32(8, true) > 0x7E000;
     await new Promise((ok, ko) => {
       this.waits ||= new Map();
       const id = this.reqId = (this.reqId || 0) + 1, copy = image.slice();
-      this.waits.set(id, { ok, ko, timer: setTimeout(() => { this.waits.delete(id); ko(new Error("délai dépassé")); }, 30000) });
+      this.waits.set(id, { ok, ko, timer: setTimeout(() => { this.waits.delete(id); ko(new Error("Timed out")); }, 30000) });
       this.send({ type: "bank", id, image: copy, unlimited }, [copy.buffer]);
     });
     this.bank = { image, unlimited };
     this.save(this.bank, this.entry.id + "/banque");
-    return `Échantillons chargés : ${what}${unlimited ? ", au-delà des 500 Kio du FM-1" : ""}.`;
+    return `Samples loaded: ${what}${unlimited ? ", beyond the FM-1 500 KiB limit" : ""}.`;
   }
   save(saved, key = this.entry.id) {
     const p = nativeFlash.put(key, saved).catch((err) => { this.storageError = err; })
@@ -2470,8 +2470,8 @@ class NativeFirmware {
     if (this.x0x) return b & (1 << 10) ? "green" : null;
     return b & (1 << 14) ? "green" : b & (1 << 10) ? "red" : null;
   }
-  takePatch() { throw new Error("Réservé à FM-1+VA"); }
-  askBank() { throw new Error("Réservé à FM-1+VA"); }
+  takePatch() { throw new Error("Available only in FM-1+VA"); }
+  askBank() { throw new Error("Available only in FM-1+VA"); }
 }
 </script>
 <script>
@@ -5355,12 +5355,12 @@ class Encoder {
 
 // the six colourways: body, rubber (plates, caps, keys), print on the body, lettering on the caps, unlit slots
 const SKINS = {
-  mint: { name: "Menthe", body: "#1d1d1f", rubber: "#98c7ba", ink: "#c4c5c8", cap: "#24302d", slot: "#0c1c18", theme: 4 },
-  black: { name: "Noir", body: "#232325", rubber: "#262628", ink: "#c8c8cb", cap: "#ededef", slot: "#e9e9ec", theme: 1, darkRubber: true, whiteSlots: true },
-  grey: { name: "Gris", body: "#d3ccc5", rubber: "#3c3e43", ink: "#3b3b3e", cap: "#8b8d92", slot: "#26272b", theme: 2, light: true, darkRubber: true },
-  navy: { name: "Marine", body: "#e0ddd6", rubber: "#4f6d8f", ink: "#47494c", cap: "#1f3247", slot: "#1d2f44", theme: 5, light: true },
+  mint: { name: "Mint", body: "#1d1d1f", rubber: "#98c7ba", ink: "#c4c5c8", cap: "#24302d", slot: "#0c1c18", theme: 4 },
+  black: { name: "Black", body: "#232325", rubber: "#262628", ink: "#c8c8cb", cap: "#ededef", slot: "#e9e9ec", theme: 1, darkRubber: true, whiteSlots: true },
+  grey: { name: "Gray", body: "#d3ccc5", rubber: "#3c3e43", ink: "#3b3b3e", cap: "#8b8d92", slot: "#26272b", theme: 2, light: true, darkRubber: true },
+  navy: { name: "Navy", body: "#e0ddd6", rubber: "#4f6d8f", ink: "#47494c", cap: "#1f3247", slot: "#1d2f44", theme: 5, light: true },
   orange: { name: "Orange", body: "#c8623f", rubber: "#a9503b", ink: "#f2ece6", cap: "#3d1d14", slot: "#3a1d17", theme: 3, light: true },
-  purple: { name: "Violet", body: "#c2a2d4", rubber: "#7568b0", ink: "#f4eef8", cap: "#251d48", slot: "#271f4a", theme: 0, light: true },
+  purple: { name: "Purple", body: "#c2a2d4", rubber: "#7568b0", ink: "#f4eef8", cap: "#251d48", slot: "#271f4a", theme: 0, light: true },
 };
 const CAP_FONT = "'M PLUS Rounded 1c', 'Arial Rounded MT Bold', 'Helvetica Neue', Arial, sans-serif";
 
@@ -5425,7 +5425,7 @@ function buildPanel(fw) {
   // ---------------------------------------------------------------- knobs: knurled black aluminium
   const knobs = {};
   // KR the top's radius, KH the height of skirt the eye sees below it, KN the knurls: coarse and few, one per detent
-  const KR = 34, KH = 11, KX = 3, KN = 18;       // KX: the skirt shows a little to the right, as seen on the photograph
+  const KR = 48, KH = 11, KX = 3, KN = 18;       // KX: the skirt shows a little to the right, as seen on the photograph
   const knob = (cx, cy, name, dot, lx = cx, ly = cy - 78) => {
     label(lx, ly, name);
     const top = cy - KH / 2, bot = cy + KH / 2;
@@ -5446,11 +5446,9 @@ function buildPanel(fw) {
     el("circle", { cx, cy: top, r: KR - 1.2, fill: "none", stroke: "url(#gKnobChamfer)", "stroke-width": 2.4 }, g);
     el("circle", { cx, cy: top, r: KR - 4.5, fill: "none", stroke: "#000000", "stroke-opacity": 0.35, "stroke-width": 1 }, g);
     const ind = el("g", {}, g);
-    if (dot) el("circle", { cx, cy: top - KR + 11, r: 4.2, fill: "#f6f6f6" }, ind);
-    else {                                                   // an engraved line: a groove with its lit lower lip
-      el("line", { x1: cx, y1: top - KR + 6, x2: cx, y2: top - KR + 19, stroke: "#000000", "stroke-opacity": 0.8, "stroke-width": 3.2, "stroke-linecap": "round" }, ind);
-      el("line", { x1: cx + 1.3, y1: top - KR + 7, x2: cx + 1.3, y2: top - KR + 18.5, stroke: "#9a9aa0", "stroke-opacity": 0.55, "stroke-width": 1, "stroke-linecap": "round" }, ind);
-    }
+    // Bright white marker; the existing drawKnob() rotates this group for every encoder.
+    el("line", { x1: cx, y1: top - KR + 7, x2: cx, y2: top - KR + 25,
+      stroke: "#ffffff", "stroke-width": 5, "stroke-linecap": "round" }, ind);
     knobs[name] = { g, ind, knurl, glint, x: cx, y: top, bot, angle: 0, label: name, box: [cx - KR - 14, top - KR - 14, 2 * KR + 28, 2 * KR + KH + 28] };
   };
   // ---------------------------------------------------------------- buttons: mint keycaps that glow when lit
@@ -5507,11 +5505,11 @@ function buildPanel(fw) {
   for (let i = 0; i < 16; i++) key(WHITE_K[i], 123 + 93 * i, 825, 152, 781, 85, null);
   BLACK_AFTER.forEach((a, k) => key(BLACK_K[k], 123 + 93 * (a + 0.5), 659, 150, 621, 43, BLACK_LABELS[k]));
   // the screen: a glass square in a polished black frame
-  el("rect", { x: 426, y: 82, width: 390, height: 390, rx: 52, fill: "#000000", opacity: 0.9, filter: "url(#fShadow)" }, base);
-  el("rect", { x: 422, y: 70, width: 390, height: 390, rx: 50, fill: "url(#gBezel)" }, base);
-  el("rect", { x: 423, y: 71, width: 388, height: 388, rx: 49, fill: "none", stroke: "url(#gBezelEdge)", "stroke-width": 2 }, base);
-  el("rect", { x: 434, y: 82, width: 366, height: 366, rx: 40, fill: "#060607" }, base);
-  el("rect", { x: 465, y: 113, width: 304, height: 304, rx: 8, fill: "#000000" }, base);
+  el("rect", { x: 394, y: 57, width: 450, height: 450, rx: 60, fill: "#000000", opacity: 0.9, filter: "url(#fShadow)" }, base);
+  el("rect", { x: 390, y: 45, width: 450, height: 450, rx: 58, fill: "url(#gBezel)" }, base);
+  el("rect", { x: 391, y: 46, width: 448, height: 448, rx: 57, fill: "none", stroke: "url(#gBezelEdge)", "stroke-width": 2 }, base);
+  el("rect", { x: 402, y: 57, width: 426, height: 426, rx: 46, fill: "#060607" }, base);
+  el("rect", { x: 429, y: 85, width: 372, height: 372, rx: 9, fill: "#000000" }, base);
 
   // ---------------------------------------------------------------- the colourways, after M-VAVE's photographs
   // every surface derives from four colours: the body, the mint (or other) rubber, the print on the body, the
@@ -5857,7 +5855,7 @@ function buildPanel(fw) {
 
   async function switchOn() {
     const go = $("go");
-    go.disabled = true; go.lastChild.textContent = "Démarrage…";
+    go.disabled = true; go.lastChild.textContent = "Starting…";
     try {
       try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch { /* older Safari */ }
       try { ac = new AudioContext({ sampleRate: 44100, latencyHint: "interactive" }); } catch { ac = new AudioContext({ latencyHint: "interactive" }); }
@@ -5882,7 +5880,7 @@ function buildPanel(fw) {
       document.addEventListener("visibilitychange", () => { if (!document.hidden && ac.state !== "running") ac.resume(); });
     } catch (err) {
       go.disabled = false; go.lastChild.textContent = "Allumer";
-      status.textContent = "Le son n'a pas pu démarrer : " + (err && err.message ? err.message : err) + ". Chrome, Edge, Firefox et Safari récents conviennent.";
+      status.textContent = "Audio could not start: " + (err && err.message ? err.message : err) + ". Recent Chrome, Edge, Firefox and Safari versions are supported.";
     }
   }
   $("go").addEventListener("click", switchOn);
@@ -5898,9 +5896,9 @@ function buildPanel(fw) {
   for (let c = 1; c <= 16; c++) midiChSel.add(new Option(String(c), String(c)));
   midiChSel.value = String(midiCh);
   function midiFill(access) {
-    const names = [...access.inputs.values()].filter((i) => i.state === "connected").map((i) => i.name || "Entrée");
+    const names = [...access.inputs.values()].filter((i) => i.state === "connected").map((i) => i.name || "Input");
     if (midiWant && midiWant !== "-" && !names.includes(midiWant)) names.push(midiWant);   // gardée, même débranchée
-    midiInSel.replaceChildren(new Option("Toutes", ""), ...names.map((n) => new Option(n, n)), new Option("Aucune", "-"));
+    midiInSel.replaceChildren(new Option("All", ""), ...names.map((n) => new Option(n, n)), new Option("None", "-"));
     midiInSel.value = midiWant;
   }
   function midiRoute(port, data) {
@@ -5930,7 +5928,7 @@ function buildPanel(fw) {
         const p = e && e.port, here = p && p.state === "connected";
         if (p && here !== known.has(p.id)) {             // a device arriving or leaving, not a port opening
           if (here) known.add(p.id); else known.delete(p.id);
-          status.textContent = "MIDI : " + (p.name || "appareil") + (here ? " branché." : " débranché.");
+          status.textContent = "MIDI : " + (p.name || "device") + (here ? " connected." : " disconnected.");
         }
       };
       for (const m of [access.inputs, access.outputs]) for (const p of m.values()) if (p.state === "connected") known.add(p.id);
@@ -5958,7 +5956,7 @@ function buildPanel(fw) {
       if (typeof WebAssembly !== "object") throw new Error("WebAssembly absent");
       new WebAssembly.Module(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0]));   // refusé là où le WebAssembly est interdit
       const r = await fetch("runtime/fm1_web.wasm");
-      if (!r.ok) throw new Error("cœur d'émulation indisponible (" + r.status + ")");
+      if (!r.ok) throw new Error("emulation core unavailable (" + r.status + ")");
       wasm = await r.arrayBuffer();
     }
     return wasm;
@@ -6020,8 +6018,8 @@ function buildPanel(fw) {
     return false;
   }
   // ---- le sélecteur
-  const VA_ENTRY = { id: "fm1va", nom: "FM-1+VA", auteur: "Réimplémentation d'après Baud Girl", categories: ["FM-1+VA"],
-    description: "Le firmware de Baud Girl réécrit d'après son manuel : FM six opérateurs, Virtual Analog et 8-Bit.", beta: false, fichier: null };
+  const VA_ENTRY = { id: "fm1va", nom: "FM-1+VA", auteur: "Reimplementation based on Baud Girl", categories: ["FM-1+VA"],
+    description: "A reimplementation based on Baud Girl's manual: six-operator FM, Virtual Analog and 8-Bit synthesis.", beta: false, fichier: null };
   const entries = () => [VA_ENTRY, ...catalogue];
   const box = $("fw-box"), picker = $("fw-picker"), sheet = $("fw-sheet"), scrim = $("fw-scrim"), search = $("fw-search"), clear = $("fw-clear");
   const sectionsEl = $("fw-sections"), resultsEl = $("fw-results"), nameEl = $("fw-name");
@@ -6038,12 +6036,12 @@ function buildPanel(fw) {
   function renderFiche(x) {
     const out = [mk("p", x.resume)];
     const section = (titre, node) => { out.push(mk("h3", titre), node); };
-    if (x.commandes.length) { const dl = mk("dl"); for (const c of x.commandes) dl.append(mk("dt", c.commande), mk("dd", c.role)); section("Commandes", dl); }
-    if (x.gestes.length) { const ul = mk("ul"); for (const g of x.gestes) ul.append(mk("li", g)); section("Gestes", ul); }
-    if (x.modes.length) { const dl = mk("dl"); for (const m of x.modes) dl.append(mk("dt", m.nom), mk("dd", m.texte)); section("Modes et écrans", dl); }
-    if (x.a_savoir?.length) { const ul = mk("ul"); for (const t of x.a_savoir) ul.append(mk("li", t)); section("À savoir", ul); }
-    const p = mk("p"); p.append(mk("a", "Manuel complet", { href: x.source.url, target: "_blank", rel: "noopener" }));
-    if (x.d_apres_le_code) p.append(" · Rédigée d'après le code du firmware, faute de doc.");
+    if (x.commandes.length) { const dl = mk("dl"); for (const c of x.commandes) dl.append(mk("dt", c.commande), mk("dd", c.role)); section("Controls", dl); }
+    if (x.gestes.length) { const ul = mk("ul"); for (const g of x.gestes) ul.append(mk("li", g)); section("Gestures", ul); }
+    if (x.modes.length) { const dl = mk("dl"); for (const m of x.modes) dl.append(mk("dt", m.nom), mk("dd", m.texte)); section("Modes and screens", dl); }
+    if (x.a_savoir?.length) { const ul = mk("ul"); for (const t of x.a_savoir) ul.append(mk("li", t)); section("Good to know", ul); }
+    const p = mk("p"); p.append(mk("a", "Full manual", { href: x.source.url, target: "_blank", rel: "noopener" }));
+    if (x.d_apres_le_code) p.append(" · Written from firmware source because documentation is unavailable.");
     out.push(p);
     ficheBox.replaceChildren(...out);
   }
@@ -6051,14 +6049,14 @@ function buildPanel(fw) {
     ficheNom.textContent = active.nom;
     const my = ++ficheSeq, id = active.id;
     ficheMeta.textContent = "";
-    if (id === "local") { ficheMessage("Pas de fiche pour ce firmware."); return; }
+    if (id === "local") { ficheMessage("No information sheet for this firmware."); return; }
     if (!ficheDetails.open) return;
     if (!fiches.has(id)) fiches.set(id, fetch(`firmwares/fiches/${id}.json`).then((r) => { if (r.status === 404) return null; if (!r.ok) throw new Error(r.status); return r.json(); }));
     let x;
-    try { x = await fiches.get(id); } catch { fiches.delete(id); if (my === ficheSeq) ficheMessage("Fiche indisponible pour le moment."); return; }
+    try { x = await fiches.get(id); } catch { fiches.delete(id); if (my === ficheSeq) ficheMessage("Firmware information is temporarily unavailable."); return; }
     if (my !== ficheSeq) return;
-    if (x) renderFiche(x); else ficheMessage("Pas de fiche pour ce firmware pour l'instant.");
-    if (id === "fm1va") ficheMeta.textContent = "Réimplémentation d'après Baud Girl · 102 · GPL-3.0";
+    if (x) renderFiche(x); else ficheMessage("No firmware information available yet.");
+    if (id === "fm1va") ficheMeta.textContent = "Reimplementation based on Baud Girl · 102 · GPL-3.0";
     else {
       await catalogueReady;
       const e = catalogue.find((c) => c.id === id);
@@ -6070,10 +6068,10 @@ function buildPanel(fw) {
 
   function tagsOf(e) {
     const t = [];
-    if (e.beta) t.push("bêta");
-    if (e.id !== "fm1va" && !e.fichier && !e.natif) t.push("en ligne");   // (un natif n'a plus de paquet dans le dépôt)
-    if (e.emulateur_fm1emu === "pas encore évalué") t.push("non évalué");
-    if (e.emulateur_fm1emu === "ne démarre pas") t.push("ne démarre pas");
+    if (e.beta) t.push("beta");
+    if (e.id !== "fm1va" && !e.fichier && !e.natif) t.push("online");   // (un natif n'a plus de paquet dans le dépôt)
+    if (e.emulateur_fm1emu === "pas encore évalué") t.push("untested");
+    if (e.emulateur_fm1emu === "ne démarre pas") t.push("does not boot");
     return t;
   }
   function row(e) {
@@ -6102,8 +6100,8 @@ function buildPanel(fw) {
   function setStar(star, e) {
     const on = favs.includes(e.id);
     star.setAttribute("aria-pressed", on);
-    star.setAttribute("aria-label", `${on ? "Retirer" : "Ajouter"} ${e.nom} ${on ? "des" : "aux"} favoris`);
-    star.title = on ? "Retirer des favoris" : "Ajouter aux favoris";
+    star.setAttribute("aria-label", `${on ? "Remove" : "Add"} ${e.nom} ${on ? "from" : "to"} favorites`);
+    star.title = on ? "Remove from favorites" : "Add to favorites";
   }
   function toggleFav(e, star) {
     loadFavs();
@@ -6122,7 +6120,7 @@ function buildPanel(fw) {
     const groups = groupCatalogue(entries());
     if (!expanded) expanded = new Set([(groups.find((g) => g.items.some((e) => e.id === active.id)) || groups[0]).cle]);
     const notes = [];
-    if (coreError) { const p = document.createElement("p"); p.className = "fw-note"; p.textContent = "Cœur d'émulation indisponible"; notes.push(p); }
+    if (coreError) { const p = document.createElement("p"); p.className = "fw-note"; p.textContent = "Emulation core unavailable"; notes.push(p); }
     const tier = (text) => { const h = document.createElement("h3"); h.className = "fw-tier"; h.textContent = text; return h; };
     const all = entries(), favItems = favs.map((id) => all.find((e) => e.id === id)).filter(Boolean);
     if (favItems.length) {
@@ -6130,7 +6128,7 @@ function buildPanel(fw) {
       sec.className = "fw-sec"; sec.dataset.cat = "Favoris";
       head.type = "button"; head.className = "fw-sec-head"; head.dataset.cat = "Favoris";
       head.setAttribute("aria-expanded", favOpen);
-      head.innerHTML = `<span>Favoris</span><span class="count">${favItems.length}</span><span class="notch" aria-hidden="true"></span>`;
+      head.innerHTML = `<span>Favorites</span><span class="count">${favItems.length}</span><span class="notch" aria-hidden="true"></span>`;
       ul.className = "fw-items"; ul.hidden = !favOpen;
       ul.append(...favItems.map(row));
       head.addEventListener("click", () => { favOpen = !favOpen; head.setAttribute("aria-expanded", favOpen); ul.hidden = !favOpen; });
@@ -6144,7 +6142,7 @@ function buildPanel(fw) {
       const open = expanded.has(g.cle);
       head.setAttribute("aria-expanded", open);
       head.innerHTML = `<span></span><span class="count">${g.items.length}</span><span class="notch" aria-hidden="true"></span>`;
-      head.firstChild.textContent = g.categorie;
+      head.firstChild.textContent = ({ "Officiel": "Official", "Synthé": "Synth", "Accords": "Chords", "Boîte à rythmes": "Drum machines", "Autre": "Other", "Base de développement": "Development base" })[g.categorie] || g.categorie;
       ul.className = "fw-items"; ul.hidden = !open;
       ul.append(...g.items.map(row));
       head.addEventListener("click", () => {
@@ -6154,7 +6152,7 @@ function buildPanel(fw) {
       });
       sec.append(head, ul);
       const first = i === 0 || groups[i - 1].optimise !== g.optimise;
-      return first ? [tier(g.optimise ? "Optimisés" : "Non optimisés"), sec] : [sec];
+      return first ? [tier(g.optimise ? "Optimized" : "Emulated"), sec] : [sec];
     }));
   }
   function renderResults() {
@@ -6165,7 +6163,7 @@ function buildPanel(fw) {
     const r = rankCatalogue(entries(), q), ul = document.createElement("ul");
     ul.className = "fw-items"; ul.append(...r.items.map(row));
     const note = document.createElement("p"); note.className = "fw-note";
-    note.textContent = r.items.length ? "Résultats approchants" : "Aucun firmware ne correspond.";
+    note.textContent = r.items.length ? "Closest matches" : "No matching firmware.";
     resultsEl.replaceChildren(...(r.approchants || !r.items.length ? [note] : []), ul);
   }
   function openSheet() {
@@ -6231,42 +6229,42 @@ function buildPanel(fw) {
     const fmdj = current.entry?.id === "fmdj";
     $("samples").accept = fmdj ? ".gb,.gbc,application/octet-stream"
       : (current.entry?.id === "zp12" ? "" : ".kob,") + ".wav,.wave,.aif,.aiff,.mp3,.m4a,.aac,.caf,.flac,application/octet-stream";
-    $("samples-box").lastChild.textContent = fmdj ? "ROM…" : "Échantillons…";
-    $("samples-box").title = fmdj ? "Votre ROM LSDj ou DMGo! (.gb) : aucune n'est fournie ici. Elle est vérifiée, puis gardée dans ce navigateur."
-      : current.entry?.id === "zp12" ? "Des sons sur les pads C1 à D8 (16 au plus) ; zp12 les garde, EDIT > WAVE les change de pad."
-      : "Un son long devient la chanson, les sons courts les pads (16 au plus) ; ou une banque .kob.";
+    $("samples-box").lastChild.textContent = fmdj ? "ROM…" : "Samples…";
+    $("samples-box").title = fmdj ? "Your LSDj or DMGo! ROM (.gb): none is included. It is checked and stored in this browser."
+      : current.entry?.id === "zp12" ? "Assign up to 16 samples to pads C1–D8; zp12 stores them and EDIT > WAVE can reassign pads."
+      : "A long sample becomes the song; shorter samples fill up to 16 pads, or import a .kob bank.";
     if (fmdj && current.kind === "natif" && !current.cart && !status.textContent) status.textContent = "FMDj : chargez votre ROM LSDj ou DMGo! (.gb) avec « ROM… ».";
   }
   let pickSeq = 0;
   const restartBtn = $("fw-restart");
-  function halted() { status.textContent = `${emu.name} s'est arrêté.`; restartBtn.hidden = false; }
+  function halted() { status.textContent = `${emu.name} stopped.`; restartBtn.hidden = false; }
   restartBtn.addEventListener("click", () => { if (emu && emu.entry) pick(emu.entry); });
   function failureText(e) {
-    if (switchFailure === "core") return "Cœur d'émulation indisponible.";
-    if (switchFailure === "fetch") return `${e.nom} : paquet injoignable.`;
-    if (e.id === "local") return "Ce fichier n'est pas un paquet FM-1.";
-    return `${e.nom} n'a pas démarré.`;
+    if (switchFailure === "core") return "Emulation core unavailable.";
+    if (switchFailure === "fetch") return `${e.nom} : firmware package unavailable.`;
+    if (e.id === "local") return "This is not an FM-1 firmware package.";
+    return `${e.nom} could not start.`;
   }
   // en Duo, FM1-B prend FM-1+VA ou un firmware natif : un firmware émulé de plus serait trop lourd (et partagerait sa mémoire)
   function emuBarred(e) { return FM1_ID === "b" && e.id !== "fm1va" && !e.natif; }
   async function pick(e) {
     closeSheet();
     restartBtn.hidden = true;
-    if (emuBarred(e)) { status.textContent = "En Duo, FM1-B prend FM-1+VA ou un firmware natif."; return; }
-    if (e.id !== "fm1va" && coreError) { status.textContent = "Cœur d'émulation indisponible."; return; }
+    if (emuBarred(e)) { status.textContent = "In Duo, FM1-B supports FM-1+VA or native firmware."; return; }
+    if (e.id !== "fm1va" && coreError) { status.textContent = "Emulation core unavailable."; return; }
     if (!ac) {
       active = { id: e.id, nom: e.nom }; nameEl.textContent = e.nom; showFiche();
       if (e.id !== "local") try { localStorage.setItem(SKEY(LAST), JSON.stringify(active)); } catch { /* cette session */ }
-      status.textContent = `Allumez le FM-1 pour démarrer ${e.nom}.`;
+      status.textContent = `Power on the FM-1 to start ${e.nom}.`;
       return;
     }
     const my = ++pickSeq;
-    status.textContent = `Démarrage de ${e.nom}…`;
+    status.textContent = `Starting ${e.nom}…`;
     const ok = await useEngine(e).catch(() => false);
     if (my !== pickSeq) return;
     if (ok) {
       active = { id: e.id, nom: e.nom }; nameEl.textContent = e.nom; showFiche();
-      status.textContent = current !== va && current.storageError ? `${e.nom} · Sauvegardes indisponibles dans ce navigateur.` : "";
+      status.textContent = current !== va && current.storageError ? `${e.nom} · Saves are unavailable in this browser.` : "";
       if (e.id !== "local") try { localStorage.setItem(SKEY(LAST), JSON.stringify(active)); } catch { /* cette session */ }
       renderSections();
     } else status.textContent = failureText(e);
@@ -6288,17 +6286,17 @@ function buildPanel(fw) {
   async function resetEmu() {
     if (current.kind === "natif") {         // natif : flash effacée, firmware redémarré à neuf
       const n = current, e = n.entry;
-      status.textContent = `Réglages d'usine de ${e.nom}…`;
+      status.textContent = `Restoring factory settings for ${e.nom}…`;
       try { await nativeFlash.put(e.id, {}); await nativeFlash.put(e.id + "/banque", null); } catch { /* rien de gardé */ }
       await n.stop(); n.node = null; natives.delete(e.id); current = va; vaOut(true);
       const ok = await useEngine(e).catch(() => false);
-      status.textContent = ok ? "" : `${e.nom} n'a pas redémarré.`;
+      status.textContent = ok ? "" : `${e.nom} could not restart.`;
       return;
     }
     const e = emu.entry;
-    status.textContent = `Réglages d'usine de ${e.nom}…`;
+    status.textContent = `Restoring factory settings for ${e.nom}…`;
     const ok = await emu.boot(e, { reset: true });
-    status.textContent = ok ? "" : `${e.nom} n'a pas redémarré.`;
+    status.textContent = ok ? "" : `${e.nom} could not restart.`;
   }
 
   // pour les tests
@@ -6312,21 +6310,21 @@ function buildPanel(fw) {
   // a DX7 patch or bank, as a .syx file: chosen, or dropped on the FM-1
   async function takeFile(file) {
     if (!file) return;
-    if (!fw.on) { status.textContent = "Allumez le FM-1 avant de charger un fichier DX7."; return; }
+    if (!fw.on) { status.textContent = "Power on the FM-1 before loading a DX7 file."; return; }
     try {
       const r = dx7Parse(new Uint8Array(await file.arrayBuffer()));
-      if (r.single) { fw.takePatch(r.single); status.textContent = `Patch « ${r.single.name} » chargé dans le preset ${String(fw.idx + 1).padStart(3, "0")}. SAVE pour le garder.`; }
-      else { fw.askBank(r.bank); status.textContent = "Banque DX7 de 32 patches : répondez à la question sur l'écran (ALGORITHM choisit la banque)."; }
-    } catch (err) { status.textContent = `« ${file.name} » n'a pas pu être lu : ${err.message}.`; }
+      if (r.single) { fw.takePatch(r.single); status.textContent = `Patch « ${r.single.name} » loaded into preset ${String(fw.idx + 1).padStart(3, "0")}. Press SAVE to keep it.`; }
+      else { fw.askBank(r.bank); status.textContent = "DX7 bank of 32 patches: follow the LCD prompt (use ALGORITHM to choose the bank)."; }
+    } catch (err) { status.textContent = `« ${file.name} » could not be read: ${err.message}.`; }
   }
   $("syx").addEventListener("change", (e) => { takeFile(e.target.files[0]); e.target.value = ""; });
   // des sons ou une banque .kob pour un firmware natif qui prend des échantillons (pigeon)
   async function takeSamples(files) {
     if (!files.length) return;
     const rom = current.entry?.id === "fmdj";
-    status.textContent = rom ? "ROM : vérification…" : "Préparation des échantillons…";
+    status.textContent = rom ? "ROM: validating…" : "Preparing samples…";
     try { status.textContent = await current.takeSamples(files, ac); }
-    catch (err) { status.textContent = (rom ? "ROM : " : "Échantillons : ") + (err && err.message ? err.message : err); }
+    catch (err) { status.textContent = (rom ? "ROM : " : "Samples: ") + (err && err.message ? err.message : err); }
   }
   $("samples").addEventListener("change", (e) => { const f = [...e.target.files]; e.target.value = ""; takeSamples(f); });
   device.addEventListener("dragover", (e) => { e.preventDefault(); });
@@ -6341,7 +6339,7 @@ function buildPanel(fw) {
   power.addEventListener("click", async () => {
     if (!$("start").hidden) { if (!$("go").disabled) switchOn(); return; }
     power.disabled = true;
-    status.textContent = "Extinction…";
+    status.textContent = "Turning off…";
     if (current !== va) {
       await resetEmu().catch(() => {});
       if (current !== va) await current.stop().catch(() => {});   // la flash effacée est enregistrée avant de partir
@@ -6379,7 +6377,7 @@ function buildPanel(fw) {
       }
       svg.append(g);
     }
-    svg.setAttribute("aria-label", "Raccourcis clavier : " + said.join(", "));
+    svg.setAttribute("aria-label", "Keyboard shortcuts: " + said.join(", "));
   }
   drawKeyboard(keyLetters(navigator.language, null));
   navigator.keyboard?.getLayoutMap?.().then((map) => drawKeyboard(keyLetters(navigator.language, map))).catch(() => {});
@@ -6405,14 +6403,14 @@ function buildPanel(fw) {
     setTimeout(() => { document.addEventListener("pointerdown", shut, { once: true }); addEventListener("blur", shut, { once: true }); });
   };
   if (FM1_ID || navigator.standalone || matchMedia("(display-mode: standalone), (display-mode: fullscreen)").matches) return;   // déjà sans navigateur
-  const help = (b) => window.__tip(b, "Ce navigateur n'ouvre pas le plein écran. Touchez <b>Partager</b>, puis <b>Sur l'écran d'accueil</b> : ouvert depuis l'écran d'accueil, le FM-1 occupe tout l'écran.");
+  const help = (b) => window.__tip(b, "Browser fullscreen is unavailable here. Tap <b>Share</b>, then <b>Add to Home Screen</b> to launch FM-1 without Safari chrome.");
   // le même bouton entre en plein écran puis en sort (le navigateur réapparaît) ; son icône le dit
   const IN = "M3 7.5V3h4.5M12.5 3H17v4.5M17 12.5V17h-4.5M7.5 17H3v-4.5", OUT = "M7.5 3v4.5H3M17 7.5h-4.5V3M12.5 17v-4.5H17M3 12.5h4.5V17";
   const paint = () => {
     const on = !!cur();
     for (const b of document.querySelectorAll(".fs")) {
       b.setAttribute("aria-pressed", on);
-      b.setAttribute("aria-label", on ? "Quitter le plein écran" : "Plein écran"); b.title = b.getAttribute("aria-label");
+      b.setAttribute("aria-label", on ? "Exit full screen" : "Full screen"); b.title = b.getAttribute("aria-label");
       b.querySelector("path").setAttribute("d", on ? OUT : IN);
     }
   };
@@ -6427,7 +6425,7 @@ function buildPanel(fw) {
 <script>
 // Duo : deux FM-1 à la fois, FM1-A et FM1-B, chacun la page entière dans son cadre (?fm1=a, ?fm1=b), avec son firmware,
 // sa mémoire et son allumage. En portrait l'un au-dessus de l'autre ; en paysage l'un ou l'autre en plein écran (le
-// sélecteur), ou, sur un grand écran, côte à côte au choix. Tempo lié : FM1-A mène, FM1-B suit son horloge (FM-1+VA
+// sélecteur), ou, sur un grand écran, côte à côte au choix. Tempo lié : FM1-A leads, FM1-B follows its clock (FM-1+VA
 // des deux côtés : un firmware natif ne lit pas encore le MIDI).
 "use strict";
 (function () {
@@ -6439,13 +6437,13 @@ function buildPanel(fw) {
   root.className = "duo";
   root.innerHTML = `
     <div class="duo-bar">
-      <div class="duo-brand"><span class="mark">FM-1<span>+VA</span></span><button type="button" class="fs" aria-label="Plein écran" title="Plein écran" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5V3h4.5M12.5 3H17v4.5M17 12.5V17h-4.5M7.5 17H3v-4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
-      <div class="seg duo-view" role="radiogroup" aria-label="Disposition">
-        <button type="button" role="radio" data-v="side">Côte à côte</button>
-        <button type="button" role="radio" data-v="one">Un à la fois</button>
+      <div class="duo-brand"><span class="mark">FM-1<span>+VA</span></span><button type="button" class="fs" aria-label="Full screen" title="Full screen" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5V3h4.5M12.5 3H17v4.5M17 12.5V17h-4.5M7.5 17H3v-4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <div class="seg duo-view" role="radiogroup" aria-label="Layout">
+        <button type="button" role="radio" data-v="side">Side by side</button>
+        <button type="button" role="radio" data-v="one">One at a time</button>
       </div>
-      <button type="button" class="duo-link" role="switch" aria-checked="false">Tempo lié<span class="dir"></span><span class="track"></span></button>
-      <nav class="seg" aria-label="Un ou deux FM-1"><a href="./">Solo</a><a href="?duo" aria-current="page">Duo</a></nav>
+      <button type="button" class="duo-link" role="switch" aria-checked="false">Linked tempo<span class="dir"></span><span class="track"></span></button>
+      <nav class="seg" aria-label="One or two FM-1s"><a href="./">Solo</a><a href="?duo" aria-current="page">Duo</a></nav>
     </div>
     <div class="duo-stage"><iframe name="a" title="FM1-A" src="?fm1=a" allow="midi; autoplay"></iframe><iframe name="b" title="FM1-B" src="?fm1=b" allow="midi; autoplay"></iframe></div>`;
   document.body.append(root);
@@ -6463,7 +6461,7 @@ function buildPanel(fw) {
     let t = deck.querySelector(".duo-tabs");
     if (!t) {
       t = d.createElement("div");
-      t.className = "seg duo-tabs"; t.setAttribute("role", "tablist"); t.setAttribute("aria-label", "Le FM-1 affiché");
+      t.className = "seg duo-tabs"; t.setAttribute("role", "tablist"); t.setAttribute("aria-label", "Displayed FM-1");
       t.innerHTML = '<button type="button" role="tab" data-k="a"><span class="beat"></span>FM1-A</button><button type="button" role="tab" data-k="b"><span class="beat"></span>FM1-B</button>';
       t.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(b.dataset.k); });
       deck.querySelector(".skins").after(t);
@@ -6498,11 +6496,11 @@ function buildPanel(fw) {
   addEventListener("blur", () => setTimeout(() => { const f = document.activeElement; if (f && f.tagName === "IFRAME" && stage.dataset.layout !== "one") midiTo(f.name); }));
   for (const f of Object.values(frames)) f.addEventListener("load", () => midiTo(active));
 
-  // le tempo lié : un FM-1+VA mène (FM1-A s'il en est un), l'autre FM-1 suit son horloge, Start, Stop et Continue,
+  // le tempo lié : un FM-1+VA mène (FM1-A s'il en est un), l'autre FM-1 follows its clock, Start, Stop et Continue,
   // FM-1+VA ou firmware natif (un natif suit s'il sait suivre une horloge MIDI, souvent un réglage Sync à lui)
   linkBtn.addEventListener("click", () => {
     if (linkBtn.getAttribute("aria-disabled") === "true") {   // aucun FM-1+VA allumé : rien ne donne l'horloge, la bulle le dit
-      return window.__tip(linkBtn, "Le tempo se lie quand les deux FM-1 sont allumés et que l'un joue <b>FM-1+VA</b> : c'est lui qui donne l'horloge. Les firmwares natifs n'en envoient pas.");
+      return window.__tip(linkBtn, "Linked tempo requires both FM-1s on, with FM-1+VA on one device supplying the clock. Native firmware does not transmit clock.");
     }
     linked = !linked; keep("link", linked ? "1" : "0"); tick();
   });
@@ -6518,7 +6516,7 @@ function buildPanel(fw) {
     linkBtn.setAttribute("aria-checked", on);
     linkBtn.setAttribute("aria-disabled", !lead);
     linkBtn.querySelector(".dir").textContent = on ? (lead === "a" ? " · A → B" : " · B → A") : "";
-    linkBtn.title = lead ? `FM1-${lead.toUpperCase()} mène, FM1-${other.toUpperCase()} suit son horloge` : "Le tempo se lie quand les deux FM-1 sont allumés et que l'un joue FM-1+VA";
+    linkBtn.title = lead ? `FM1-${lead.toUpperCase()} leads, FM1-${other.toUpperCase()} follows its clock` : "Linked tempo requires both FM-1s on, with FM-1+VA as clock leader";
     for (const k of ["a", "b"]) {                     // ce que chacun doit être maintenant
       const e = E[k] && (E[k].va || E[k].natif || E[k].emu), isLead = on && k === lead, isFollow = on && k === other;
       if (was[k] && was[k] !== e && was[k].mi) { was[k].mi.lead = false; was[k].mi.follow = false; was[k].mi.link = null; was[k].sendGlobal(); }
