@@ -11,6 +11,7 @@
     let linked = initialLinked, playing = false, starting = false, ctx = null, node = null, setup = null;
     let epoch = 0; // invalidates stale worklet messages and asynchronous start requests
     let currentPlayers = null, pendingPlayers = null, cached = { a: null, b: null };
+    let deliveryFault = false;
     const stats = { pulses: 0, starts: 0, stops: 0, late: 0, maxLagMs: 0, frames: [], arrivals: [] };
     tempoBox.value = String(bpm);
 
@@ -27,22 +28,34 @@
     const same = (a, b) => !!a && !!b && a.a === b.a && a.b === b.b;
 
     function deliver(byte, to = engines()) {
-      for (const k of ["a", "b"]) {
-        if (to[k]?.on) to[k].midiIn(Uint8Array.of(byte));
+      let ok = true;
+      // One firmware failing to accept a message must not prevent Stop (or
+      // other transport messages) from reaching its healthy partner.
+      for (const k of ["a", "b"]) if (to[k]?.on) {
+        try { to[k].midiIn(Uint8Array.of(byte)); }
+        catch (err) { ok = false; console.warn("Duo MIDI delivery failed to FM1-" + k.toUpperCase(), err); }
       }
+      return ok;
     }
+    const localClockHint = "After disabling Duo sync, firmware still set to external MIDI clock cannot run from panel PLAY. " +
+      "Set the firmware's clock to INT (native Hortator: GLOBAL → CLK → INT; imported Hortator: CLK → INT).";
     function paint() {
       linkBtn.setAttribute("aria-checked", String(linked));
-      linkBtn.title = "Shared host MIDI clock; native Hortator external clock = USB; imported .fwsc external clock = TRS.";
+      linkBtn.title = linked
+        ? "Shared host MIDI clock. Native Hortator: CLK USB; imported .fwsc: CLK TRS."
+        : localClockHint;
       tempoBox.disabled = !linked;
       playBtn.disabled = !linked || !ready(cached) || starting;
       playBtn.setAttribute("aria-pressed", String(playing));
       playBtn.textContent = playing ? "Stop" : starting ? "Starting…" : "Play";
       // 'Ready' means only that both engines have a MIDI input adapter, NOT
       // that their chosen firmware actually follows external clock.
-      state.textContent = !linked ? "Sync off" : !ready(cached) ? "Power on both" :
+      const hortator = Object.values(cached).some(e => e?.entry?.id === "hortator");
+      state.textContent = !linked ? (hortator ? "Local Play: set CLK INT" : "Sync off") :
+        deliveryFault ? "Clock delivery failed" : !ready(cached) ? "Power on both" :
         playing ? (stats.late > 3 ? "Clock delays detected" : "Clock sent · set ext sync") :
         starting ? "Starting clock…" : "Clock ready · set ext sync";
+      state.title = !linked ? localClockHint : "Receiving MIDI clock requires external clock selected in each firmware. Inactive/unsupported receivers may ignore it.";
     }
     function stop() {
       // Invalidate any pending asynchronous start, including Play followed by
@@ -65,7 +78,11 @@
       const e = engines();
       if (!same(e, currentPlayers)) { stop(); return; }
       for (const event of message.events) {
-        deliver(event.byte, e);
+        if (!deliver(event.byte, e)) {
+          deliveryFault = true;
+          stop(); // Don't leave one sequencer running after its partner fails.
+          return;
+        }
         if (event.byte === 0xf8) {
           stats.pulses++;
           // A valid sample timeline does not mean each MIDI message arrived on
@@ -142,6 +159,7 @@
     }
     linkBtn.addEventListener("click", () => {
       stop(); // cancel start even if the worklet has not loaded yet
+      deliveryFault = false;
       linked = !linked;
       keep("link", linked ? "1" : "0");
       tick();
@@ -159,6 +177,7 @@
       tick();
       if (!linked || !ready(cached)) return;
       const selected = cached, attempt = ++epoch;
+      deliveryFault = false;
       starting = true;
       pendingPlayers = selected;
       paint();
