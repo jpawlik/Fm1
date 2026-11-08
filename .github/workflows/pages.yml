@@ -24,6 +24,7 @@ on:
       - "duo-sync.js"
       - "backup.js"
       - "tests/test_duo.py"
+      - "tests/test_duo_host.py"
       - "tests/test_backup.py"
       - "tools/**"
   workflow_dispatch:
@@ -324,7 +325,7 @@ jobs:
         run: tar -xzf natif.tar.gz
       - name: Duo MIDI clock and regression tests
         if: github.event_name == 'pull_request'
-        run: python -m pytest -q tests/test_duo.py tests/test_backup.py
+        run: python -m pytest -q tests/test_duo.py tests/test_duo_host.py tests/test_backup.py
       - name: Démarrage des firmwares natifs
         if: needs.plan.outputs.native == 'true'
         run: |
