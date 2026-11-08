@@ -23,19 +23,21 @@ def test_base_worklet_bundle_follows_nested_imports_and_preserves_parts(tmp_path
         'const Fm1 = class {};\n'
         'registerProcessor("fm1", Fm1);\n'
     )
-    subprocess.run([sys.executable, str(ROOT / "tools/worklets/fm1base_bundle.py"), str(tmp_path)],
+    subprocess.run([sys.executable, str(ROOT / "tools/worklets/fm1base_bundle.py"), str(tmp_path), "natif-demo"],
                    check=True)
     bundle = (tmp_path / "worklet-bundle.js").read_text()
     assert bundle.index("globalThis.fm1App") < bundle.index('registerProcessor("fm1"')
-    assert "name.startsWith(\"natif-\")" in bundle
+    assert 'name !== "natif-demo"' in bundle
+    assert 'name.startsWith("natif-")' not in bundle
     assert 'import "./' not in bundle
-    assert bundle.count("globalThis.fm1App") == 1
+    assert 'const __fm1ScopedApp = globalThis.fm1App || {};' in bundle
+    assert bundle.count("globalThis.fm1App") == 2
 
 
 def test_base_worklet_bundle_rejects_escaping_imports(tmp_path):
     (tmp_path / "app_worklet.js").write_text('import "../outside.js";')
     (tmp_path / "worklet.js").write_text('registerProcessor("fm1", class {});')
-    result = subprocess.run([sys.executable, str(ROOT / "tools/worklets/fm1base_bundle.py"), str(tmp_path)],
+    result = subprocess.run([sys.executable, str(ROOT / "tools/worklets/fm1base_bundle.py"), str(tmp_path), "natif-demo"],
                             capture_output=True, text=True)
     assert result.returncode != 0
 
@@ -52,7 +54,19 @@ def test_only_pinned_licenced_base_engines_use_the_new_protocol():
     import json
     builds = json.loads((ROOT / "tools/natif.json").read_text())["firmwares"]
     native = {b["id"]: b for b in builds}
-    for id_ in ("echofield", "graine"):
+    for id_ in ("echofield", "graine", "loom"):
         assert native[id_]["dialecte"] == "base"
         assert len(native[id_]["commit"]) == 40
         assert 'fm1base_bundle.py' in native[id_]["construction"]
+
+def test_base_worklet_without_app_clears_stale_global_and_binds_callback(tmp_path):
+    (tmp_path / "worklet.js").write_text(
+        'class Fm1 { onMessage() { return globalThis.fm1App; } }\n'
+        'registerProcessor("fm1", Fm1);\n'
+    )
+    subprocess.run([sys.executable, str(ROOT / "tools/worklets/fm1base_bundle.py"),
+                    str(tmp_path), "natif-loom"], check=True)
+    bundle = (tmp_path / "worklet-bundle.js").read_text()
+    assert 'globalThis.fm1App = {};' in bundle
+    assert 'const __fm1ScopedApp = globalThis.fm1App || {};' in bundle
+    assert 'return __fm1ScopedApp;' in bundle

@@ -24,7 +24,7 @@
    "depot": "Philip-Bos/echofield-fm1",
    "commit": "27feb2d23dc60bf1f8dbd7209286ee5a15a6b88f",
    "script": "base/tools/build.py",
-   "construction": "python3 base/tools/build.py app --web && python3 \"$HERE/tools/worklets/fm1base_bundle.py\" app/build/emu",
+   "construction": "python3 base/tools/build.py app --web && python3 \"$HERE/tools/worklets/fm1base_bundle.py\" app/build/emu natif-echofield",
    "wasm": "app/build/emu/app.wasm",
    "dialecte": "base"
   },
@@ -48,7 +48,7 @@
    "depot": "omnipotard/Granular-FM1",
    "commit": "40a9a99abfbd03b3c837c98fdea2fab50c169ed3",
    "script": "build.sh",
-   "construction": "sh build.sh --web && python3 \"$HERE/tools/worklets/fm1base_bundle.py\" app/build/emu",
+   "construction": "sh build.sh --web && python3 \"$HERE/tools/worklets/fm1base_bundle.py\" app/build/emu natif-graine",
    "wasm": "app/build/emu/app.wasm",
    "dialecte": "base"
   },
@@ -75,8 +75,9 @@
    "depot": "charlesvestal/fm1-loom",
    "commit": "faf459d1f9cea3e634b6e2622a1c3e91d58b3452",
    "script": "build.sh",
-   "construction": "sh build.sh --web",
-   "wasm": "app/build/emu/app.wasm"
+   "construction": "sh build.sh --web && python3 \"$HERE/tools/worklets/fm1base_bundle.py\" app/build/emu natif-loom",
+   "wasm": "app/build/emu/app.wasm",
+   "dialecte": "base"
   },
   {
    "id": "loomfm1",
