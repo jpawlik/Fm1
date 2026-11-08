@@ -235,3 +235,112 @@ def test_cpu_emulator_on_b_uses_separate_save_store_and_receives_clock(page):
     assert b.evaluate("window.__clockBytes").count(0xF8) >= 10
     page.click(".duo-play")
     assert 0xFC in b.evaluate("window.__clockBytes")
+
+
+def tap_native(frame, button):
+    """A normal short panel-button press; do not invoke the sequencer directly."""
+    frame.evaluate("""button => {
+      const fw = window.__engine();
+      fw.press(button);
+      setTimeout(() => fw.release(button), 100);
+    }""", button)
+    frame.wait_for_timeout(160)
+
+
+def test_native_hortator_local_play_after_duo_unlink_requires_clk_int(page):
+    """Regression for iPad report: panel PLAY in USB mode has no free-running clock.
+    Switching the firmware itself back to INT restores local playback.
+    """
+    a, b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    native(a, "hortator")
+    native(b, "hortator")
+    for f in (a, b):
+        tap_native(f, "GLO")
+        f.evaluate("window.__engine().turn('KNOB3', 1)")  # CLK INT -> USB
+        f.wait_for_timeout(180)
+    page.click(".duo-link")
+    page.click(".duo-play")
+    for f in (a, b):
+        f.wait_for_function("window.__engine().playLight() === 'green'", timeout=6000)
+    page.click(".duo-link")  # sends Stop and removes clock pulses
+    assert page.get_attribute(".duo-link", "aria-checked") == "false"
+    for f in (a, b):
+        f.wait_for_function("window.__engine().playLight() !== 'green'", timeout=6000)
+        # The control still responds, but USB-clock mode times out with no external pulses.
+        tap_native(f, "PLAY")
+        f.wait_for_timeout(750)
+        assert f.evaluate("window.__engine().playLight()") != "green"
+    # App must give specific guidance instead of silently indicating local Play works.
+    assert "CLK INT" in page.inner_text(".duo-sync-state")
+    assert "CLK" in page.get_attribute(".duo-link", "title")
+    for f in (a, b):
+        f.evaluate("window.__engine().turn('KNOB3', -1)")  # CLK USB -> INT
+        f.wait_for_timeout(220)
+        tap_native(f, "PLAY")
+        f.wait_for_timeout(750)
+        assert f.evaluate("window.__engine().playLight()") == "green"
+    for f in (a, b):
+        tap_native(f, "PLAY")
+        f.wait_for_function("window.__engine().playLight() !== 'green'", timeout=4000)
+    assert not page.evaluate("window.__duo.playing")
+
+
+def test_fm1va_local_transport_survives_disabling_duo_sync(page):
+    """FM-1+VA must not retain its MIDI follower flag after unlink."""
+    a, b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    a.evaluate("window.__fw.seqOn(true)")
+    b.evaluate("window.__fw.seqOn(true)")
+    page.click(".duo-link")
+    page.wait_for_function("window.__duo.linked")
+    a.wait_for_function("window.__fw.mi.follow")
+    b.wait_for_function("window.__fw.mi.follow")
+    page.click(".duo-play")
+    a.wait_for_function("window.__fw.S.playing", timeout=6000)
+    b.wait_for_function("window.__fw.S.playing", timeout=6000)
+    page.click(".duo-link")
+    a.wait_for_function("!window.__fw.mi.follow && !window.__fw.S.playing", timeout=6000)
+    b.wait_for_function("!window.__fw.mi.follow && !window.__fw.S.playing", timeout=6000)
+    a.evaluate("window.__fw.seqPlay()")
+    b.evaluate("window.__fw.seqPlay()")
+    a.wait_for_function("window.__fw.S.playing", timeout=4000)
+    b.wait_for_function("window.__fw.S.playing", timeout=4000)
+    page.wait_for_timeout(700)
+    assert a.evaluate("window.__fw.S.playing") and b.evaluate("window.__fw.S.playing")
+    a.evaluate("window.__fw.seqPlay()")
+    b.evaluate("window.__fw.seqPlay()")
+
+
+def test_midi_delivery_exception_stops_other_receiver_and_reports_fault(page):
+    """Throwing adapter must not strand the healthy receiver or leave the host running."""
+    a, b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    native(a, "hortator")
+    native(b, "hortator")
+    capture(a)
+    b.evaluate("""() => { window.__engine().midiIn = () => { throw Error('simulated MIDI adapter failure'); }; }""")
+    page.click(".duo-link")
+    page.click(".duo-play")
+    page.wait_for_function("!window.__duo.playing && document.querySelector('.duo-sync-state').textContent.includes('delivery failed')", timeout=10000)
+    assert 0xFC in a.evaluate("window.__clockBytes")
+    assert page.get_attribute(".duo-play", "aria-pressed") == "false"
+
+
+def test_turning_off_duo_sync_while_stopped_does_not_send_spurious_stop(page):
+    a, b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    native(a, "hortator")
+    native(b, "hortator")
+    capture(a)
+    capture(b)
+    page.click(".duo-link")
+    assert not page.evaluate("window.__duo.playing")
+    page.click(".duo-link")
+    assert page.evaluate("window.__duo.stats.stops") == 0
+    assert 0xFC not in a.evaluate("window.__clockBytes")
+    assert 0xFC not in b.evaluate("window.__clockBytes")
