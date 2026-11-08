@@ -11,6 +11,8 @@ A small UI-focused fork of **[Ninjathune-Human/Fm1](https://github.com/Ninjathun
 3. On iPad, use **Safari → Share → Add to Home Screen**. Launch from the icon instead of Safari's fullscreen button.
 4. Open [Duo mode](https://jpawlik.github.io/Fm1/?duo), enable **Duo sync**, choose a BPM, and press **Play** in the Duo bar. Its host MIDI clock sends Start/Stop and 24 clocks per beat to both instances, with no FM-1+VA requirement. In each firmware select external clock: **USB for built-in native Hortator; TRS for a CPU-emulated `.fwsc`**. Other firmware must support MIDI clock input to follow it. Running two CPU emulators on iPad can crackle.
 
+**Returning to independent playback:** Turning **Duo sync off** stops the host clock but does *not* change the firmware's own clock-source setting. Native Hortator left on **GLOBAL → CLK → USB** (or imported Hortator on **CLK → TRS**) will wait for external pulses, so its panel PLAY may appear stuck. Choose **CLK → INT** on each firmware to use its own Play/Stop and internal tempo again. This also applies when leaving Duo for Solo; clock-source preferences can be saved with the firmware. The app deliberately does not silently overwrite firmware project settings.
+
 Presets and settings are stored in your browser. **Turning the FM-1 off resets the active firmware's saved data.** Before resetting or switching devices, open **Backup and restore** below the panel in Solo mode and export a JSON backup to iPad Files / iCloud Drive. The file includes native and emulated firmware saves plus Duo settings; it can also include imported firmware, samples and ROM data, so keep it private. To restore, power off, close other tabs, import the file, and confirm replacement.
 
 ## Curated firmware collection
