@@ -95,7 +95,7 @@
   "Captured sound and other saved data may be affected by the FM-1 app's known Power Off persistence bug."
  ],
  "source": {
-  "url": "https://github.com/omnipotard/Granular-FM1/blob/40a9a99abfbd03b3c837c98fdea2fab50c169ed3/app/docs/MANUAL.md",
+  "url": "https://github.com/Omnipotard/Granular-FM1/blob/40a9a99abfbd03b3c837c98fdea2fab50c169ed3/app/docs/MANUAL.md",
   "commit": "40a9a99abfbd03b3c837c98fdea2fab50c169ed3"
  },
  "d_apres_le_code": false
