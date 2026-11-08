@@ -34,6 +34,7 @@ on:
       - "tests/fiches.test.mjs"
       - "tests/test_picker.py"
       - "tests/test_base_worklets.py"
+      - "tests/test_natif.py"
       - "tools/**"
   workflow_dispatch:
     inputs:
@@ -315,7 +316,6 @@ jobs:
     runs-on: ubuntu-latest
     # A failing sync/backup regression must block merging the PR; retain the
     # historical non-blocking firmware-compatibility annotations on main.
-    continue-on-error: ${{ github.event_name != 'pull_request' }}
     defaults:
       run:
         shell: bash
