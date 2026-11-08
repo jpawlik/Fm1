@@ -1,66 +1,123 @@
 {
-  "id": "fizz",
-  "resume": "Un séquenceur pas à pas pour la voix FM TONE de ChoralRoot : des pistes, 16 pas par page, verrous de paramètres (p-locks), conditions, ratchets et accords jusqu'à six notes. Les touches blanches sont les pas.",
-  "commandes": [
-    { "commande": "OCT-", "role": "F1 : retour, annuler, ou octave plus bas sur un pas. Tenu avec une touche blanche, copie et colle ; tenu avec une touche noire (1 à 8), choisit une page. Ferme les menus restés ouverts." },
-    { "commande": "OCT+", "role": "F2 : confirmer, ou octave plus haut sur un pas. Tenu avec une touche blanche, déplace un pas." },
-    { "commande": "FX", "role": "Effets de ChoralRoot (SENDS, CHORUS, DELAY, REVERB, MASTER, ROUTING) ; FX encore passe à la page suivante. Tenu avec ALGORITHM, choisit la piste." },
-    { "commande": "SEL", "role": "Appui court : réglages de la piste (trois pages). Tenu : liste des pistes ; avec une touche noire 1 à 6, choisit la piste ; avec une touche blanche 1 à 6, appui court coupe la piste, appui long la met en solo." },
-    { "commande": "ENV", "role": "Mixeur : niveau, panoramique, envois delay et reverb de chaque piste ; ENV encore, les envois chorus, delay et reverb." },
-    { "commande": "LFO", "role": "Verrou de pas (latch) : fait comme si un pas était toujours tenu, pour éditer sans le garder sous le doigt. Allumé quand il est actif. LFO encore ou HOME l'éteint." },
-    { "commande": "EDIT", "role": "Éditeur de son de la piste choisie ; les touches noires 1 à 8 sont ses groupes de pages (opérateurs, enveloppes, filtres, ampli et effets, trois LFO)." },
-    { "commande": "GLO", "role": "SHIFT : tenu, active des raccourcis (touche noire 1 mémorise un instantané du pattern, 3 le rappelle, 4 copie, 5 colle, 6 tap tempo, 7 métronome, 8 suivi de page, 9 double la piste, 11 efface la piste). Avec SEL : réglages globaux. Avec SAVE : projets. Avec REC : réglages d'enregistrement." },
-    { "commande": "HOME", "role": "Revient à la vue de pas que vous utilisez (PIANO ROLL, STEPS ou EDIT) et ferme menus et pages. Avec SHIFT, passe de l'une à l'autre et à GEEK OUT." },
-    { "commande": "SAVE", "role": "Garde le son de la piste choisie dans MY PRESETS (SAVE PRESET). Avec SHIFT : les projets. Le projet lui-même s'enregistre tout seul." },
-    { "commande": "ARP", "role": "Écran MIDI FX : cinq groupes de huit emplacements (arpégiateur et autres effets de notes) ; ARP encore ou HOME ferme. SHIFT + FX maintenu : FILL." },
-    { "commande": "SEQ", "role": "Appui court : TOOLS, qui transforme une page, une piste ou le pattern (rotation, inversion, hasard, euclidien, humanisation, quantification, etc.). Tenu : les patterns, par banques de 16." },
-    { "commande": "PLAY", "role": "Lance et arrête la lecture. Maintenu, ouvre le menu F3 (comme les deux touches OCT ensemble)." },
-    { "commande": "REC", "role": "Appui court : la zone des touches devient un clavier jouable pour la piste ; REC encore revient aux pas. Maintenu : arme l'enregistrement ; un appui court l'arrête." },
-    { "commande": "SELECT", "role": "Choisit la page de 16 pas à éditer ; dans les menus et les écrans à pages, tourne les pages. Avec F3 : le tempo. Avec SHIFT : la piste." },
-    { "commande": "PRESETS", "role": "Sans rien tenir, ouvre la bibliothèque de sons (le son de la piste). Avec un pas tenu, c'est le verrou de son de ce pas. Avec SHIFT : la tonique de la piste." },
-    { "commande": "ALGORITHM", "role": "Curseur de pas : parcourt les pas des huit pages et édite celui choisi. Avec SHIFT : la gamme de la piste. Avec F3 : le swing. Avec SEQ tenu : quand un pattern entre (END, BAR, BEAT, NOW)." },
-    { "commande": "Touches blanches", "role": "Les 16 pas de la page (W1 à W16). Appui : crée ou retire un pas. Tenir un pas permet de l'éditer avec les touches noires et les boutons. En mode clavier (REC), elles jouent des notes." },
-    { "commande": "Touches noires", "role": "Choisissent le mode d'édition, aucun doigt sur un pas : B1 NOTE, B2 VEL, B3 LEN, B4 MICRO, B5 RATCH, B6 CHNC, B7 COND, B8 TRIG, B9 FUNC, B10 SLIDE, B11 SOUND. Avec un pas tenu, elles donnent dix valeurs rapides du mode ; B11 remet le pas à la valeur par défaut de la piste." }
-  ],
-  "gestes": [
-    "Un pas tenu (une touche blanche, 250 ms) + KNOB 1 à 4 : édite ses notes, vélocité, longueur, etc. selon le mode choisi.",
-    "Une touche noire tenue (B1 à B11) + un bouton : édite la valeur par défaut de la piste pour ce mode.",
-    "OCT- + OCT+ ensemble, ou PLAY maintenu : ouvre le menu F3 (OCT- le ferme). F3 + touches noires 1 à 7 : valeur de note de la piste ; F3 + SELECT : tempo ; F3 + ALGORITHM : swing ; F3 + une touche blanche : fin de la page.",
-    "SHIFT (GLO) + ALGORITHM : gamme de la piste ; SHIFT + PRESETS : tonique.",
-    "Un pas tenu dans l'éditeur de son + un bouton : verrouille cette valeur sur le pas.",
-    "OCT- tenu + touche blanche : copie et colle des pas ; OCT+ tenu + touche blanche : déplace un pas."
-  ],
-  "modes": [
-    {
-      "nom": "Vues de pas",
-      "texte": "PIANO ROLL, STEPS (les huit pages en rangées de 16 pas) et EDIT (le pas ou la valeur par défaut de la piste en grand). HOME ramène à celle que vous utilisez."
-    },
-    {
-      "nom": "Verrou de pas (LFO)",
-      "texte": "Édition sans garder le pas sous le doigt. Deux réglages, tenez LFO et tournez SELECT : MODES (les touches noires choisissent le mode, les boutons règlent les pas choisis) ou VALUES (les touches noires donnent les valeurs)."
-    },
-    {
-      "nom": "Clavier et enregistrement",
-      "texte": "REC bascule la zone des touches en clavier. Les touches hors gamme jouent la note de la gamme juste en dessous. OCT- et OCT+ déplacent le clavier de deux octaves au plus. L'enregistrement CAPTURE efface la piste au premier jeu et prend la durée jouée."
-    },
-    {
-      "nom": "Pages et boucle",
-      "texte": "Chaque piste a huit pages de 16 pas, chacune avec son début et sa fin. OCT- tenu + touches noires 1 à 8 choisissent la page, deux appuis rapides la bouclent seule, un appui long l'ajoute ou la retire de la boucle."
-    },
-    {
-      "nom": "Verrous de paramètres",
-      "texte": "Dans l'éditeur de son, le mixeur ou les effets, tenir un pas et tourner un bouton verrouille la valeur sur ce pas seulement. OCT+ tenu + le bouton retire le verrou."
-    }
-  ],
-  "a_savoir": [
-    "La doc décrit le son et l'écran comme tournant sur le Mac (FM1VST), le FM-1 servant de panneau ; elle dit que le firmware sur l'appareil arrive en phase 2. La version du catalogue peut donc aller plus loin ou moins loin.",
-    "Les noms de touches du FM-1 sont rebaptisés dans la doc : OCT- s'y appelle F1, OCT+ F2, GLO SHIFT.",
-    "Le projet s'enregistre tout seul 1,5 seconde après le dernier changement.",
-    "Au démarrage, SAVE maintenu lance le mode sans mémoire (safe mode) ; REC maintenu, le mode de mise à jour ; OCT- et OCT+, le réglage du panneau."
-  ],
-  "source": {
-    "url": "https://github.com/Quixotic7/FIZZ/blob/664d9812e32d5c24a0f3a89b429d35ccac1a9b32/PLAYING.md",
-    "commit": "664d9812e32d5c24a0f3a89b429d35ccac1a9b32"
+ "id": "fizz",
+ "resume": "Un séquenceur pas à pas pour la voix FM TONE de ChoralRoot : des pistes, 16 pas par page, verrous de paramètres (p-locks), conditions, ratchets et accords jusqu'à six notes. Les touches blanches sont les pas.",
+ "commandes": [
+  {
+   "commande": "OCT-",
+   "role": "F1 : retour, annuler, ou octave plus bas sur un pas. Tenu avec une touche blanche, copie et colle ; tenu avec une touche noire (1 à 8), choisit une page. Ferme les menus restés ouverts."
   },
-  "d_apres_le_code": false
+  {
+   "commande": "OCT+",
+   "role": "F2 : confirmer, ou octave plus haut sur un pas. Tenu avec une touche blanche, déplace un pas."
+  },
+  {
+   "commande": "FX",
+   "role": "Effets de ChoralRoot (SENDS, CHORUS, DELAY, REVERB, MASTER, ROUTING) ; FX encore passe à la page suivante. Tenu avec ALGORITHM, choisit la piste."
+  },
+  {
+   "commande": "SEL",
+   "role": "Appui court : réglages de la piste (trois pages). Tenu : liste des pistes ; avec une touche noire 1 à 6, choisit la piste ; avec une touche blanche 1 à 6, appui court coupe la piste, appui long la met en solo."
+  },
+  {
+   "commande": "ENV",
+   "role": "Mixeur : niveau, panoramique, envois delay et reverb de chaque piste ; ENV encore, les envois chorus, delay et reverb."
+  },
+  {
+   "commande": "LFO",
+   "role": "Verrou de pas (latch) : fait comme si un pas était toujours tenu, pour éditer sans le garder sous le doigt. Allumé quand il est actif. LFO encore ou HOME l'éteint."
+  },
+  {
+   "commande": "EDIT",
+   "role": "Éditeur de son de la piste choisie ; les touches noires 1 à 8 sont ses groupes de pages (opérateurs, enveloppes, filtres, ampli et effets, trois LFO)."
+  },
+  {
+   "commande": "GLO",
+   "role": "SHIFT : tenu, active des raccourcis (touche noire 1 mémorise un instantané du pattern, 3 le rappelle, 4 copie, 5 colle, 6 tap tempo, 7 métronome, 8 suivi de page, 9 double la piste, 11 efface la piste). Avec SEL : réglages globaux. Avec SAVE : projets. Avec REC : réglages d'enregistrement."
+  },
+  {
+   "commande": "HOME",
+   "role": "Revient à la vue de pas que vous utilisez (PIANO ROLL, STEPS ou EDIT) et ferme menus et pages. Avec SHIFT, passe de l'une à l'autre et à GEEK OUT."
+  },
+  {
+   "commande": "SAVE",
+   "role": "Garde le son de la piste choisie dans MY PRESETS (SAVE PRESET). Avec SHIFT : les projets. Le projet lui-même s'enregistre tout seul."
+  },
+  {
+   "commande": "ARP",
+   "role": "Écran MIDI FX : cinq groupes de huit emplacements (arpégiateur et autres effets de notes) ; ARP encore ou HOME ferme. SHIFT + FX maintenu : FILL."
+  },
+  {
+   "commande": "SEQ",
+   "role": "Appui court : TOOLS, qui transforme une page, une piste ou le pattern (rotation, inversion, hasard, euclidien, humanisation, quantification, etc.). Tenu : les patterns, par banques de 16."
+  },
+  {
+   "commande": "PLAY",
+   "role": "Lance et arrête la lecture. Maintenu, ouvre le menu F3 (comme les deux touches OCT ensemble)."
+  },
+  {
+   "commande": "REC",
+   "role": "Appui court : la zone des touches devient un clavier jouable pour la piste ; REC encore revient aux pas. Maintenu : arme l'enregistrement ; un appui court l'arrête."
+  },
+  {
+   "commande": "SELECT",
+   "role": "Choisit la page de 16 pas à éditer ; dans les menus et les écrans à pages, tourne les pages. Avec F3 : le tempo. Avec SHIFT : la piste."
+  },
+  {
+   "commande": "PRESETS",
+   "role": "Sans rien tenir, ouvre la bibliothèque de sons (le son de la piste). Avec un pas tenu, c'est le verrou de son de ce pas. Avec SHIFT : la tonique de la piste."
+  },
+  {
+   "commande": "ALGORITHM",
+   "role": "Curseur de pas : parcourt les pas des huit pages et édite celui choisi. Avec SHIFT : la gamme de la piste. Avec F3 : le swing. Avec SEQ tenu : quand un pattern entre (END, BAR, BEAT, NOW)."
+  },
+  {
+   "commande": "Touches blanches",
+   "role": "Les 16 pas de la page (W1 à W16). Appui : crée ou retire un pas. Tenir un pas permet de l'éditer avec les touches noires et les boutons. En mode clavier (REC), elles jouent des notes."
+  },
+  {
+   "commande": "Touches noires",
+   "role": "Choisissent le mode d'édition, aucun doigt sur un pas : B1 NOTE, B2 VEL, B3 LEN, B4 MICRO, B5 RATCH, B6 CHNC, B7 COND, B8 TRIG, B9 FUNC, B10 SLIDE, B11 SOUND. Avec un pas tenu, elles donnent dix valeurs rapides du mode ; B11 remet le pas à la valeur par défaut de la piste."
+  }
+ ],
+ "gestes": [
+  "Un pas tenu (une touche blanche, 250 ms) + KNOB 1 à 4 : édite ses notes, vélocité, longueur, etc. selon le mode choisi.",
+  "Une touche noire tenue (B1 à B11) + un bouton : édite la valeur par défaut de la piste pour ce mode.",
+  "OCT- + OCT+ ensemble, ou PLAY maintenu : ouvre le menu F3 (OCT- le ferme). F3 + touches noires 1 à 7 : valeur de note de la piste ; F3 + SELECT : tempo ; F3 + ALGORITHM : swing ; F3 + une touche blanche : fin de la page.",
+  "SHIFT (GLO) + ALGORITHM : gamme de la piste ; SHIFT + PRESETS : tonique.",
+  "Un pas tenu dans l'éditeur de son + un bouton : verrouille cette valeur sur le pas.",
+  "OCT- tenu + touche blanche : copie et colle des pas ; OCT+ tenu + touche blanche : déplace un pas."
+ ],
+ "modes": [
+  {
+   "nom": "Vues de pas",
+   "texte": "PIANO ROLL, STEPS (les huit pages en rangées de 16 pas) et EDIT (le pas ou la valeur par défaut de la piste en grand). HOME ramène à celle que vous utilisez."
+  },
+  {
+   "nom": "Verrou de pas (LFO)",
+   "texte": "Édition sans garder le pas sous le doigt. Deux réglages, tenez LFO et tournez SELECT : MODES (les touches noires choisissent le mode, les boutons règlent les pas choisis) ou VALUES (les touches noires donnent les valeurs)."
+  },
+  {
+   "nom": "Clavier et enregistrement",
+   "texte": "REC bascule la zone des touches en clavier. Les touches hors gamme jouent la note de la gamme juste en dessous. OCT- et OCT+ déplacent le clavier de deux octaves au plus. L'enregistrement CAPTURE efface la piste au premier jeu et prend la durée jouée."
+  },
+  {
+   "nom": "Pages et boucle",
+   "texte": "Chaque piste a huit pages de 16 pas, chacune avec son début et sa fin. OCT- tenu + touches noires 1 à 8 choisissent la page, deux appuis rapides la bouclent seule, un appui long l'ajoute ou la retire de la boucle."
+  },
+  {
+   "nom": "Verrous de paramètres",
+   "texte": "Dans l'éditeur de son, le mixeur ou les effets, tenir un pas et tourner un bouton verrouille la valeur sur ce pas seulement. OCT+ tenu + le bouton retire le verrou."
+  }
+ ],
+ "a_savoir": [
+  "La doc décrit le son et l'écran comme tournant sur le Mac (FM1VST), le FM-1 servant de panneau ; elle dit que le firmware sur l'appareil arrive en phase 2. La version du catalogue peut donc aller plus loin ou moins loin.",
+  "Les noms de touches du FM-1 sont rebaptisés dans la doc : OCT- s'y appelle F1, OCT+ F2, GLO SHIFT.",
+  "Le projet s'enregistre tout seul 1,5 seconde après le dernier changement.",
+  "Au démarrage, SAVE maintenu lance le mode sans mémoire (safe mode) ; REC maintenu, le mode de mise à jour ; OCT- et OCT+, le réglage du panneau."
+ ],
+ "source": {
+  "url": "https://github.com/Quixotic7/FIZZ/blob/01b5a98414d87ffce45d62997b4cd9d6bdd7364d/PLAYING.md",
+  "commit": "01b5a98414d87ffce45d62997b4cd9d6bdd7364d"
+ },
+ "d_apres_le_code": false
 }
