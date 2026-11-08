@@ -26,7 +26,13 @@ test("the curated 23 firmware entries and their categories are exact", () => {
 test("chaque paquet local existe et a l'empreinte du catalogue", () => {
   for (const e of cat.firmwares.filter((e) => e.fichier)) {
     const p = join(ROOT, e.fichier);
-    assert.ok(existsSync(p), `${e.id} : ${e.fichier} absent`);
+    if (e.paquet_a_telecharger) {
+      assert.match(e.paquet_en_ligne, /^https:\/\/github\.com\//, e.id);
+      assert.match(e.sha256, /^[a-f0-9]{64}$/, e.id);
+      // CI pulls verified release assets before assembling the site; a plain
+      // source checkout deliberately does not ship an old binary as fallback.
+      if (!existsSync(p)) continue;
+    } else assert.ok(existsSync(p), `${e.id} : ${e.fichier} absent`);
     assert.equal(createHash("sha256").update(readFileSync(p)).digest("hex"), e.sha256, e.id);
   }
 });
