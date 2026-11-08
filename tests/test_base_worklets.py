@@ -4,7 +4,6 @@ import sys
 from pathlib import Path
 
 from conftest import ROOT
-ROOT = Path(ROOT)
 
 ROOT = Path(ROOT)
 
@@ -44,7 +43,7 @@ def test_base_worklet_bundle_rejects_escaping_imports(tmp_path):
 def test_native_base_protocol_is_wired_to_host():
     s = (ROOT / "index.html").read_text(encoding="utf-8")
     assert 'this.dialect === "base"' in s
-    assert 'case "base": return { type: "load", wasm, store: saved || {}, master };' in s
+    assert 'case "base": return { type: "load", wasm, store: saved || {}, master, parts:' in s
     assert '{ type: "app", part: "midi", data: [s, a, b] }' in s
     assert "this.basePixels" in s
 
