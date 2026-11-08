@@ -1,21 +1,38 @@
-# Compile le cœur d'émulation fm1-emu (MIT, Joakim Eriksson) au commit figé, compile depuis leurs sources
-# les firmwares qui ont une version navigateur (tools/natif.json, une tâche par firmware : ceux qui échouent
-# restent émulés), assemble le site, joint runtime/ et natif/ à des versions GitHub, et publie depuis main.
+# Publish the website quickly from pinned release assets; rebuild the emulator and/or
+# the native firmware only when their inputs change (or on manual request).
 name: Site
 
 on:
   push:
     branches: [main, natif]
+    paths:
+      - "index.html"
+      - "engine.js"
+      - "assets/**"
+      - "firmwares/**"
+      - "tools/**"
+      - ".github/workflows/pages.yml"
   workflow_dispatch:
+    inputs:
+      mode:
+        description: What should be rebuilt?
+        required: true
+        type: choice
+        default: site
+        options:
+          - site
+          - runtime
+          - full
 
 permissions:
   contents: write
   pages: write
   id-token: write
 
+# Never cancel a long native build just because another change was pushed.
 concurrency:
   group: site-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   FM1_EMU_COMMIT: 93cb7ee3f7008b27959ba73073b864e37efd7289
@@ -24,7 +41,65 @@ env:
   NATIF_TAG: natif
 
 jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      native: ${{ steps.scope.outputs.native }}
+      runtime: ${{ steps.scope.outputs.runtime }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: scope
+        name: Select reusable assets or rebuilds
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          MODE: ${{ inputs.mode }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          native=false
+          runtime=false
+          # A new emulator pin must also get a unique matching release tag.
+          if [ "$RUNTIME_TAG" != "runtime-${FM1_EMU_COMMIT:0:7}" ]; then
+            echo "::error::RUNTIME_TAG must match the first 7 digits of FM1_EMU_COMMIT"
+            exit 1
+          fi
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            case "$MODE" in
+              full) native=true; runtime=true ;;
+              runtime) runtime=true ;;
+              site) ;;
+              *) echo "::error::Unknown build mode: $MODE"; exit 1 ;;
+            esac
+          elif [ -z "$BEFORE" ] || [[ "$BEFORE" =~ ^0+$ ]]; then
+            native=true
+            runtime=true
+          else
+            # Fetch just the previous pushed commit, without the full history.
+            if ! git fetch --no-tags --depth=1 origin "$BEFORE"; then
+              echo "::warning::Previous commit unavailable; rebuilding all assets"
+              native=true
+              runtime=true
+            else
+              while IFS= read -r path; do
+                case "$path" in
+                  tools/fm1emu_vert.py) runtime=true ;;
+                  tools/*) native=true ;;
+                  .github/workflows/pages.yml) runtime=true ;;
+                esac
+              done < <(git diff --name-only "$BEFORE" "$GITHUB_SHA")
+            fi
+          fi
+          # Bootstrap a new fork, or self-heal deleted release assets.
+          if ! gh release view "$NATIF_TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then native=true; fi
+          if ! gh release view "$RUNTIME_TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then runtime=true; fi
+          echo "native=$native" >> "$GITHUB_OUTPUT"
+          echo "runtime=$runtime" >> "$GITHUB_OUTPUT"
+          echo "Native rebuild: $native; emulator runtime rebuild: $runtime"
+
   liste:
+    needs: plan
+    if: needs.plan.outputs.native == 'true'
     runs-on: ubuntu-latest
     outputs:
       firmwares: ${{ steps.l.outputs.firmwares }}
@@ -87,8 +162,8 @@ jobs:
           if-no-files-found: ignore
 
   build:
-    needs: natif
-    if: ${{ !cancelled() }}
+    needs: [plan, natif]
+    if: ${{ always() && !cancelled() && needs.plan.result == 'success' && (needs.natif.result == 'success' || needs.natif.result == 'skipped') }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -97,72 +172,103 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v4
+        if: needs.plan.outputs.native == 'true'
         with:
           pattern: natif-*
           path: _site/natif
           merge-multiple: true
 
       - uses: actions/checkout@v4
+        if: needs.plan.outputs.runtime == 'true'
         with:
           repository: joakimeriksson/fm1-emu
           ref: ${{ env.FM1_EMU_COMMIT }}
           path: fm1-emu
 
-      - name: Cible WebAssembly
+      - name: WebAssembly target
+        if: needs.plan.outputs.runtime == 'true'
         run: rustup target add wasm32-unknown-unknown
 
-      - name: LED verte de PLAY (absente du tableau de LED de fm1-emu)
+      - name: Add the FM-1 green PLAY LED
+        if: needs.plan.outputs.runtime == 'true'
         run: python3 tools/fm1emu_vert.py fm1-emu fm1-emu/web/worklet.js
 
-      - name: Compilation du cœur
+      - name: Compile emulator runtime
+        if: needs.plan.outputs.runtime == 'true'
         working-directory: fm1-emu
         env:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           RUSTFLAGS: -Cllvm-args=-inline-threshold=2000 -Clink-arg=--export-table -Clink-arg=--growable-table
         run: cargo build --release -p fm1-web --target wasm32-unknown-unknown --target-dir target/wasm
 
-      - name: Assemblage du site
+      - name: Assemble website
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REBUILD_NATIVE: ${{ needs.plan.outputs.native }}
+          REBUILD_RUNTIME: ${{ needs.plan.outputs.runtime }}
         run: |
-          mkdir -p _site/runtime
+          set -euo pipefail
+          mkdir -p _site/runtime _site/natif
           cp index.html engine.js _site/
           for d in firmwares assets; do [ -d "$d" ] && cp -r "$d" _site/; done
-          cp fm1-emu/target/wasm/wasm32-unknown-unknown/release/fm1_web.wasm _site/runtime/
-          cp fm1-emu/web/worklet.js fm1-emu/web/persistence.js _site/runtime/
-          # écran envoyé 60 fois par seconde au lieu de 30 (seule modification du fichier de fm1-emu)
-          sed -i 's#sampleRate / 30#sampleRate / 60#' _site/runtime/worklet.js
-          grep -q 'sampleRate / 60' _site/runtime/worklet.js
-          cp fm1-emu/LICENSE _site/runtime/LICENSE-fm1-emu.txt
-          ls -la _site/runtime
-          # la liste des firmwares natifs prêts, lue par la page : {id: {wasm, processeur, dialecte}}
-          mkdir -p _site/natif
-          python3 -c "import json,glob,os; m={os.path.basename(os.path.dirname(f)): json.load(open(f)) for f in sorted(glob.glob('_site/natif/*/natif.json'))}; json.dump(m, open('_site/natif/manifest.json','w'), indent=1); print(len(m), 'natifs :', ' '.join(f'{k}({v[\"dialecte\"]})' for k,v in m.items()))"
-          echo "::notice title=natifs::$(python3 -c "import json; m=json.load(open('_site/natif/manifest.json')); print(len(m), ' '.join(sorted(m)))")"
-          tar -czf natif.tar.gz -C _site natif
 
-      - uses: actions/upload-artifact@v4       # pour la vérification
+          if [ "$REBUILD_RUNTIME" = "true" ]; then
+            cp fm1-emu/target/wasm/wasm32-unknown-unknown/release/fm1_web.wasm _site/runtime/
+            cp fm1-emu/web/worklet.js fm1-emu/web/persistence.js _site/runtime/
+            # Keep the site's 60 Hz LCD updates (upstream defaults to 30 Hz).
+            sed -i 's#sampleRate / 30#sampleRate / 60#' _site/runtime/worklet.js
+            grep -q 'sampleRate / 60' _site/runtime/worklet.js
+            cp fm1-emu/LICENSE _site/runtime/LICENSE-fm1-emu.txt
+          else
+            gh release download "$RUNTIME_TAG" -R "$GITHUB_REPOSITORY" -D _site/runtime
+          fi
+
+          if [ "$REBUILD_NATIVE" = "true" ]; then
+            python3 -c "import json,glob,os; m={os.path.basename(os.path.dirname(f)): json.load(open(f)) for f in sorted(glob.glob('_site/natif/*/natif.json'))}; json.dump(m, open('_site/natif/manifest.json','w'), indent=1); print(len(m), 'native firmwares:', ' '.join(sorted(m)))"
+            tar -czf natif.tar.gz -C _site natif
+          else
+            gh release download "$NATIF_TAG" -R "$GITHUB_REPOSITORY" -p natif.tar.gz -D .
+            tar -xzf natif.tar.gz -C _site
+          fi
+
+          test -s _site/runtime/fm1_web.wasm
+          test -s _site/runtime/worklet.js
+          test -s _site/runtime/persistence.js
+          test -s _site/natif/manifest.json
+          echo "::notice title=Site assets::runtime rebuilt=$REBUILD_RUNTIME, native rebuilt=$REBUILD_NATIVE"
+
+      - uses: actions/upload-artifact@v4
+        if: needs.plan.outputs.native == 'true' || needs.plan.outputs.runtime == 'true'
         with:
           name: site-natif
           path: natif.tar.gz
 
-      - uses: actions/upload-artifact@v4       # le cœur compilé, pour la vérification des firmwares émulés
+      - uses: actions/upload-artifact@v4
+        if: needs.plan.outputs.native == 'true' || needs.plan.outputs.runtime == 'true'
         with:
           name: site-runtime
           path: _site/runtime
 
-      - name: Version runtime
-        if: github.ref == 'refs/heads/main'    # une branche d'essai ne remplace pas les versions publiées
+      - name: Publish emulator runtime
+        if: github.ref == 'refs/heads/main' && needs.plan.outputs.runtime == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release view "$RUNTIME_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
             gh release create "$RUNTIME_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
-              --title "Cœur fm1-emu ${FM1_EMU_COMMIT:0:7}" \
-              --notes "fm1_web.wasm compilé depuis joakimeriksson/fm1-emu@${FM1_EMU_COMMIT} (MIT), avec worklet.js et persistence.js."
+              --title "fm1-emu ${FM1_EMU_COMMIT:0:7}" \
+              --notes "fm1_web.wasm compiled from joakimeriksson/fm1-emu@${FM1_EMU_COMMIT} (MIT), with worklet.js and persistence.js."
           gh release upload "$RUNTIME_TAG" _site/runtime/* --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Publish native firmware builds
+        if: github.ref == 'refs/heads/main' && needs.plan.outputs.native == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
           gh release view "$NATIF_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
             gh release create "$NATIF_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
-              --title "Firmwares natifs" \
-              --notes "Les firmwares de tools/natif.json compilés depuis leurs sources pour le navigateur (chacun sous la licence de son auteur, jointe)."
+              --title "Native firmware" \
+              --notes "Firmware from tools/natif.json compiled for the browser from each author's source (original licenses retained)."
           gh release upload "$NATIF_TAG" natif.tar.gz --repo "$GITHUB_REPOSITORY" --clobber
 
       - uses: actions/upload-pages-artifact@v3
@@ -171,8 +277,8 @@ jobs:
 
   # chaque firmware natif démarre et dessine son écran ; le résultat en annotation (lisible sans les journaux)
   verification:
-    needs: build
-    if: ${{ !cancelled() }}
+    needs: [plan, build]
+    if: ${{ !cancelled() && needs.build.result == 'success' && (needs.plan.outputs.native == 'true' || needs.plan.outputs.runtime == 'true') }}
     runs-on: ubuntu-latest
     continue-on-error: true
     defaults:
