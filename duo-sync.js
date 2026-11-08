@@ -10,8 +10,8 @@
     let bpm = clamp(keep("bpm") || 120);
     let linked = initialLinked, playing = false, starting = false, ctx = null, node = null, setup = null;
     let epoch = 0; // invalidates stale worklet messages and asynchronous start requests
-    let currentPlayers = null, cached = { a: null, b: null };
-    const stats = { pulses: 0, starts: 0, stops: 0, frames: [], arrivals: [] };
+    let currentPlayers = null, pendingPlayers = null, cached = { a: null, b: null };
+    const stats = { pulses: 0, starts: 0, stops: 0, late: 0, maxLagMs: 0, frames: [], arrivals: [] };
     tempoBox.value = String(bpm);
 
     function engine(k) {
@@ -54,6 +54,7 @@
         stats.stops++;
       }
       currentPlayers = null;
+      pendingPlayers = null;
       paint();
     }
     function fromClock({ data: message }) {
@@ -64,6 +65,11 @@
         deliver(event.byte, e);
         if (event.byte === 0xf8) {
           stats.pulses++;
+          // A valid sample timeline does not mean each MIDI message arrived on
+          // time. Track main-thread stalls separately, without claiming zero jitter.
+          const lag = Math.max(0, (ctx.currentTime * ctx.sampleRate - event.frame) * 1000 / ctx.sampleRate);
+          if (lag > 80) stats.late++;
+          stats.maxLagMs = Math.max(stats.maxLagMs, lag);
           stats.frames.push(event.frame);
           stats.arrivals.push(performance.now());
           if (stats.frames.length > 144) stats.frames.shift();
@@ -102,6 +108,7 @@
       const e = engines();
       // A changed firmware, power-off or suspended clock must STOP, not silently drift.
       if (playing && (!linked || !same(e, currentPlayers) || ctx?.state !== "running")) stop();
+      if (starting && (!linked || !same(e, pendingPlayers))) stop();
       cached = e;
       // FM-1+VA retains the existing MIDI follower setting but is never required as source.
       for (const k of ["a", "b"]) {
@@ -150,6 +157,7 @@
       if (!linked || !ready(cached)) return;
       const selected = cached, attempt = ++epoch;
       starting = true;
+      pendingPlayers = selected;
       paint();
       try {
         // Resume on the click, not after async module compilation.
@@ -159,7 +167,9 @@
         if (attempt !== epoch || document.hidden || !linked || !same(selected, engines())) return;
         if (ctx.state !== "running") throw Error("Audio clock suspended");
         currentPlayers = selected;
+        pendingPlayers = null;
         playing = true;
+        stats.late = 0; stats.maxLagMs = 0;
         stats.frames.length = stats.arrivals.length = 0;
         clock.port.postMessage({ type: "start", bpm, epoch: attempt });
       } catch (err) {
@@ -168,7 +178,7 @@
           if (window.__tip) window.__tip(playBtn, "Duo clock unavailable: " + (err?.message || err));
         }
       } finally {
-        if (attempt === epoch) { starting = false; paint(); }
+        if (attempt === epoch) { starting = false; pendingPlayers = null; paint(); }
       }
     });
     window.addEventListener("pagehide", stop);
