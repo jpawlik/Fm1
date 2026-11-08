@@ -120,3 +120,86 @@ def test_cpu_emulator_receives_host_clock_via_virtual_trs(page):
         assert 0xFA in midi and midi.count(0xF8) >= 8
     page.click(".duo-play")
     assert 0xFC in a.evaluate("window.__clockBytes")
+
+
+def test_rapid_start_stop_restart_never_forwards_stale_stop(page):
+    """A late worklet Stop from a previous session cannot stop a newer Start."""
+    a,b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    native(a, "hortator")
+    native(b, "felucca")
+    capture(a)
+    capture(b)
+    page.click(".duo-link")
+    page.click(".duo-play")
+    page.wait_for_function("window.__duo.stats.pulses > 5", timeout=10000)
+    page.click(".duo-play")
+    page.click(".duo-play")
+    page.wait_for_function("window.__duo.playing && window.__duo.stats.pulses > 8", timeout=10000)
+    for frame in (a,b):
+        messages = frame.evaluate("window.__clockBytes")
+        assert messages.count(0xFA) == 2
+        assert messages.count(0xFC) == 1
+        assert messages.index(0xFC) < len(messages) - 1
+        assert messages[-1] == 0xF8  # no stale Stop after the new Start
+    page.click(".duo-play")
+
+
+def test_unlink_cancels_worklet_start_in_progress(page):
+    """Tap Play then immediately unlink: no delayed Start after async addModule."""
+    a,b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    native(a, "hortator")
+    native(b, "felucca")
+    capture(a)
+    capture(b)
+    page.click(".duo-link")
+    page.click(".duo-play")
+    page.click(".duo-link")
+    page.wait_for_timeout(500)
+    assert page.get_attribute(".duo-link", "aria-checked") == "false"
+    assert not page.evaluate("window.__duo.playing")
+    for frame in (a,b):
+        assert 0xFA not in frame.evaluate("window.__clockBytes")
+
+
+def test_poweroff_stops_host_clock_and_old_receiver(page):
+    """A lost receiver stops the shared transport, rather than leaving B running."""
+    a,b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    native(a, "hortator")
+    native(b, "felucca")
+    capture(a)
+    capture(b)
+    page.click(".duo-link")
+    page.click(".duo-play")
+    page.wait_for_function("window.__duo.stats.pulses >= 12", timeout=10000)
+    b.evaluate("document.getElementById('power').click()")
+    page.wait_for_function("!window.__duo.playing", timeout=5000)
+    assert 0xFC in a.evaluate("window.__clockBytes")
+    assert page.get_attribute(".duo-play", "aria-pressed") == "false"
+
+
+def test_invalid_bpm_is_clamped_and_persisted(page):
+    a,b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    native(a, "hortator")
+    native(b, "felucca")
+    page.click(".duo-link")
+    page.fill(".duo-bpm", "999")
+    page.locator(".duo-bpm").dispatch_event("change")
+    assert page.evaluate("window.__duo.bpm") == 240
+    assert page.evaluate("localStorage.getItem('fm1.duo.bpm')") == "240"
+    page.fill(".duo-bpm", "-40")
+    page.locator(".duo-bpm").dispatch_event("change")
+    assert page.evaluate("window.__duo.bpm") == 40
+    page.click(".duo-play")
+    page.wait_for_function("window.__duo.stats.pulses >= 20", timeout=10000)
+    info = page.evaluate("() => ({f:window.__duo.stats.frames, r:window.__duo.sampleRate})")
+    diffs = [b-a for a,b in zip(info["f"],info["f"][1:])]
+    assert abs(statistics.median(diffs) - info["r"] * 60/(24*40)) < 2
+    page.click(".duo-play")
