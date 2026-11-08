@@ -7,6 +7,7 @@ const MAX_JSON = 96 * 1024 * 1024;
 const SCHEMAS = {
   "fm1-natif": { version: 1, stores: ["flash"] },
   "fm1-emulator": { version: 2, stores: ["packages", "states", "entries"] },
+  "fm1-emulator-b": { version: 2, stores: ["packages", "states", "entries"] },
 };
 const APP_KEY = /^(fm1\.|fm1b\.|fm1va\.)/;
 const BIN = {
@@ -146,7 +147,9 @@ export async function createBackup() {
 function validate(data) {
   if (!data || data.format !== FORMAT || data.version !== VERSION ||
       !Array.isArray(data.local) || !data.databases ||
-      Object.keys(data.databases).sort().join(",") !== Object.keys(SCHEMAS).sort().join(","))
+      !Object.hasOwn(data.databases, "fm1-natif") ||
+      !Object.hasOwn(data.databases, "fm1-emulator") ||
+      Object.keys(data.databases).some(name => !Object.hasOwn(SCHEMAS, name)))
     throw new Error("Not a supported FM-1 backup");
   const local = [], seen = new Set();
   if (data.local.length > 10000) throw new Error("Too many saved settings");
@@ -159,6 +162,9 @@ function validate(data) {
   const databases = {};
   for (const [name, schema] of Object.entries(SCHEMAS)) {
     const input = data.databases[name];
+    // Backups made before FM1-B had its own emulator DB do not contain that
+    // store. Preserve existing B data rather than clearing it on old restores.
+    if (name === "fm1-emulator-b" && !Object.hasOwn(data.databases, name)) continue;
     if (!input || Object.keys(input).sort().join(",") !== schema.stores.slice().sort().join(","))
       throw new Error("Missing firmware save section");
     const stores = {};
@@ -169,7 +175,7 @@ function validate(data) {
         if (!Array.isArray(record) || record.length !== 2) throw new Error("Invalid firmware save record");
         const key = decode(record[0]), value = decode(record[1]);
         if (typeof key !== "string" || keys.has(key)) throw new Error("Invalid or duplicate firmware key");
-        if (name === "fm1-emulator" && store !== "entries" && !/^[a-f0-9]{64}$/.test(key))
+        if (name.startsWith("fm1-emulator") && store !== "entries" && !/^[a-f0-9]{64}$/.test(key))
           throw new Error("Invalid emulator firmware hash");
         keys.add(key);
         return [key, value];
@@ -186,7 +192,7 @@ export async function restoreBackup(backup) {
   const { local, databases } = validate(backup);  // validate *everything* before touching storage
   // Restore each database as a transaction. Existing entries not in the backup are
   // intentionally removed: this is a full snapshot restore, not a merge.
-  for (const name of Object.keys(SCHEMAS)) {
+  for (const name of Object.keys(databases)) {
     const db = await openDB(name);
     try { await writeDB(db, databases[name]); }
     finally { db.close(); }
