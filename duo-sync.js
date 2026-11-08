@@ -158,11 +158,16 @@
       }
     }
     linkBtn.addEventListener("click", () => {
+      const disabling = linked;
       stop(); // cancel start even if the worklet has not loaded yet
       deliveryFault = false;
       linked = !linked;
       keep("link", linked ? "1" : "0");
       tick();
+      // Do not quietly change a firmware's saved clock source or project.
+      // Make the explicit firmware-side step discoverable on touch-only iPads.
+      if (disabling && Object.values(cached).some(e => e?.entry?.id === "hortator"))
+        window.__tip?.(linkBtn, "Duo clock stopped. To use each Hortator's own PLAY again, set <b>GLOBAL → CLK → INT</b> (imported .fwsc: <b>CLK → INT</b>).");
     });
     tempoBox.addEventListener("change", () => {
       bpm = clamp(tempoBox.value || bpm);
