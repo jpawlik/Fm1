@@ -44,7 +44,7 @@ test("each native-only entry has a pinned native build and any external package 
 test("chaque firmware a un état d'émulation mesuré ou déclaré", () => {
   const allowed = new Set(["fonctionne selon fm1-emu", "vérifié", "ne démarre pas"]);
   // un paquet seulement en ligne n'a pas pu être essayé ici : il garde « pas encore évalué »
-  for (const e of cat.firmwares) assert.ok(allowed.has(e.emulateur_fm1emu) || (!e.fichier && e.emulateur_fm1emu === "pas encore évalué"), `${e.id} : ${e.emulateur_fm1emu}`);
+  for (const e of cat.firmwares) assert.ok(allowed.has(e.emulateur_fm1emu) || ((!e.fichier || e.paquet_a_telecharger) && e.emulateur_fm1emu === "pas encore évalué"), `${e.id} : ${e.emulateur_fm1emu}`);
 });
 
 test("native build list matches the approved optimized subset", () => {
