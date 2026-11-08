@@ -5425,7 +5425,7 @@ function buildPanel(fw) {
   // ---------------------------------------------------------------- knobs: knurled black aluminium
   const knobs = {};
   // KR the top's radius, KH the height of skirt the eye sees below it, KN the knurls: coarse and few, one per detent
-  const KR = 34, KH = 11, KX = 3, KN = 18;       // KX: the skirt shows a little to the right, as seen on the photograph
+  const KR = 48, KH = 11, KX = 3, KN = 18;       // KX: the skirt shows a little to the right, as seen on the photograph
   const knob = (cx, cy, name, dot, lx = cx, ly = cy - 78) => {
     label(lx, ly, name);
     const top = cy - KH / 2, bot = cy + KH / 2;
@@ -5446,11 +5446,9 @@ function buildPanel(fw) {
     el("circle", { cx, cy: top, r: KR - 1.2, fill: "none", stroke: "url(#gKnobChamfer)", "stroke-width": 2.4 }, g);
     el("circle", { cx, cy: top, r: KR - 4.5, fill: "none", stroke: "#000000", "stroke-opacity": 0.35, "stroke-width": 1 }, g);
     const ind = el("g", {}, g);
-    if (dot) el("circle", { cx, cy: top - KR + 11, r: 4.2, fill: "#f6f6f6" }, ind);
-    else {                                                   // an engraved line: a groove with its lit lower lip
-      el("line", { x1: cx, y1: top - KR + 6, x2: cx, y2: top - KR + 19, stroke: "#000000", "stroke-opacity": 0.8, "stroke-width": 3.2, "stroke-linecap": "round" }, ind);
-      el("line", { x1: cx + 1.3, y1: top - KR + 7, x2: cx + 1.3, y2: top - KR + 18.5, stroke: "#9a9aa0", "stroke-opacity": 0.55, "stroke-width": 1, "stroke-linecap": "round" }, ind);
-    }
+    // Bright white marker; the existing drawKnob() rotates this group for every encoder.
+    el("line", { x1: cx, y1: top - KR + 7, x2: cx, y2: top - KR + 25,
+      stroke: "#ffffff", "stroke-width": 5, "stroke-linecap": "round" }, ind);
     knobs[name] = { g, ind, knurl, glint, x: cx, y: top, bot, angle: 0, label: name, box: [cx - KR - 14, top - KR - 14, 2 * KR + 28, 2 * KR + KH + 28] };
   };
   // ---------------------------------------------------------------- buttons: mint keycaps that glow when lit
