@@ -8,7 +8,8 @@
   window.setupDuoHost = function ({ frames, tabsOf, show, keep, linkBtn, tempoBox, playBtn, state, initialLinked }) {
     const clamp = (v) => Math.max(40, Math.min(240, Math.round(Number(v) || 120)));
     let bpm = clamp(keep("bpm") || 120);
-    let linked = initialLinked, playing = false, ctx = null, node = null, setup = null;
+    let linked = initialLinked, playing = false, starting = false, ctx = null, node = null, setup = null;
+    let epoch = 0; // invalidates stale worklet messages and asynchronous start requests
     let currentPlayers = null, cached = { a: null, b: null };
     const stats = { pulses: 0, starts: 0, stops: 0, frames: [], arrivals: [] };
     tempoBox.value = String(bpm);
@@ -32,23 +33,31 @@
       linkBtn.setAttribute("aria-checked", String(linked));
       linkBtn.title = "Shared host MIDI clock; native Hortator external clock = USB; imported .fwsc external clock = TRS.";
       tempoBox.disabled = !linked;
-      playBtn.disabled = !linked || !ready(cached);
+      playBtn.disabled = !linked || !ready(cached) || starting;
       playBtn.setAttribute("aria-pressed", String(playing));
-      playBtn.textContent = playing ? "Stop" : "Play";
-      state.textContent = !linked ? "Sync off" : !ready(cached) ? "Power on both" : playing ? "Host clock running" : "Ready";
+      playBtn.textContent = playing ? "Stop" : starting ? "Starting…" : "Play";
+      // 'Ready' means only that both engines have a MIDI input adapter, NOT
+      // that their chosen firmware actually follows external clock.
+      state.textContent = !linked ? "Sync off" : !ready(cached) ? "Power on both" :
+        playing ? "Clock sent · enable ext sync" : starting ? "Starting clock…" : "Clock ready · set ext sync";
     }
     function stop() {
-      if (!playing) return;
-      playing = false;
-      node?.port.postMessage({ type: "stop" });
-      // Stop both receivers immediately, even if audio rendering is suspended.
-      deliver(0xfc, currentPlayers || engines());
-      stats.stops++;
+      // Invalidate any pending asynchronous start, including Play followed by
+      // immediate unlink, firmware change or page backgrounding.
+      const old = epoch++;
+      starting = false;
+      if (playing) {
+        playing = false;
+        node?.port.postMessage({ type: "stop", epoch: old });
+        // Stop both immediately, even with a suspended audio context.
+        deliver(0xfc, currentPlayers || engines());
+        stats.stops++;
+      }
       currentPlayers = null;
       paint();
     }
     function fromClock({ data: message }) {
-      if (message.type !== "events" || !playing || !linked) return;
+      if (message.type !== "events" || message.epoch !== epoch || !playing || !linked) return;
       const e = engines();
       if (!same(e, currentPlayers)) { stop(); return; }
       for (const event of message.events) {
@@ -122,7 +131,7 @@
       }
     }
     linkBtn.addEventListener("click", () => {
-      if (linked) stop();
+      stop(); // cancel start even if the worklet has not loaded yet
       linked = !linked;
       keep("link", linked ? "1" : "0");
       tick();
@@ -136,24 +145,30 @@
     });
     playBtn.addEventListener("click", async () => {
       if (playing) { stop(); return; }
+      if (starting) return;
       tick();
       if (!linked || !ready(cached)) return;
-      const selected = cached;
+      const selected = cached, attempt = ++epoch;
+      starting = true;
+      paint();
       try {
         // Resume on the click, not after async module compilation.
         const resumed = ctx?.state === "suspended" ? ctx.resume() : Promise.resolve();
         const clock = await getClock();
         await resumed;
+        if (attempt !== epoch || document.hidden || !linked || !same(selected, engines())) return;
         if (ctx.state !== "running") throw Error("Audio clock suspended");
-        if (!linked || !same(selected, engines())) return;
         currentPlayers = selected;
         playing = true;
         stats.frames.length = stats.arrivals.length = 0;
-        clock.port.postMessage({ type: "start", bpm });
-        paint();
+        clock.port.postMessage({ type: "start", bpm, epoch: attempt });
       } catch (err) {
-        stop();
-        if (window.__tip) window.__tip(playBtn, "Duo clock unavailable: " + (err?.message || err));
+        if (attempt === epoch) {
+          stop();
+          if (window.__tip) window.__tip(playBtn, "Duo clock unavailable: " + (err?.message || err));
+        }
+      } finally {
+        if (attempt === epoch) { starting = false; paint(); }
       }
     });
     window.addEventListener("pagehide", stop);
