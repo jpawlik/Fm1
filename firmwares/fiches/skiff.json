@@ -1,57 +1,141 @@
 {
-  "id": "skiff",
-  "resume": "Groove box à six pistes : quatorze moteurs de synthé et de batterie, séquenceur de 64 pas, patterns et morceau, couche PERFORM pour le jeu en direct. Maintenir HOME affiche à l'écran le rôle de chaque commande de la page.",
-  "commandes": [
-    { "commande": "OCT-", "role": "Dans les boîtes d'action, revient en arrière ; pendant que la boîte d'annulation est affichée, recule dans les annulations. Sur le clavier, descend d'une octave." },
-    { "commande": "OCT+", "role": "Dans les boîtes d'action, valide ; pendant que la boîte d'annulation est affichée, avance dans les annulations. Sur le clavier, monte d'une octave. Sur SEQ puis SONG, joue l'entrée." },
-    { "commande": "FX", "role": "Ouvre les pages d'effets (DRIVE, INSERT, DUCK, SLICER). Maintenu, ouvre la couche FX : quatorze effets sur les touches blanches, des coupures de pistes sur les noires." },
-    { "commande": "SEL", "role": "Ouvre la page SCALE (gamme, QNT) ; une seconde pression ouvre la page CHORD (accords). Maintenu, ouvre sa couche rapide." },
-    { "commande": "ENV", "role": "Ouvre les pages d'enveloppe de la piste, dont ENV 2 pour la matrice de modulation." },
-    { "commande": "LFO", "role": "Ouvre les pages de LFO. Maintenu, puis un bouton tourné sur HOME, une page de son, une page FX ou le MIXER : les valeurs reviennent au relâchement (OCT+ les garde)." },
-    { "commande": "EDIT", "role": "Ouvre les pages d'édition du moteur (OPERATOR et ALL OPS pour FM6, LANES pour la batterie, SOUND pour DRUM-X). Sur STEP et ROLL avec REC armé, efface le pas du curseur. Maintenu, ouvre sa couche rapide." },
-    { "commande": "GLO", "role": "Ouvre les réglages globaux (tempo, swing, chorus, delay, reverb). Maintenu, ouvre la couche GLO : niveaux, solos, mutes, FILL, tap tempo." },
-    { "commande": "HOME", "role": "Revient à l'accueil. Maintenu, c'est SHIFT : une carte montre le rôle de chaque commande de la page ; relâché seul, il ouvre le MENU." },
-    { "commande": "SAVE", "role": "Ouvre les pages PRESETS, USER, PATTERNS et PROJECT. Maintenu, annule (8 niveaux). Avec SHIFT, TAKE garde la dernière boucle jouée." },
-    { "commande": "ARP", "role": "Ouvre l'arpégiateur (14 modes). Maintenu, ouvre la couche PERFORM : lancer des entrées, préparer des mutes, rappeler des scènes." },
-    { "commande": "SEQ", "role": "Ouvre le séquenceur (STEP, ROLL, AUTOMATION, SONG). Maintenu, ouvre SEQ TOOLS : effacer, inverser, décaler, aléatoire, cuisiner." },
-    { "commande": "PLAY", "role": "Lance et arrête la lecture. Avec GLO, relance chaque piste depuis sa première entrée." },
-    { "commande": "REC", "role": "Arme ou désarme la piste choisie dès la pression. Avec SHIFT, ouvre la couche REC : effacer, CLICK, COUNT-IN, CLICK LEVEL, FEEL." },
-    { "commande": "MASTER", "role": "Règle le volume général. Selon USB LEVEL, règle aussi le niveau USB ; règle aussi CLICK LEVEL." },
-    { "commande": "SELECT", "role": "Tourne les pages d'une famille. Avec GLO, règle le tempo." },
-    { "commande": "PRESETS", "role": "Change le son de la piste. Sur les pages de pas, déplace le curseur ; dans les listes, choisit. Avec LIST sur un type, ne parcourt que ce type." },
-    { "commande": "ALGORITHM", "role": "Choisit la piste, sur toutes les pages." },
-    { "commande": "Touches", "role": "Jouent le moteur de la piste, accords de gamme possibles. Sur DRUM et DRUM-X, grille de batterie : touches blanches les pas, noires les pistes." },
-    { "commande": "Touches blanches", "role": "Couche FX : REPEAT, REVERSE, LPF, HPF, TAPE STOP, FREEZE, OCT UP, OCT DN, GATE, DUB, FLANGE, VINYL. Couche PERFORM : lancent les entrées d'une piste. Avec QNT sur WHITE, jouent les notes de la gamme (Do est la fondamentale ROOT)." },
-    { "commande": "Touches noires", "role": "Couche FX : coupent les pistes 1 à 6 tant qu'elles sont tenues. Couche PERFORM : préparent les mutes. Couche EDIT sur une batterie : les touches 1 à 8 coupent les lanes." }
-  ],
-  "gestes": [
-    "HOME maintenu : une carte montre le rôle de chaque commande de la page.",
-    "HOME relâché seul : ouvre le MENU.",
-    "SHIFT + FX, GLO, SEL, EDIT, ARP ou SEQ : garde la couche ouverte (l'en-tête dit LOCKED) ; le bouton la ferme.",
-    "SAVE maintenu : annule ; SHIFT + SAVE : TAKE, garde la dernière boucle jouée.",
-    "Un pas tenu sur SEQ puis STEP + un bouton KNOB 1 à 4 : verrouille ce paramètre sur ce pas.",
-    "SAVE maintenu + une touche, dans PERFORM : range une scène.",
-    "GLO + SELECT : règle le tempo.",
-    "GLO + PLAY : relance toutes les pistes depuis leur première entrée."
-  ],
-  "modes": [
-    { "nom": "Pistes et moteurs", "texte": "Six pistes, chacune avec son moteur parmi quatorze : ANALOG, FM6, PHASE, LOFI, SAMPLE, VOICE, TRIO, WHEEL, GRAIN, PHYS, NOISE, SLICE, DRUM, DRUM-X. Les pistes 5 et 6 jouent tous les moteurs sauf PHYS et GRAIN." },
-    { "nom": "Choisir un son par type", "texte": "Sur SAVE puis PRESETS, KNOB 4 (LIST) choisit BASS, LEAD, PAD, KEYS, PLUCK, DRUM ou FX. PRESETS parcourt alors seulement ce type, tous moteurs confondus, sur toutes les pages. KNOB 3 (FAV) marque les favoris ; KNOB 2 (ENG) saute au moteur suivant." },
-    { "nom": "Séquenceur", "texte": "64 pas par piste, accords de 4 notes, accent, glissé, liaison, chance, ratchet ou FLAM, conditions de déclenchement, NUDGE. Enregistrement en direct avec overdub, FEEL, décompte et métronome, ou pas à pas. Un pas tenu avec un bouton tourné verrouille le paramètre ; les mouvements de boutons s'enregistrent en automation." },
-    { "nom": "Patterns et morceau", "texte": "64 patterns partagés par tous les projets. Chaque piste a une liste de 16 entrées (A à P), chacune un pattern joué 1 à 16 fois. Avec SONG sur ON, chaque piste avance dans sa liste ; sur OFF, elle boucle son entrée. Une entrée vide entre deux patterns est un silence." },
-    { "nom": "PERFORM", "texte": "ARP maintenu. Les touches blanches lancent les entrées de la piste, les noires préparent les mutes, au prochain LOOP, BAR, BEAT ou NOW. Seize scènes gardent l'entrée de chaque piste et les mutes. KNOB 1 à 4 lancent des effets qui reviennent seuls : CUTOFF, REVERB, DELAY, DIST." },
-    { "nom": "FM6 depuis zéro", "texte": "EDIT puis OPERATOR et ALL OPS donnent chaque valeur d'un patch FM6 (6 opérateurs, 32 algorithmes). INIT repart d'un sinus nu ; SAVE puis USER garde le son." },
-    { "nom": "Gamme et accords", "texte": "SEL ouvre SCALE : avec QNT sur WHITE, les touches blanches jouent la gamme choisie, les noires se taisent. SNAP arrondit à la gamme ; QNT SEQ fait aussi passer les notes séquencées par la gamme (jamais les batteries). Une seconde pression sur SEL ouvre CHORD : CHRD choisit les accords, VOIC le renversement." }
-  ],
-  "a_savoir": [
-    "Skiff est un fork de Felucca 1.1.5 : les sons et projets de Felucca s'y chargent.",
-    "Huit voix partagées entre les pistes, douze avec le second cœur du FM-1 (MENU, SYSTEM, CPU 2 CORES, en BETA).",
-    "La page de chaque réglage dessine ce qu'il fait ; HOME maintenu en donne la carte.",
-    "Le même firmware tourne aussi sur le clavier SMK-37 Pro."
-  ],
-  "source": {
-    "url": "https://github.com/illuminus5/skiff/blob/c01fa1ed619266d770ea6552b153612e1b77d0a9/README.md",
-    "commit": "c01fa1ed619266d770ea6552b153612e1b77d0a9"
+ "id": "skiff",
+ "resume": "Groove box à six pistes : quatorze moteurs de synthé et de batterie, séquenceur de 64 pas, patterns et morceau, couche PERFORM pour le jeu en direct. Maintenir HOME affiche à l'écran le rôle de chaque commande de la page.",
+ "commandes": [
+  {
+   "commande": "OCT-",
+   "role": "Dans les boîtes d'action, revient en arrière ; pendant que la boîte d'annulation est affichée, recule dans les annulations. Sur le clavier, descend d'une octave."
   },
-  "d_apres_le_code": false
+  {
+   "commande": "OCT+",
+   "role": "Dans les boîtes d'action, valide ; pendant que la boîte d'annulation est affichée, avance dans les annulations. Sur le clavier, monte d'une octave. Sur SEQ puis SONG, joue l'entrée."
+  },
+  {
+   "commande": "FX",
+   "role": "Ouvre les pages d'effets (DRIVE, INSERT, DUCK, SLICER). Maintenu, ouvre la couche FX : quatorze effets sur les touches blanches, des coupures de pistes sur les noires."
+  },
+  {
+   "commande": "SEL",
+   "role": "Ouvre la page SCALE (gamme, QNT) ; une seconde pression ouvre la page CHORD (accords). Maintenu, ouvre sa couche rapide."
+  },
+  {
+   "commande": "ENV",
+   "role": "Ouvre les pages d'enveloppe de la piste, dont ENV 2 pour la matrice de modulation."
+  },
+  {
+   "commande": "LFO",
+   "role": "Ouvre les pages de LFO. Maintenu, puis un bouton tourné sur HOME, une page de son, une page FX ou le MIXER : les valeurs reviennent au relâchement (OCT+ les garde)."
+  },
+  {
+   "commande": "EDIT",
+   "role": "Ouvre les pages d'édition du moteur (OPERATOR et ALL OPS pour FM6, LANES pour la batterie, SOUND pour DRUM-X). Sur STEP et ROLL avec REC armé, efface le pas du curseur. Maintenu, ouvre sa couche rapide."
+  },
+  {
+   "commande": "GLO",
+   "role": "Ouvre les réglages globaux (tempo, swing, chorus, delay, reverb). Maintenu, ouvre la couche GLO : niveaux, solos, mutes, FILL, tap tempo."
+  },
+  {
+   "commande": "HOME",
+   "role": "Revient à l'accueil. Maintenu, c'est SHIFT : une carte montre le rôle de chaque commande de la page ; relâché seul, il ouvre le MENU."
+  },
+  {
+   "commande": "SAVE",
+   "role": "Ouvre les pages PRESETS, USER, PATTERNS et PROJECT. Maintenu, annule (8 niveaux). Avec SHIFT, TAKE garde la dernière boucle jouée."
+  },
+  {
+   "commande": "ARP",
+   "role": "Ouvre l'arpégiateur (14 modes). Maintenu, ouvre la couche PERFORM : lancer des entrées, préparer des mutes, rappeler des scènes."
+  },
+  {
+   "commande": "SEQ",
+   "role": "Ouvre le séquenceur (STEP, ROLL, AUTOMATION, SONG). Maintenu, ouvre SEQ TOOLS : effacer, inverser, décaler, aléatoire, cuisiner."
+  },
+  {
+   "commande": "PLAY",
+   "role": "Lance et arrête la lecture. Avec GLO, relance chaque piste depuis sa première entrée."
+  },
+  {
+   "commande": "REC",
+   "role": "Arme ou désarme la piste choisie dès la pression. Avec SHIFT, ouvre la couche REC : effacer, CLICK, COUNT-IN, CLICK LEVEL, FEEL."
+  },
+  {
+   "commande": "MASTER",
+   "role": "Règle le volume général. Selon USB LEVEL, règle aussi le niveau USB ; règle aussi CLICK LEVEL."
+  },
+  {
+   "commande": "SELECT",
+   "role": "Tourne les pages d'une famille. Avec GLO, règle le tempo."
+  },
+  {
+   "commande": "PRESETS",
+   "role": "Change le son de la piste. Sur les pages de pas, déplace le curseur ; dans les listes, choisit. Avec LIST sur un type, ne parcourt que ce type."
+  },
+  {
+   "commande": "ALGORITHM",
+   "role": "Choisit la piste, sur toutes les pages."
+  },
+  {
+   "commande": "Touches",
+   "role": "Jouent le moteur de la piste, accords de gamme possibles. Sur DRUM et DRUM-X, grille de batterie : touches blanches les pas, noires les pistes."
+  },
+  {
+   "commande": "Touches blanches",
+   "role": "Couche FX : REPEAT, REVERSE, LPF, HPF, TAPE STOP, FREEZE, OCT UP, OCT DN, GATE, DUB, FLANGE, VINYL. Couche PERFORM : lancent les entrées d'une piste. Avec QNT sur WHITE, jouent les notes de la gamme (Do est la fondamentale ROOT)."
+  },
+  {
+   "commande": "Touches noires",
+   "role": "Couche FX : coupent les pistes 1 à 6 tant qu'elles sont tenues. Couche PERFORM : préparent les mutes. Couche EDIT sur une batterie : les touches 1 à 8 coupent les lanes."
+  }
+ ],
+ "gestes": [
+  "HOME maintenu : une carte montre le rôle de chaque commande de la page.",
+  "HOME relâché seul : ouvre le MENU.",
+  "SHIFT + FX, GLO, SEL, EDIT, ARP ou SEQ : garde la couche ouverte (l'en-tête dit LOCKED) ; le bouton la ferme.",
+  "SAVE maintenu : annule ; SHIFT + SAVE : TAKE, garde la dernière boucle jouée.",
+  "Un pas tenu sur SEQ puis STEP + un bouton KNOB 1 à 4 : verrouille ce paramètre sur ce pas.",
+  "SAVE maintenu + une touche, dans PERFORM : range une scène.",
+  "GLO + SELECT : règle le tempo.",
+  "GLO + PLAY : relance toutes les pistes depuis leur première entrée."
+ ],
+ "modes": [
+  {
+   "nom": "Pistes et moteurs",
+   "texte": "Six pistes, chacune avec son moteur parmi quatorze : ANALOG, FM6, PHASE, LOFI, SAMPLE, VOICE, TRIO, WHEEL, GRAIN, PHYS, NOISE, SLICE, DRUM, DRUM-X. Les pistes 5 et 6 jouent tous les moteurs sauf PHYS et GRAIN."
+  },
+  {
+   "nom": "Choisir un son par type",
+   "texte": "Sur SAVE puis PRESETS, KNOB 4 (LIST) choisit BASS, LEAD, PAD, KEYS, PLUCK, DRUM ou FX. PRESETS parcourt alors seulement ce type, tous moteurs confondus, sur toutes les pages. KNOB 3 (FAV) marque les favoris ; KNOB 2 (ENG) saute au moteur suivant."
+  },
+  {
+   "nom": "Séquenceur",
+   "texte": "64 pas par piste, accords de 4 notes, accent, glissé, liaison, chance, ratchet ou FLAM, conditions de déclenchement, NUDGE. Enregistrement en direct avec overdub, FEEL, décompte et métronome, ou pas à pas. Un pas tenu avec un bouton tourné verrouille le paramètre ; les mouvements de boutons s'enregistrent en automation."
+  },
+  {
+   "nom": "Patterns et morceau",
+   "texte": "64 patterns partagés par tous les projets. Chaque piste a une liste de 16 entrées (A à P), chacune un pattern joué 1 à 16 fois. Avec SONG sur ON, chaque piste avance dans sa liste ; sur OFF, elle boucle son entrée. Une entrée vide entre deux patterns est un silence."
+  },
+  {
+   "nom": "PERFORM",
+   "texte": "ARP maintenu. Les touches blanches lancent les entrées de la piste, les noires préparent les mutes, au prochain LOOP, BAR, BEAT ou NOW. Seize scènes gardent l'entrée de chaque piste et les mutes. KNOB 1 à 4 lancent des effets qui reviennent seuls : CUTOFF, REVERB, DELAY, DIST."
+  },
+  {
+   "nom": "FM6 depuis zéro",
+   "texte": "EDIT puis OPERATOR et ALL OPS donnent chaque valeur d'un patch FM6 (6 opérateurs, 32 algorithmes). INIT repart d'un sinus nu ; SAVE puis USER garde le son."
+  },
+  {
+   "nom": "Gamme et accords",
+   "texte": "SEL ouvre SCALE : avec QNT sur WHITE, les touches blanches jouent la gamme choisie, les noires se taisent. SNAP arrondit à la gamme ; QNT SEQ fait aussi passer les notes séquencées par la gamme (jamais les batteries). Une seconde pression sur SEL ouvre CHORD : CHRD choisit les accords, VOIC le renversement."
+  }
+ ],
+ "a_savoir": [
+  "Skiff est un fork de Felucca 1.1.5 : les sons et projets de Felucca s'y chargent.",
+  "Huit voix partagées entre les pistes, douze avec le second cœur du FM-1 (MENU, SYSTEM, CPU 2 CORES, en BETA).",
+  "La page de chaque réglage dessine ce qu'il fait ; HOME maintenu en donne la carte.",
+  "Le même firmware tourne aussi sur le clavier SMK-37 Pro."
+ ],
+ "source": {
+  "url": "https://github.com/illuminus5/skiff/blob/76b5f9c9f6d523466f5c3910f9baf91110133b7b/README.md",
+  "commit": "76b5f9c9f6d523466f5c3910f9baf91110133b7b"
+ },
+ "d_apres_le_code": false
 }
