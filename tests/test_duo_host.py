@@ -279,8 +279,9 @@ def test_native_hortator_local_play_after_duo_unlink_requires_clk_int(page):
         f.evaluate("window.__engine().turn('KNOB3', -1)")  # CLK USB -> INT
         f.wait_for_timeout(220)
         tap_native(f, "PLAY")
-        f.wait_for_timeout(750)
-        assert f.evaluate("window.__engine().playLight()") == "green"
+        f.wait_for_function("window.__engine().playLight() === 'green'", timeout=4000)
+        f.wait_for_timeout(700)  # survives the external-clock 500 ms timeout
+        f.wait_for_function("window.__engine().playLight() === 'green'", timeout=3000)
     for f in (a, b):
         tap_native(f, "PLAY")
         f.wait_for_function("window.__engine().playLight() !== 'green'", timeout=4000)
