@@ -8,15 +8,20 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const cat = JSON.parse(readFileSync(join(ROOT, "firmwares/catalogue.json"), "utf8")).firmwares;
 const readme = readFileSync(join(ROOT, "README.md"), "utf8");
 
-test("le README liste chaque firmware visible avec le lien vers sa source au commit exact", () => {
+test("the catalogue preserves each firmware author's source revision and license", () => {
   for (const e of cat.filter((e) => e.id !== "bubba")) {
-    assert.ok(readme.includes(`| ${e.nom.replace(/\|/g, "\\|")} |`), `${e.id} absent`);
-    if (e.commit_source) assert.ok(readme.includes(`${e.depot}/tree/${e.commit_source}`), `${e.id} : lien source absent`);
+    assert.ok(e.nom && e.auteur && e.licence, `${e.id}: missing metadata`);
+    assert.match(e.depot || "", /^https:\/\/github\.com\//, `${e.id}: missing source`);
+    assert.match(e.commit_source || "", /^[0-9a-f]{7,40}$/, `${e.id}: missing source revision`);
   }
 });
 
-test("le README crédite fm1-emu et précise que FM-1+VA n'est pas redistribué", () => {
+test("the README credits the upstream fork, emulator and original authors", () => {
+  assert.match(readme, /Ninjathune-Human\/Fm1/);
   assert.match(readme, /joakimeriksson\/fm1-emu/);
-  assert.match(readme, /FM-1\+VA/);
-  assert.match(readme, /n'est pas redistribué/);
+  assert.match(readme, /sbegueria\/fm1-dub/);
+  assert.match(readme, /Baud Girl/);
+  assert.match(readme, /not redistributed/i);
+  assert.match(readme, /firmwares\/catalogue\.json/);
+  assert.match(readme, /GPL-3\.0/);
 });
