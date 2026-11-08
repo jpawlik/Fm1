@@ -3,7 +3,7 @@
   {
    "id": "chipbox",
    "depot": "pbarilla/chipbox",
-   "commit": "48510318cffe4db2a5ceccfc153a65dcd6c8d6ff",
+   "commit": "6fdbc9855361d15ce44065c4e2ef6308de568587",
    "script": "web/build.sh",
    "construction": "\"$HERE/tools/worklets/asyncify.sh\" build/natif/chipbox.wasm -DCHIPBOX_HOST -DCHIPBOX_WEB '-DAPP_VER=\"web\"' -Ifirmware/src -Ifirmware/gen firmware/src/chipbox.c",
    "wasm": "build/natif/chipbox.wasm",
@@ -14,10 +14,19 @@
   {
    "id": "ctl",
    "depot": "charlesvestal/fm1-ctl",
-   "commit": "c3c2a7e51f3d14dd7a94f8b3775e838f097ec367",
+   "commit": "9bb5abcc6ef6e0af803a868ecda166e76e90d8d6",
    "script": "build.sh",
    "construction": "sh build.sh --web",
    "wasm": "app/build/emu/app.wasm"
+  },
+  {
+   "id": "echofield",
+   "depot": "Philip-Bos/echofield-fm1",
+   "commit": "27feb2d23dc60bf1f8dbd7209286ee5a15a6b88f",
+   "script": "base/tools/build.py",
+   "construction": "python3 base/tools/build.py app --web && python3 \"$HERE/tools/worklets/fm1base_bundle.py\" app/build/emu",
+   "wasm": "app/build/emu/app.wasm",
+   "dialecte": "base"
   },
   {
    "id": "elixir",
@@ -31,13 +40,22 @@
   {
    "id": "felucca",
    "depot": "hugelton/Felucca",
-   "commit": "a53ecf428c29c780108fd70a31b71a32a6b5c313",
+   "commit": "d7b1b7c4099bba28854869ddb256b3d9f634cee8",
    "script": "web/emu/build.sh"
+  },
+  {
+   "id": "graine",
+   "depot": "omnipotard/Granular-FM1",
+   "commit": "40a9a99abfbd03b3c837c98fdea2fab50c169ed3",
+   "script": "build.sh",
+   "construction": "sh build.sh --web && python3 \"$HERE/tools/worklets/fm1base_bundle.py\" app/build/emu",
+   "wasm": "app/build/emu/app.wasm",
+   "dialecte": "base"
   },
   {
    "id": "hortator",
    "depot": "deadactive/hortator",
-   "commit": "4e40f27232518e34881d02727eb3df3ee9940f03",
+   "commit": "c8cca2ce9a6a1ba5a055ef3bd4aadc9ef5237bb4",
    "script": "tools/build_sim.sh",
    "construction": "bash \"$HERE/tools/worklets/hortator.sh\" build/natif/hortator.wasm",
    "wasm": "build/natif/hortator.wasm",
@@ -55,7 +73,7 @@
   {
    "id": "loom",
    "depot": "charlesvestal/fm1-loom",
-   "commit": "92b4bf2c080b0a4172c07e4cf499dd6d557c3f5f",
+   "commit": "faf459d1f9cea3e634b6e2622a1c3e91d58b3452",
    "script": "build.sh",
    "construction": "sh build.sh --web",
    "wasm": "app/build/emu/app.wasm"
@@ -79,7 +97,7 @@
   {
    "id": "mono2k",
    "depot": "InigoHernandez/mono2k",
-   "commit": "b52d67703d4728c176c685c27d213f0c4da52232",
+   "commit": "b443b00ae5b6f15b01eda3e0ad7d5292761a0b53",
    "script": "web/build.sh"
   },
   {
@@ -108,13 +126,13 @@
   {
    "id": "skiff",
    "depot": "illuminus5/skiff",
-   "commit": "c01fa1ed619266d770ea6552b153612e1b77d0a9",
+   "commit": "76b5f9c9f6d523466f5c3910f9baf91110133b7b",
    "script": "web/emu/build.sh"
   },
   {
    "id": "x0x",
    "depot": "charlesvestal/fm1-x0x",
-   "commit": "27f6fac7e07ce97b5de158b45aec99f59a9e23fd",
+   "commit": "502b2c28c14ab2bff31eb4f0777fdfd0efcf8bea",
    "script": "web/emu/build.sh"
   }
  ]

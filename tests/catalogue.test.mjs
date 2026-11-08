@@ -8,11 +8,11 @@ import { dirname, join } from "node:path";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const cat = JSON.parse(readFileSync(join(ROOT, "firmwares/catalogue.json"), "utf8"));
 
-test("the approved 21 firmware entries and their categories are exact", () => {
-  const approved = ["hortator", "elixir", "skiff", "mono2k", "mnm1", "jiant", "x0x", "pigeon", "chipbox",
+test("the curated 23 firmware entries and their categories are exact", () => {
+  const approved = ["hortator", "elixir", "echofield", "graine", "skiff", "mono2k", "mnm1", "jiant", "x0x", "pigeon", "chipbox",
     "loom", "ravel", "sloop", "fomajam", "fizz", "orbit", "loomfm1",
     "mvave15", "felucca", "dinghy", "fm1dock", "ctl"];
-  assert.equal(cat.firmwares.length, 21);
+  assert.equal(cat.firmwares.length, 23);
   assert.deepEqual(new Set(cat.firmwares.map(e => e.id)), new Set(approved));
   assert.equal(cat.defaut, "hortator");
   assert.deepEqual(new Set(cat.firmwares.flatMap(e => e.categories)),
@@ -50,9 +50,9 @@ test("chaque firmware a un état d'émulation mesuré ou déclaré", () => {
 test("native build list matches the approved optimized subset", () => {
   const native = JSON.parse(readFileSync(join(ROOT, "tools/natif.json"), "utf8")).firmwares;
   const allowed = new Set(cat.firmwares.map(e => e.id));
-  assert.equal(native.length, 14);
+  assert.equal(native.length, 16);
   assert.deepEqual(new Set(native.map(e => e.id)), new Set([
-    "chipbox", "ctl", "elixir", "felucca", "hortator", "jiant", "loom", "loomfm1", "mnm1",
+    "chipbox", "ctl", "echofield", "elixir", "graine", "felucca", "hortator", "jiant", "loom", "loomfm1", "mnm1",
     "mono2k", "pigeon", "ravel", "skiff", "x0x"
   ]));
   for (const e of native) assert.ok(allowed.has(e.id), e.id);
@@ -74,4 +74,22 @@ test("four approved upstream upgrades are pinned to stable/public release source
     assert.equal(build.commit, commit, id);
     assert.equal(entry.natif_seulement, true, id);
   }
+});
+
+test("stable refresh and special upstream channels are explicit", () => {
+ const byId = Object.fromEntries(cat.firmwares.map(e => [e.id,e]));
+ for (const [id,version] of Object.entries({
+  hortator:"1.0.1", skiff:"2.2", mono2k:"1.9", x0x:"1.2.1", chipbox:"1.5.1",
+  loom:"0.14", felucca:"1.7.0", ctl:"1.0.3", sloop:"2.8.5",
+  fomajam:"0.1.10", orbit:"1.0.0", dinghy:"0.5", fm1dock:"0.8",
+  echofield:"0.2.10", graine:"0.2 (source snapshot)", fizz:"0.12.0-beta.14"
+ })) assert.equal(byId[id]?.version,version,id);
+ assert.equal(byId.graine.beta,true);
+ assert.equal(byId.fizz.beta,true);
+ assert.equal(byId.pigeon.version,"0.5.0-beta.1");
+ for(const f of cat.firmwares.filter(e=>e.paquet_a_telecharger)){
+  assert.match(f.paquet_en_ligne,/^https:\/\/github\.com\//);
+  assert.match(f.sha256,/^[a-f0-9]{64}$/);
+  assert.ok(f.taille>300000);
+ }
 });

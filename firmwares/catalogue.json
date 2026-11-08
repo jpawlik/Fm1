@@ -6,23 +6,24 @@
   {
    "id": "hortator",
    "nom": "Hortator",
-   "version": "0.26.0",
+   "version": "1.0.1",
    "auteur": "DEADACTIVE",
    "categories": [
     "Drums & Samplers"
    ],
    "licence": "GPL-3.0",
-   "beta": true,
-   "fichier": "firmwares/hortator.fwsc",
-   "sha256": "f630e3c573174fe9c0240cdd1fa726d0092601a9f8b5d08d0327968a83e901d5",
+   "beta": false,
+   "fichier": null,
+   "sha256": "ac81af292e035ee0c4b8b7ab3a78b942e4f03deee31ae213a2613c743cd9110f",
    "taille": 609649,
    "depot": "https://github.com/deadactive/hortator",
-   "commit_source": "4e40f27232518e34881d02727eb3df3ee9940f03",
+   "commit_source": "c8cca2ce9a6a1ba5a055ef3bd4aadc9ef5237bb4",
    "source_c": 206,
    "description": "Eight-track drum machine with a direct 16-key step grid, per-step probability, ratchets and timing, Grids rhythms, resonators, compression and live effects.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/hortator-0.26.0.fwsc",
-   "provenance_paquet": "gh-pages firmware/felucca-drum-0.26.0-4e40f27-ble.fwsc"
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/DeadActive/hortator/releases/download/drum-v1.0.1/hortator-1.0.1.fwsc",
+   "provenance_paquet": "Pinned public upstream release 1.0.1 (c8cca2ce9a6a); package digest verified when bundled",
+   "natif_seulement": true
   },
   {
    "id": "elixir",
@@ -48,7 +49,7 @@
   {
    "id": "skiff",
    "nom": "Skiff",
-   "version": "1.4",
+   "version": "2.2",
    "auteur": "illuminus5",
    "categories": [
     "Grooveboxes"
@@ -56,21 +57,21 @@
    "licence": "GPL-3.0",
    "beta": false,
    "fichier": null,
-   "sha256": "0622a752e8304777c042ccea0732ba023e1413baa6dbc8724576e2ec76de02e0",
-   "taille": 610337,
+   "sha256": null,
+   "taille": null,
    "depot": "https://github.com/illuminus5/skiff",
-   "commit_source": "c01fa1ed619266d770ea6552b153612e1b77d0a9",
+   "commit_source": "76b5f9c9f6d523466f5c3910f9baf91110133b7b",
    "source_c": 194,
    "description": "Six-track synth-and-drum groovebox with a 64-step drum grid and piano roll, chords, parameter locks, ratchets, conditional steps, scenes, songs and a browser editor.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/skiff-1.4.fwsc",
-   "provenance_paquet": "release download/v1.4/skiff-1.4.fwsc",
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/illuminus5/skiff/releases/download/v2.2/skiff-2.2.fwsc",
+   "provenance_paquet": "Pinned public upstream release 2.2 (76b5f9c9f6d5); package digest verified when bundled",
    "natif_seulement": true
   },
   {
    "id": "mono2k",
    "nom": "MONO2K",
-   "version": "1.1",
+   "version": "1.9",
    "auteur": "Iñigo Hernandez",
    "categories": [
     "Grooveboxes"
@@ -78,15 +79,15 @@
    "licence": "GPL-3.0",
    "beta": false,
    "fichier": null,
-   "sha256": "3567333cdbf2992da1f06aedf0823f96ff5c229d7f3385e861bfea6513cf337b",
-   "taille": 610113,
+   "sha256": null,
+   "taille": null,
    "depot": "https://github.com/InigoHernandez/mono2k",
-   "commit_source": "b52d67703d4728c176c685c27d213f0c4da52232",
+   "commit_source": "b443b00ae5b6f15b01eda3e0ad7d5292761a0b53",
    "source_c": 61,
    "description": "Six monophonic synth and drum machines inspired by Elektron Monomachine. Direct step editing, 64-step tracks, trig conditions, parameter locks, ratchets and a lo-fi effects bus.",
-   "emulateur_fm1emu": "vérifié",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/mono2k-1.1.fwsc",
-   "provenance_paquet": "dans le dépôt web/firmware/mono2k.fwsc",
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/InigoHernandez/mono2k/releases/download/v1.9/mono2k-1.9.fwsc",
+   "provenance_paquet": "Pinned public upstream release 1.9 (b443b00ae5b6); package digest verified when bundled",
    "natif_seulement": true
   },
   {
@@ -134,7 +135,7 @@
   {
    "id": "x0x",
    "nom": "X0X",
-   "version": "1.1.0",
+   "version": "1.2.1",
    "auteur": "Charles Vestal",
    "categories": [
     "Grooveboxes"
@@ -142,15 +143,59 @@
    "licence": "GPL-3.0",
    "beta": false,
    "fichier": null,
-   "sha256": "a0c29deb930c65f1d40b5691b7d673f861418b438b7e65027cb9c671e6f44f5b",
-   "taille": 609684,
+   "sha256": null,
+   "taille": null,
    "depot": "https://github.com/charlesvestal/fm1-x0x",
-   "commit_source": "27f6fac7e07ce97b5de158b45aec99f59a9e23fd",
+   "commit_source": "502b2c28c14ab2bff31eb4f0777fdfd0efcf8bea",
    "source_c": 96,
    "description": "808/909-style drum tracks and two acid-bass parts with direct step programming, per-part lengths and rates, pattern chaining, breakbeats and song mode.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/x0x-1.1.0.fwsc",
-   "provenance_paquet": "release download/v1.1.0/x0x-1.1.0.fwsc",
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/charlesvestal/fm1-x0x/releases/download/v1.2.1/x0x-1.2.1.fwsc",
+   "provenance_paquet": "Pinned public upstream release 1.2.1 (502b2c28c14a); package digest verified when bundled",
+   "natif_seulement": true
+  },
+  {
+   "id": "echofield",
+   "nom": "ECHOFIELD",
+   "version": "0.2.10",
+   "auteur": "Philip Bos (PhilipsKnobs)",
+   "categories": [
+    "Drums & Samplers"
+   ],
+   "licence": "MIT",
+   "beta": false,
+   "fichier": null,
+   "sha256": null,
+   "taille": null,
+   "depot": "https://github.com/Philip-Bos/echofield-fm1",
+   "commit_source": "27feb2d23dc60bf1f8dbd7209286ee5a15a6b88f",
+   "source_c": 0,
+   "description": "Playable granular sampler with CLOUD, DUST, TAPE, BLOOM, PULSE and DRIFT modes, up to 16 user samples, tempo-synced grains, resampling and hold-to-trigger live effects; sample editing uses its own companion app.",
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/Philip-Bos/echofield-fm1/releases/download/v0.2.10/echofield-0.2.10.fwsc",
+   "provenance_paquet": "Official v0.2.10 release; browser native build at exact upstream commit",
+   "natif_seulement": true
+  },
+  {
+   "id": "graine",
+   "nom": "GRAINE",
+   "version": "0.2 (source snapshot)",
+   "auteur": "GRAINE contributors (omnipotard)",
+   "categories": [
+    "Drums & Samplers"
+   ],
+   "licence": "MIT",
+   "beta": true,
+   "fichier": null,
+   "sha256": null,
+   "taille": null,
+   "depot": "https://github.com/Omnipotard/Granular-FM1",
+   "commit_source": "40a9a99abfbd03b3c837c98fdea2fab50c169ed3",
+   "source_c": 0,
+   "description": "Six-voice granular synthesizer with up to 128 grains, built-in source bank, captured audio, time-stretch and freeze, LFO/ENV knob modulation, rhythmic gestures, echo and reverb; TAPIS turns keys into sample positions and performance pads.",
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": null,
+   "provenance_paquet": "Pinned 2026-11-07 public source snapshot; upstream has no tagged 0.2 release, not represented as stable",
    "natif_seulement": true
   },
   {
@@ -178,7 +223,7 @@
   {
    "id": "chipbox",
    "nom": "Chipbox",
-   "version": "1.3.3",
+   "version": "1.5.1",
    "auteur": "Pasquale Barilla",
    "categories": [
     "Grooveboxes"
@@ -186,37 +231,38 @@
    "licence": "GPL-3.0",
    "beta": false,
    "fichier": null,
-   "sha256": "9121ab7d4689923c3fc39d3beb619d3a0a7f2fd8c89c075c532972081bbdb9c2",
-   "taille": 610110,
+   "sha256": "18f5e0649d13bf8bdb0a4e1bc6c94b8ceda427cfa826940812e9b537d8f10b09",
+   "taille": 611700,
    "depot": "https://github.com/pbarilla/chipbox",
-   "commit_source": "48510318cffe4db2a5ceccfc153a65dcd6c8d6ff",
+   "commit_source": "6fdbc9855361d15ce44065c4e2ef6308de568587",
    "source_c": 63,
    "description": "Chiptune groovebox with emulated NES, Game Boy and Master System-style sounds. RACK edits 16-step patterns, CHIP edits voices and SONG chains patterns.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/chipbox-1.3.3.fwsc",
-   "provenance_paquet": "release download/v1.3.3/chipbox-1.3.3.fwsc",
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/pbarilla/chipbox/releases/download/v1.5.1/chipbox-1.5.1.fwsc",
+   "provenance_paquet": "Pinned public upstream release 1.5.1 (6fdbc9855361); package digest verified when bundled",
    "natif_seulement": true
   },
   {
    "id": "loom",
    "nom": "LOOM-8",
-   "version": "0.9.3",
+   "version": "0.14",
    "auteur": "Charles Vestal",
    "categories": [
     "Grooveboxes"
    ],
    "licence": "MPL-2.0",
-   "beta": true,
-   "fichier": "firmwares/loom.fwsc",
-   "sha256": "c02cc1b8c99d87796acf51f36724de8ade98728168367fa01995ab5c8dace8ab",
-   "taille": 611496,
+   "beta": false,
+   "fichier": null,
+   "sha256": "362d04a31e75a3acacebf58f1c39faead5b98d3ee3c76f18d3b82495703f0d2c",
+   "taille": 614938,
    "depot": "https://github.com/charlesvestal/fm1-loom",
-   "commit_source": "92b4bf2c080b0a4172c07e4cf499dd6d557c3f5f",
+   "commit_source": "faf459d1f9cea3e634b6e2622a1c3e91d58b3452",
    "source_c": 49,
    "description": "Eight-track groovebox with synths, drums, samples and slices, 64-step patterns, per-step locks, scenes, performance effects and pattern-weaving arrangements.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/loom-0.9.3.fwsc",
-   "provenance_paquet": "release download/v0.9.3/loom-0.9.3.fwsc"
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/charlesvestal/fm1-loom/releases/download/v0.14/loom-0.14.fwsc",
+   "provenance_paquet": "Pinned public upstream release 0.14 (faf459d1f9ce); package digest verified when bundled",
+   "natif_seulement": true
   },
   {
    "id": "ravel",
@@ -243,7 +289,7 @@
   {
    "id": "sloop",
    "nom": "SLOOP",
-   "version": "2.8.1",
+   "version": "2.8.5",
    "auteur": "isod89",
    "categories": [
     "Grooveboxes"
@@ -251,41 +297,43 @@
    "licence": "GPL-3.0",
    "beta": false,
    "fichier": "firmwares/sloop.fwsc",
-   "sha256": "64c9dfa7e75312debeae01a7c96e4ad3801eaffff9c81cb76ece9c48daf0501d",
-   "taille": 610035,
+   "sha256": "b0446effb840740a3aa5c386ce004e79334e4f833d48d82a9eb5edbfde92ae67",
+   "taille": 610076,
    "depot": "https://github.com/isod89/sloop-fm1",
-   "commit_source": "d89364253b79a5c6002c0d90c5f16b3c3c16ea9d",
+   "commit_source": "bac9c05ea7627449405aa10e48da21d75b6c8c56",
    "source_c": 129,
    "description": "Four-track performance groovebox with three synth parts and drums. Direct 16-key step entry, 64-step tracks, live recording, parameter locks, effects and song sections.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/sloop-2.8.1.fwsc",
-   "provenance_paquet": "dans le dépôt docs/firmware/sloop-2.8.1.fwsc"
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/isod89/sloop-fm1/releases/download/v2.8.5/sloop-2.8.5.fwsc",
+   "provenance_paquet": "Pinned public upstream release 2.8.5 (bac9c05ea762); package digest verified when bundled",
+   "paquet_a_telecharger": true
   },
   {
    "id": "fomajam",
    "nom": "FOMAJAM",
-   "version": "0.1.7",
+   "version": "0.1.10",
    "auteur": "konsumer",
    "categories": [
     "Drums & Samplers"
    ],
    "licence": "GPL-3.0",
-   "beta": true,
+   "beta": false,
    "fichier": "firmwares/fomajam.fwsc",
-   "sha256": "8dc19f4f43ce9463d4f3dd7384bb8e0c8470b4bad0b29a64aed23a7c56522894",
-   "taille": 610110,
+   "sha256": "b33c4a644e0eddec8cf83be30c30251bb0e375b1ca178efe5b0daf68670c11fc",
+   "taille": 610131,
    "depot": "https://github.com/konsumer/fomajam",
-   "commit_source": "a80681b6102c731b5b84b2469d5a67d18ee5f5aa",
+   "commit_source": "ee103264944aba303fb3b478fce7b96183f566eb",
    "source_c": 62,
    "description": "Classic drum-machine workflow: 16 white keys edit steps, black keys choose tracks. Mix modeled 808/909-style voices and vintage drum samples with accents, patterns and recording.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/fomajam-0.1.7.fwsc",
-   "provenance_paquet": "release download/v0.1.7/fomajam-0.1.7.fwsc"
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/konsumer/fomajam/releases/download/v0.1.10/fomajam-0.1.10.fwsc",
+   "provenance_paquet": "Pinned public upstream release 0.1.10 (ee103264944a); package digest verified when bundled",
+   "paquet_a_telecharger": true
   },
   {
    "id": "fizz",
    "nom": "FIZZ",
-   "version": "0.12.0-beta.10",
+   "version": "0.12.0-beta.14",
    "auteur": "Quixotic7",
    "categories": [
     "Grooveboxes"
@@ -293,36 +341,38 @@
    "licence": "MPL-2.0",
    "beta": true,
    "fichier": "firmwares/fizz.fwsc",
-   "sha256": "4108aa5b349ce992ad6d3c8af859551abb1103784b58759309f8e76ec156ffaf",
-   "taille": 611496,
+   "sha256": "a98d97af506252caa421a7d6cc5018dbd1b07f8c9350c2f319343318e4572605",
+   "taille": 1042154,
    "depot": "https://github.com/Quixotic7/FIZZ",
-   "commit_source": "664d9812e32d5c24a0f3a89b429d35ccac1a9b32",
+   "commit_source": "01b5a98414d87ffce45d62997b4cd9d6bdd7364d",
    "source_c": 229,
    "description": "Eight-track FM TONE sequencer with per-step sound locks, conditional trigs, ratchets, chords and MIDI effects. Beta firmware; runs through the CPU emulator in this fork.",
-   "emulateur_fm1emu": "vérifié",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/fizz-0.12.0-beta.10.fwsc",
-   "provenance_paquet": "dans le dépôt site/firmware/0.12.0-beta.10/fizz.fwsc"
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/Quixotic7/FIZZ/releases/download/v0.12.0-beta.14/fizz-0.12.0-beta.14.fwsc",
+   "provenance_paquet": "Pinned public upstream release 0.12.0-beta.14 (01b5a98414d8); package digest verified when bundled",
+   "paquet_a_telecharger": true
   },
   {
    "id": "orbit",
    "nom": "ORBIT",
-   "version": "0.8.0",
+   "version": "1.0.0",
    "auteur": "dspaudio",
    "categories": [
     "Grooveboxes"
    ],
    "licence": "GPL-3.0",
-   "beta": true,
+   "beta": false,
    "fichier": "firmwares/orbit.fwsc",
-   "sha256": "6103c21d9b0f5268568ae3b8be0bd59c38021545446317640f59e2fbed38dbaf",
-   "taille": 610019,
+   "sha256": "6f6c73e86807f2b9c96402c5cc9aac2f1024417d4ebd4763568e098fbb30d791",
+   "taille": 610032,
    "depot": "https://github.com/dspaudio/orbit",
-   "commit_source": "3cbd2502ddd375484574837ae8e7e6a46c5c1e2d",
+   "commit_source": "81e4df5eae55d7a1a53348802079833a97dbe74b",
    "source_c": 151,
    "description": "Four-track synth-and-drum groovebox with direct drum step editing, 64-step sequencing, macros, arrangement and an Event Tape for editing note and automation events.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/orbit-0.8.0.fwsc",
-   "provenance_paquet": "release download/v0.8.0/orbit.fwsc"
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/dspaudio/orbit/releases/download/v1.0.0/orbit.fwsc",
+   "provenance_paquet": "Pinned public upstream release 1.0.0 (81e4df5eae55); package digest verified when bundled",
+   "paquet_a_telecharger": true
   },
   {
    "id": "loomfm1",
@@ -370,7 +420,7 @@
   {
    "id": "felucca",
    "nom": "Felucca",
-   "version": "1.6.1",
+   "version": "1.7.0",
    "auteur": "Leo Kuroshita (Hügelton Instruments)",
    "categories": [
     "System & Tools"
@@ -378,42 +428,43 @@
    "licence": "GPL-3.0",
    "beta": false,
    "fichier": null,
-   "sha256": "dff3a38f7e5b9833e15aba322558c9485e9e422e3ff813c616c91b3584a2d909",
-   "taille": 610090,
+   "sha256": "bff7c617cfb2c88e66b22aa691cb798dfa0d9cb12ff9a73deab51d404e82817c",
+   "taille": 610286,
    "depot": "https://github.com/hugelton/Felucca",
-   "commit_source": "a53ecf428c29c780108fd70a31b71a32a6b5c313",
+   "commit_source": "d7b1b7c4099bba28854869ddb256b3d9f634cee8",
    "source_c": 168,
    "description": "Foundational multiengine FM-1 firmware with synthesis, drums, sequencing, effects, saving and a browser editor; a source base for many other instruments.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/felucca-1.6.1.fwsc",
-   "provenance_paquet": "release download/v1.6.1/felucca-1.6.1.fwsc",
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/hugelton/Felucca/releases/download/v1.7.0/felucca-1.7.0.fwsc",
+   "provenance_paquet": "Pinned public upstream release 1.7.0 (d7b1b7c4099b); package digest verified when bundled",
    "natif_seulement": true
   },
   {
    "id": "dinghy",
    "nom": "Dinghy",
-   "version": "0.4",
+   "version": "0.5",
    "auteur": "zvenson",
    "categories": [
     "System & Tools"
    ],
    "licence": "GPL-3.0",
-   "beta": true,
+   "beta": false,
    "fichier": "firmwares/dinghy.fwsc",
-   "sha256": "5e7dc80d186528cf71a2e6dd2ade8a176325aa20c62334e0fdb9256789d58838",
-   "taille": 612195,
+   "sha256": "139da045ea20eb5e772e7da5242ae2efaa0dcd9b533ac169992f7795a77efb90",
+   "taille": 612218,
    "depot": "https://github.com/zvenson/dinghy",
-   "commit_source": "7c31bb25c90cc11b2a94f1a10f549d0817884ac1",
+   "commit_source": "ea1b6bf5973b11f9b4b806d08155602aaa0b505e",
    "source_c": 44,
    "description": "Minimal FM-1 firmware development platform with example sine synthesis, screen, keys, USB/TRS MIDI, flash and update infrastructure. Primarily for developers.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/dinghy-0.4.fwsc",
-   "provenance_paquet": "release download/v0.4/dinghy-0.4.fwsc"
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/zvenson/dinghy/releases/download/v0.5/dinghy-0.5.fwsc",
+   "provenance_paquet": "Pinned public upstream release 0.5 (ea1b6bf5973b); package digest verified when bundled",
+   "paquet_a_telecharger": true
   },
   {
    "id": "fm1dock",
    "nom": "fm1-dock",
-   "version": "0.5",
+   "version": "0.8",
    "auteur": "joakimeriksson",
    "categories": [
     "System & Tools"
@@ -421,36 +472,38 @@
    "licence": "GPL-3.0",
    "beta": false,
    "fichier": "firmwares/fm1dock.fwsc",
-   "sha256": "aacf3f160d5bb0592938a7decc8addca25acf2f423f0474ea975b47ae7280fea",
-   "taille": 610110,
+   "sha256": "ed5d8c0330e87959b01fd8b6716c13d181eebf369e8820175f8a8470bf1545d6",
+   "taille": 610130,
    "depot": "https://github.com/joakimeriksson/fm1-dock",
-   "commit_source": "3ead086893b0a0bc1cf139c1b1234b86461fda56",
+   "commit_source": "501cb23f9f44981e8dc5a32091ef50122e1abb2b",
    "source_c": 194,
    "description": "Firmware module launcher for choosing compatible synth modules stored in flash. Module images are not supplied automatically with this package.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": null,
-   "provenance_paquet": "dans le dépôt docs/fm1-dock-0.5.fwsc"
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/joakimeriksson/fm1-dock/releases/download/v0.8/fm1-dock-0.8.fwsc",
+   "provenance_paquet": "Pinned public upstream release 0.8 (501cb23f9f44); package digest verified when bundled",
+   "paquet_a_telecharger": true
   },
   {
    "id": "ctl",
    "nom": "CTL-1",
-   "version": "1.0",
+   "version": "1.0.3",
    "auteur": "Charles Vestal",
    "categories": [
     "System & Tools"
    ],
    "licence": "MPL-2.0",
    "beta": false,
-   "fichier": "firmwares/ctl.fwsc",
-   "sha256": "fd9df8eac1d37a1bb296842728057b42bb5e666f4b0112ece01f5f179cd82f75",
-   "taille": 610108,
+   "fichier": null,
+   "sha256": "1ecf7e3c2af255c7f404fa6232e9a55cdbaaf3e60cc1c549e14ecd310f7d5104",
+   "taille": 614938,
    "depot": "https://github.com/charlesvestal/fm1-ctl",
-   "commit_source": "c3c2a7e51f3d14dd7a94f8b3775e838f097ec367",
+   "commit_source": "9bb5abcc6ef6e0af803a868ecda166e76e90d8d6",
    "source_c": 94,
    "description": "MIDI performance controller with scale-aware notes, chord keys, four knob banks, arpeggiator and Euclidean rhythms; includes General MIDI sounds for standalone use.",
-   "emulateur_fm1emu": "fonctionne selon fm1-emu",
-   "paquet_en_ligne": "https://thefirmwarehub.com/fw/ctl-1.0.fwsc",
-   "provenance_paquet": "release download/v1.0/ctl-1.0.fwsc"
+   "emulateur_fm1emu": "pas encore évalué",
+   "paquet_en_ligne": "https://github.com/charlesvestal/fm1-ctl/releases/download/v1.0.3/ctl-1.0.3.fwsc",
+   "provenance_paquet": "Pinned public upstream release 1.0.3 (9bb5abcc6ef6); package digest verified when bundled",
+   "natif_seulement": true
   }
  ]
 }

@@ -33,6 +33,7 @@ on:
       - "tests/catalogue.test.mjs"
       - "tests/fiches.test.mjs"
       - "tests/test_picker.py"
+      - "tests/test_base_worklets.py"
       - "tools/**"
   workflow_dispatch:
     inputs:
@@ -60,7 +61,7 @@ env:
   FM1_EMU_COMMIT: a0e9a88cba72a6de7368273c82e26867848e281d
   RUNTIME_TAG: runtime-a0e9a88
   EMSDK_VERSION: 3.1.64
-  NATIF_TAG: natif-curated-v2
+  NATIF_TAG: natif-curated-v3
 
 jobs:
   plan:
@@ -238,6 +239,7 @@ jobs:
           mkdir -p _site/runtime _site/natif
           cp index.html engine.js backup.js duo-clock.js duo-sync.js _site/
           for d in firmwares assets; do [ -d "$d" ] && cp -r "$d" _site/; done
+          python3 tools/fetch_packages.py _site
 
           if [ "$REBUILD_RUNTIME" = "true" ]; then
             cp fm1-emu/target/wasm/wasm32-unknown-unknown/release/fm1_web.wasm _site/runtime/
@@ -333,11 +335,14 @@ jobs:
       - name: Prepare native firmwares for browser tests
         if: github.event_name == 'pull_request' || needs.plan.outputs.native == 'true'
         run: tar -xzf natif.tar.gz
+      - name: Download and verify updated CPU firmware packages
+        if: github.event_name == 'pull_request'
+        run: python3 tools/fetch_packages.py .
       - name: Catalogue, source provenance and curated firmware picker
         if: github.event_name == 'pull_request'
         run: |
           node --test tests/catalogue.test.mjs tests/fiches.test.mjs tests/readme.test.mjs
-          python -m pytest -q tests/test_picker.py
+          python -m pytest -q tests/test_picker.py tests/test_base_worklets.py
       - name: Duo MIDI clock and regression tests
         if: github.event_name == 'pull_request'
         run: python -m pytest -q tests/test_duo.py tests/test_duo_host.py tests/test_backup.py tests/test_duo_webkit.py
