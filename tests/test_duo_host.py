@@ -210,3 +210,28 @@ def test_invalid_bpm_is_clamped_and_persisted(page):
     diffs = [b-a for a,b in zip(info["f"],info["f"][1:])]
     assert abs(statistics.median(diffs) - info["r"] * 60/(24*40)) < 2
     page.click(".duo-play")
+
+
+def test_cpu_emulator_on_b_uses_separate_save_store_and_receives_clock(page):
+    """Actual B-side CPU firmware boots, uses its own IDB and receives 24-PPQN MIDI."""
+    a,b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    native(a, "hortator")
+    b.wait_for_function("window.__catalogue && window.__catalogue.some(e => e.id === 'gator')")
+    ok = b.evaluate("""() => {
+      const e = window.__catalogue.find(e => e.id === 'gator');
+      return window.__useEngine({ ...e, natif: null, natif_wasm: null });
+    }""")
+    assert ok
+    b.wait_for_function("window.__engine().kind === 'emu' && window.__engine().running", timeout=25000)
+    database = b.evaluate("async () => (await window.__engine().saveStore.open()).name")
+    assert database == "fm1-emulator-b"
+    capture(a)
+    capture(b)
+    page.click(".duo-link")
+    page.click(".duo-play")
+    page.wait_for_function("window.__duo.stats.pulses >= 12", timeout=10000)
+    assert b.evaluate("window.__clockBytes").count(0xF8) >= 10
+    page.click(".duo-play")
+    assert 0xFC in b.evaluate("window.__clockBytes")
