@@ -6423,10 +6423,9 @@ function buildPanel(fw) {
 })();
 </script>
 <script>
-// Duo : deux FM-1 à la fois, FM1-A et FM1-B, chacun la page entière dans son cadre (?fm1=a, ?fm1=b), avec son firmware,
-// sa mémoire et son allumage. En portrait l'un au-dessus de l'autre ; en paysage l'un ou l'autre en plein écran (le
-// sélecteur), ou, sur un grand écran, côte à côte au choix. Tempo lié : FM1-A leads, FM1-B follows its clock (FM-1+VA
-// des deux côtés : un firmware natif ne lit pas encore le MIDI).
+// Duo: two FM-1 instances with separate firmware and saved settings.
+// MIDI clock is one-way: FM1-B (FM-1+VA) leads; FM1-A follows when its firmware accepts clock.
+// Native/CPU-emulated firmware cannot currently act as a clock source in this app.
 "use strict";
 (function () {
   if (!DUO_SHELL) return;
@@ -6442,7 +6441,7 @@ function buildPanel(fw) {
         <button type="button" role="radio" data-v="side">Side by side</button>
         <button type="button" role="radio" data-v="one">One at a time</button>
       </div>
-      <button type="button" class="duo-link" role="switch" aria-checked="false">Linked tempo<span class="dir"></span><span class="track"></span></button>
+      <button type="button" class="duo-link" role="switch" aria-checked="false">MIDI clock<span class="dir"> · B → A</span><span class="track"></span></button>
       <nav class="seg" aria-label="One or two FM-1s"><a href="./">Solo</a><a href="?duo" aria-current="page">Duo</a></nav>
     </div>
     <div class="duo-stage"><iframe name="a" title="FM1-A" src="?fm1=a" allow="midi; autoplay"></iframe><iframe name="b" title="FM1-B" src="?fm1=b" allow="midi; autoplay"></iframe></div>`;
@@ -6496,11 +6495,11 @@ function buildPanel(fw) {
   addEventListener("blur", () => setTimeout(() => { const f = document.activeElement; if (f && f.tagName === "IFRAME" && stage.dataset.layout !== "one") midiTo(f.name); }));
   for (const f of Object.values(frames)) f.addEventListener("load", () => midiTo(active));
 
-  // le tempo lié : un FM-1+VA mène (FM1-A s'il en est un), l'autre FM-1 follows its clock, Start, Stop et Continue,
-  // FM-1+VA ou firmware natif (un natif suit s'il sait suivre une horloge MIDI, souvent un réglage Sync à lui)
+  // Clock/transport only, from FM1-B to FM1-A. FM1-B must run FM-1+VA because
+  // native/CPU-emulated firmwares do not expose their outgoing MIDI clock yet.
   linkBtn.addEventListener("click", () => {
-    if (linkBtn.getAttribute("aria-disabled") === "true") {   // aucun FM-1+VA allumé : rien ne donne l'horloge, la bulle le dit
-      return window.__tip(linkBtn, "Linked tempo requires both FM-1s on, with FM-1+VA on one device supplying the clock. Native firmware does not transmit clock.");
+    if (linkBtn.getAttribute("aria-disabled") === "true") {
+      return window.__tip(linkBtn, "MIDI clock B → A requires both devices on and FM1-B running FM-1+VA. Native firmware cannot transmit clock yet.");
     }
     linked = !linked; keep("link", linked ? "1" : "0"); tick();
   });
@@ -6511,12 +6510,12 @@ function buildPanel(fw) {
   let was = { a: null, b: null };
   function tick() {
     const E = { a: engOf("a"), b: engOf("b") };
-    const lead = E.a && E.a.va && E.b ? "a" : E.b && E.b.va && E.a ? "b" : null, other = lead === "a" ? "b" : "a";
+    const lead = E.b && E.b.va && E.a ? "b" : null, other = "a";
     const on = linked && !!lead;
     linkBtn.setAttribute("aria-checked", on);
     linkBtn.setAttribute("aria-disabled", !lead);
-    linkBtn.querySelector(".dir").textContent = on ? (lead === "a" ? " · A → B" : " · B → A") : "";
-    linkBtn.title = lead ? `FM1-${lead.toUpperCase()} leads, FM1-${other.toUpperCase()} follows its clock` : "Linked tempo requires both FM-1s on, with FM-1+VA as clock leader";
+    linkBtn.querySelector(".dir").textContent = " · B → A";
+    linkBtn.title = lead ? "FM1-B supplies MIDI clock and transport to FM1-A" : "FM1-B must run FM-1+VA to send MIDI clock to FM1-A";
     for (const k of ["a", "b"]) {                     // ce que chacun doit être maintenant
       const e = E[k] && (E[k].va || E[k].natif || E[k].emu), isLead = on && k === lead, isFollow = on && k === other;
       if (was[k] && was[k] !== e && was[k].mi) { was[k].mi.lead = false; was[k].mi.follow = false; was[k].mi.link = null; was[k].sendGlobal(); }

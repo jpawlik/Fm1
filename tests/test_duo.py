@@ -54,33 +54,35 @@ def test_b_takes_no_emulated_firmware(page):
 
 
 def test_linked_tempo(page):
+    """With two FM-1+VA instances, FM1-B is ALWAYS the clock master."""
     a, b = open_duo(page, 1600, 900)
     power(a)
     power(b)
     page.click(".duo-link")
     page.wait_for_timeout(400)
-    assert a.evaluate("!!window.__fw.mi.lead") and b.evaluate("!!window.__fw.mi.follow")
-    assert b.evaluate("window.__fw.globList().rows[0].dim()")           # le Tempo de FM1-B grisé
-    a.evaluate("() => { const fw = window.__fw; fw.G.tempo = 150; fw.sendGlobal(); fw.seqOn(true); fw.sendSeq(); }")
-    b.evaluate("""() => { const fw = window.__fw, P = fw.pats[0]; fw.G.tempo = 90; fw.sendGlobal(); P.rate = 7; P.steps = 16;
+    assert b.evaluate("!!window.__fw.mi.lead") and a.evaluate("!!window.__fw.mi.follow")
+    assert not a.evaluate("!!window.__fw.mi.lead")
+    assert a.evaluate("window.__fw.globList().rows[0].dim()")    # follower tempo is read-only
+    b.evaluate("() => { const fw = window.__fw; fw.G.tempo = 150; fw.sendGlobal(); fw.seqOn(true); fw.sendSeq(); }")
+    a.evaluate("""() => { const fw = window.__fw, P = fw.pats[0]; fw.G.tempo = 90; fw.sendGlobal(); P.rate = 7; P.steps = 16;
       P.notes[0] = [{ n: 60, v: 100, len: 1 }]; fw.sendSeq();
       window.__pos = []; const on = fw.onPos.bind(fw); fw.onPos = (m) => { window.__pos.push(m); on(m); }; }""")
-    page.wait_for_timeout(500)                                          # l'horloge de FM1-A arrive déjà (Always)
-    assert b.evaluate("valText(window.__fw.globList().rows[0])") == "150"   # FM1-B montre le tempo qu'il suit
-    assert page.evaluate("document.querySelector('.duo-link').textContent").endswith("A → B")
-    a.evaluate("window.__fw.seqPlay()")                                 # PLAY sur FM1-A : Start vers FM1-B, qui allume son séquenceur
+    page.wait_for_timeout(500)
+    assert a.evaluate("valText(window.__fw.globList().rows[0])") == "150"
+    assert page.evaluate("document.querySelector('.duo-link').textContent").endswith("B → A")
+    b.evaluate("window.__fw.seqPlay()")                         # B's Start travels to A
     page.wait_for_timeout(1500)
-    pos = b.evaluate("window.__pos")
+    pos = a.evaluate("window.__pos")
     assert len(pos) >= 8
     at = [p["at"] for p in pos]
     d = sorted(y - x for x, y in zip(at, at[1:]))
-    assert 0.085 <= d[len(d) // 2] <= 0.115                             # 1/16 à 150 (0,1 s), pas à 90
-    a.evaluate("window.__fw.seqPlay()")                                 # Stop
+    assert 0.085 <= d[len(d) // 2] <= 0.115              # 1/16 at 150 BPM, not A's 90 BPM
+    b.evaluate("window.__fw.seqPlay()")                         # B's Stop reaches A
     page.wait_for_timeout(300)
-    assert not b.evaluate("window.__fw.S.playing")
+    assert not a.evaluate("window.__fw.S.playing")
     page.click(".duo-link")
     page.wait_for_timeout(400)
-    assert not b.evaluate("!!window.__fw.mi.follow")
+    assert not a.evaluate("!!window.__fw.mi.follow")
 
 
 def test_native_follows(page):
@@ -98,6 +100,21 @@ def test_native_follows(page):
     assert b.evaluate("!!window.__fw.mi.lead")
     got = a.evaluate("window.__got")
     assert got.count(0xF8) >= 10                                        # l'horloge de FM1-B
+
+
+def test_native_on_b_cannot_claim_clock_master(page):
+    """A native firmware on B receives MIDI but does not expose clock output."""
+    a, b = open_duo(page, 1600, 900)
+    power(a)
+    power(b)
+    b.wait_for_function("window.__catalogue && window.__catalogue.some((e) => e.natif)")
+    assert b.evaluate("() => window.__useEngine(window.__catalogue.find((e) => e.natif && e.natif_dialecte === 'felucca'))")
+    page.wait_for_function("document.querySelector('.duo-link').getAttribute('aria-disabled') === 'true'")
+    page.click(".duo-link", force=True)
+    assert page.is_visible(".fs-tip")
+    assert "FM1-B" in page.inner_text(".fs-tip")
+    assert page.evaluate("window.__duo.linked") is False
+    assert not a.evaluate("!!window.__fw.mi.lead")
 
 
 def test_sheet_opens_upward_frame_stays(page):
@@ -124,7 +141,7 @@ def test_sheet_visible_side_by_side(page):
 def test_link_disabled_explains(page):
     open_duo(page, 1600, 900)                                            # rien d'allumé : personne ne donne l'horloge
     page.click(".duo-link", force=True)                                 # aria-disabled : Playwright l'attendrait
-    assert page.is_visible(".fs-tip") and "FM-1+VA" in page.inner_text(".fs-tip")
+    assert page.is_visible(".fs-tip") and "FM1-B" in page.inner_text(".fs-tip") and "FM-1+VA" in page.inner_text(".fs-tip")
     assert page.evaluate("window.__duo.linked") is False                 # le réglage ne change pas
 
 

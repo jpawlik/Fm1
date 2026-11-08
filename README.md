@@ -9,7 +9,7 @@ A small UI-focused fork of **[Ninjathune-Human/Fm1](https://github.com/Ninjathun
 1. Open the app, power on, and choose a firmware.
 2. Turn knobs by dragging up/right; hold buttons while playing with another finger.
 3. On iPad, use **Safari → Share → Add to Home Screen**. Launch from the icon instead of Safari's fullscreen button.
-4. Open [Duo mode](https://jpawlik.github.io/Fm1/?duo) to run two FM-1 instances. Linked tempo requires FM-1+VA as clock leader.
+4. Open [Duo mode](https://jpawlik.github.io/Fm1/?duo) to run two instances. **MIDI clock B → A** forwards clock and Start/Stop/Continue from FM1-B (FM-1+VA) to FM1-A (any firmware that supports incoming MIDI clock). Native firmware does not yet transmit clock.
 
 Presets and settings are stored in your browser. **Turning the FM-1 off resets the active firmware's saved data.**
 
