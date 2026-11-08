@@ -2216,6 +2216,7 @@ class NativeFirmware {
     this.m2k = this.dialect === "m2k";       // mono2k : ses propres messages {t}, un écran d'un bit par pixel
     this.perKey = this.dialect === "sim" || this.dialect === "monk" || this.m2k;
     this.dinghy = this.dialect === "sim" || this.dialect === "mel";
+    this.basePixels = this.dialect === "base";  // fm1-base publishes host-order RGB565 pixels
     this.potMax = this.x0x ? 4096 : 1023;
     this.pot = Math.round((va.G.master ?? 0.88) * 1023);
     this.off = document.createElement("canvas"); this.off.width = this.off.height = 240;
@@ -2232,7 +2233,8 @@ class NativeFirmware {
     if (this.dialect === "choralroot") {               // un paquet USB-MIDI : son code, puis les trois octets
       const cin = s >= 0xf8 ? 0xf : s >= 0x80 && s < 0xf0 ? s >> 4 : 0;
       if (cin) this.send({ type: "midi", pkts: [(cin | (s << 8) | (a << 16) | (b << 24)) >>> 0] });
-    } else if (this.x0x) this.send({ type: "midi", b0: s, b1: a, b2: b });
+    } else if (this.dialect === "base") this.send({ type: "app", part: "midi", data: [s, a, b] });
+    else if (this.x0x) this.send({ type: "midi", b0: s, b1: a, b2: b });
     else if (this.m2k) this.send({ t: "midi", s, a, b });
     else if (this.dialect === "sim") this.send({ t: "midi", d: [s, a, b] });   // OberVave, ShineOn, S1Vave, zp12 : sim_midi
     else this.send({ type: "midi", data: [s, a, b] });
@@ -2266,6 +2268,9 @@ class NativeFirmware {
       const load = this.loadMessage(wasm, sectors, master);
       if (load) this.send(load, [wasm]);
       await ready;
+      // The ECHOFIELD editor normally creates its CC0 sample bank after web
+      // boot. In the shared panel, request the factory bank on a fresh flash.
+      if (this.entry.id === "echofield" && !sectors) this.send({ type: "app", id: 0, op: "factory" });
       this.node.connect(this.an);
       this.on = true;
       return true;
@@ -2279,6 +2284,7 @@ class NativeFirmware {
   loadMessage(wasm, saved, master) {
     switch (this.dialect) {
       case "sim": return null;                 // tout passe par les options du processeur
+      case "base": return { type: "load", wasm, store: saved || {}, master };
       case "x0x": case "monk": return { type: "load", wasm, store: saved || {}, master };
       case "m2k": return { t: "wasm", bytes: wasm, seed: (Math.random() * 4294967295) >>> 0, store: saved instanceof Uint8Array ? saved : null };
       case "choralroot": return { type: "load", wasm, flash: saved instanceof ArrayBuffer ? saved : null, master };
@@ -2423,7 +2429,7 @@ class NativeFirmware {
     if (!this.fb) { c.fillStyle = "#000"; c.fillRect(0, 0, this.cv.width, this.cv.height); return; }
     if (this.fbNew) {                       // l'ordre d'octets de la dalle : chaque pixel est inversé avant la conversion
       const f = this.fb;                    // (sim et MEL donnent l'écran dans l'ordre de la machine)
-      if (!this.dinghy && !this.m2k) for (let i = 0; i < f.length; i++) { const v = f[i]; f[i] = ((v >> 8) | (v << 8)) & 0xFFFF; }
+      if (!this.dinghy && !this.m2k && !this.basePixels) for (let i = 0; i < f.length; i++) { const v = f[i]; f[i] = ((v >> 8) | (v << 8)) & 0xFFFF; }
       rgb565ToRgba(f, this.img.data); this.off.getContext("2d").putImageData(this.img, 0, 0); this.fbNew = false;
     }
     c.drawImage(this.off, 0, 0, this.cv.width, this.cv.height);
