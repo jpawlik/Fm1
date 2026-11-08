@@ -17,7 +17,9 @@
     function engine(k) {
       try {
         const w = frames[k].contentWindow, e = w.__engine && w.__engine();
-        return e && e.on && typeof e.midiIn === "function" ? e : null;
+        // A halted CPU emulation instance cannot consume further MIDI clock.
+        return e && e.on && !(e.kind === "emu" && (e.halted || !e.live)) &&
+          typeof e.midiIn === "function" ? e : null;
       } catch { return null; }
     }
     const engines = () => ({ a: engine("a"), b: engine("b") });
@@ -39,7 +41,8 @@
       // 'Ready' means only that both engines have a MIDI input adapter, NOT
       // that their chosen firmware actually follows external clock.
       state.textContent = !linked ? "Sync off" : !ready(cached) ? "Power on both" :
-        playing ? "Clock sent · enable ext sync" : starting ? "Starting clock…" : "Clock ready · set ext sync";
+        playing ? (stats.late > 3 ? "Clock delays detected" : "Clock sent · set ext sync") :
+        starting ? "Starting clock…" : "Clock ready · set ext sync";
     }
     function stop() {
       // Invalidate any pending asynchronous start, including Play followed by
