@@ -20,6 +20,15 @@
    "wasm": "app/build/emu/app.wasm"
   },
   {
+   "id": "elixir",
+   "depot": "dmajka/elixir",
+   "commit": "088b055c507ad4dd83a90fb7e648c211d58148da",
+   "script": "web/emu/build.sh",
+   "avant": "sh tools/gen.sh",
+   "wasm": "build/emu/elixir.wasm",
+   "dialecte": "felucca"
+  },
+  {
    "id": "felucca",
    "depot": "hugelton/Felucca",
    "commit": "a53ecf428c29c780108fd70a31b71a32a6b5c313",
@@ -36,6 +45,14 @@
    "dialecte": "felucca"
   },
   {
+   "id": "jiant",
+   "depot": "juanjiant-bit/JIANT",
+   "commit": "cac23c6d0bb9a7f6986eb79bbe42ae710805ce98",
+   "script": "web/emu/build.sh",
+   "wasm": "build/emu/felucca.wasm",
+   "dialecte": "felucca"
+  },
+  {
    "id": "loom",
    "depot": "charlesvestal/fm1-loom",
    "commit": "92b4bf2c080b0a4172c07e4cf499dd6d557c3f5f",
@@ -48,6 +65,16 @@
    "depot": "Co-oscillator/Loom-FM-1",
    "commit": "ed6f036f9e3187ba22f915c3941d23f477159683",
    "script": "web/emu/build.sh"
+  },
+  {
+   "id": "mnm1",
+   "depot": "galfaroth/mnm1",
+   "commit": "2c7aee4c277bb642404c4638dbc77a360d36cf55",
+   "script": "tools/build_sim.sh",
+   "construction": "SIM_PREFIX=MNM1 bash \"$HERE/tools/worklets/hortator.sh\" build/natif/mnm1.wasm",
+   "wasm": "build/natif/mnm1.wasm",
+   "worklet": "tools/worklets/hortator.js",
+   "dialecte": "felucca"
   },
   {
    "id": "mono2k",
@@ -72,7 +99,7 @@
   {
    "id": "ravel",
    "depot": "De-Pattern/Ravel_FM1",
-   "commit": "6a7696d75ae4ffaeff21827f973abf2b93771326",
+   "commit": "407276ca17e8b2941967d21981542f4001f9d32a",
    "script": "web/emu/build.sh",
    "wasm": "web/emu/ravel.wasm",
    "worklet": "tools/worklets/ravel.js",

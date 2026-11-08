@@ -1,0 +1,110 @@
+{
+ "id": "elixir",
+ "resume": "A seven-track drum machine porting Erica Synths LXR-02 firmware to FM-1. Six voices with a direct 16-step grid per bar, four-bar patterns, sound locks, flams, rolls, kit morphing, scene-based performance tools and song arrangements.",
+ "commandes": [
+  {
+   "commande": "OCT-",
+   "role": "SHIFT. Hold while using keys or panel buttons for alternate operations and mute/solo controls."
+  },
+  {
+   "commande": "OCT+",
+   "role": "COPY. Hold and press a track, bar or pattern to copy; works with sound parameters for Control All."
+  },
+  {
+   "commande": "FX",
+   "role": "Master FX bus, drive, phaser/flanger, delay, reverb and master compression."
+  },
+  {
+   "commande": "SEL",
+   "role": "Scale controls and keyboard settings."
+  },
+  {
+   "commande": "ENV",
+   "role": "Voice amplitude and modulation envelopes."
+  },
+  {
+   "commande": "LFO",
+   "role": "Two LFOs, random-per-hit, cross-modulation and choke settings."
+  },
+  {
+   "commande": "EDIT",
+   "role": "Voice synthesis and sound model pages. With SHIFT: enter keyboard voice-play mode."
+  },
+  {
+   "commande": "GLO",
+   "role": "Mixer, output, FX/reverb sends, MIDI and clock-sync configuration."
+  },
+  {
+   "commande": "HOME",
+   "role": "Main 16-step grid, patterns and song views; SHIFT + HOME resets performance effects."
+  },
+  {
+   "commande": "SAVE",
+   "role": "Save or load kits, patterns, songs, morph snapshots and projects."
+  },
+  {
+   "commande": "ARP",
+   "role": "Live performance pages: rolls, mute effects, stutter, density and modulation."
+  },
+  {
+   "commande": "SEQ",
+   "role": "Track sequencer and step detail pages: chance, condition, ratchets, note/velocity, shifts, locks and lengths."
+  },
+  {
+   "commande": "PLAY",
+   "role": "Start and stop the sequencer."
+  },
+  {
+   "commande": "REC",
+   "role": "Arm recording for the selected track."
+  },
+  {
+   "commande": "MASTER",
+   "role": "Overall output level."
+  },
+  {
+   "commande": "SELECT",
+   "role": "Change the selected page or sequencer editing view."
+  },
+  {
+   "commande": "PRESETS",
+   "role": "Browse kit and sound libraries."
+  },
+  {
+   "commande": "ALGORITHM",
+   "role": "Select a drum track or voice."
+  },
+  {
+   "commande": "Touches blanches",
+   "role": "Tap white keys 1–16 to toggle steps of the currently selected bar. Other views use the keys for patterns or performance actions."
+  },
+  {
+   "commande": "Touches noires",
+   "role": "Keys 1–7 choose tracks; keys 8–11 choose the displayed bar. SHIFT/COPY modify their behavior."
+  }
+ ],
+ "gestes": [
+  "Tap a white key to switch a step on or off on the grid; hold that step and turn a knob on a sound page to create a parameter lock.",
+  "Hold COPY (OCT+) and tap a bar key to copy a bar's steps.",
+  "Select a track using the black keys and a bar using the other black keys."
+ ],
+ "modes": [
+  {
+   "nom": "Pattern and song arrangement",
+   "texte": "A pattern can contain up to four 16-step bars. There are 32 patterns and song arrangement, with kits, morphing and 128 kit-library positions."
+  },
+  {
+   "nom": "Live performance",
+   "texte": "PERF has rolls, DJ filter, FILL, density, stutter and other effects; they can alter playback without permanently changing the underlying pattern."
+  }
+ ],
+ "a_savoir": [
+  "LXR-02 sound-engine port; unofficial and not endorsed by Erica Synths.",
+  "The native build uses Elixir's own fixed-point WebAssembly simulation. Imported USB library features may not be accessible through the generic FM-1 panel."
+ ],
+ "source": {
+  "url": "https://github.com/dmajka/elixir/blob/088b055c507ad4dd83a90fb7e648c211d58148da/README.md",
+  "commit": "088b055c507ad4dd83a90fb7e648c211d58148da"
+ },
+ "d_apres_le_code": false
+}

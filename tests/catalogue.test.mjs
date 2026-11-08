@@ -8,11 +8,11 @@ import { dirname, join } from "node:path";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const cat = JSON.parse(readFileSync(join(ROOT, "firmwares/catalogue.json"), "utf8"));
 
-test("the approved 18 firmware entries and their categories are exact", () => {
-  const approved = ["hortator", "skiff", "mono2k", "x0x", "pigeon", "chipbox",
+test("the approved 21 firmware entries and their categories are exact", () => {
+  const approved = ["hortator", "elixir", "skiff", "mono2k", "mnm1", "jiant", "x0x", "pigeon", "chipbox",
     "loom", "ravel", "sloop", "fomajam", "fizz", "orbit", "loomfm1",
     "mvave15", "felucca", "dinghy", "fm1dock", "ctl"];
-  assert.equal(cat.firmwares.length, 18);
+  assert.equal(cat.firmwares.length, 21);
   assert.deepEqual(new Set(cat.firmwares.map(e => e.id)), new Set(approved));
   assert.equal(cat.defaut, "hortator");
   assert.deepEqual(new Set(cat.firmwares.flatMap(e => e.categories)),
@@ -31,9 +31,13 @@ test("chaque paquet local existe et a l'empreinte du catalogue", () => {
   }
 });
 
-test("une entrée sans paquet local a un paquet en ligne sur le Hub", () => {
+test("each native-only entry has a pinned native build and any external package has an approved origin", () => {
+  const nativeIds = new Set(JSON.parse(readFileSync(join(ROOT, "tools/natif.json"), "utf8")).firmwares.map(e => e.id));
   for (const e of cat.firmwares.filter((e) => !e.fichier)) {
-    assert.match(e.paquet_en_ligne || "", /^https:\/\/thefirmwarehub\.com\/fw\//, e.id);
+    if (e.natif_seulement) assert.ok(nativeIds.has(e.id), e.id);
+    else assert.ok(e.paquet_en_ligne, e.id);
+    if (e.paquet_en_ligne) assert.match(e.paquet_en_ligne,
+      /^https:\/\/(?:thefirmwarehub\.com\/fw\/|github\.com\/[\w.-]+\/[\w.-]+\/releases\/download\/)/, e.id);
   }
 });
 
@@ -46,10 +50,28 @@ test("chaque firmware a un état d'émulation mesuré ou déclaré", () => {
 test("native build list matches the approved optimized subset", () => {
   const native = JSON.parse(readFileSync(join(ROOT, "tools/natif.json"), "utf8")).firmwares;
   const allowed = new Set(cat.firmwares.map(e => e.id));
-  assert.equal(native.length, 11);
+  assert.equal(native.length, 14);
   assert.deepEqual(new Set(native.map(e => e.id)), new Set([
-    "chipbox", "ctl", "felucca", "hortator", "loom", "loomfm1",
+    "chipbox", "ctl", "elixir", "felucca", "hortator", "jiant", "loom", "loomfm1", "mnm1",
     "mono2k", "pigeon", "ravel", "skiff", "x0x"
   ]));
   for (const e of native) assert.ok(allowed.has(e.id), e.id);
+});
+
+test("four approved upstream upgrades are pinned to stable/public release source", () => {
+  const upgrades = new Map([
+    ["mnm1", ["1.0.1", "2c7aee4c277bb642404c4638dbc77a360d36cf55"]],
+    ["elixir", ["0.25.2", "088b055c507ad4dd83a90fb7e648c211d58148da"]],
+    ["jiant", ["V10.6z2", "cac23c6d0bb9a7f6986eb79bbe42ae710805ce98"]],
+    ["ravel", ["1.27.0", "407276ca17e8b2941967d21981542f4001f9d32a"]],
+  ]);
+  const native = JSON.parse(readFileSync(join(ROOT, "tools/natif.json"), "utf8")).firmwares;
+  for (const [id, [version, commit]] of upgrades) {
+    const entry = cat.firmwares.find(e => e.id === id), build = native.find(e => e.id === id);
+    assert.ok(entry && build, id);
+    assert.equal(entry.version, version, id);
+    assert.equal(entry.commit_source, commit, id);
+    assert.equal(build.commit, commit, id);
+    assert.equal(entry.natif_seulement, true, id);
+  }
 });
