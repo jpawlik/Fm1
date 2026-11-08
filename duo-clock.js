@@ -9,19 +9,23 @@ class DuoHostClock extends AudioWorkletProcessor {
     this.running = false;
     this.nextPulse = 0;
     this.pending = [];
+    this.epoch = 0;
     this.port.onmessage = ({ data: m }) => {
       if (m.type === "start") {
+        this.epoch = m.epoch;
         this.bpm = this.clamp(m.bpm || this.bpm);
         this.running = true;
         this.nextPulse = currentFrame;
+        this.pending.length = 0; // discard old Stop / Start on rapid restart
         this.pending.push(0xfa);
-      } else if (m.type === "continue") {
+      } else if (m.type === "continue" && m.epoch === this.epoch) {
         this.running = true;
         this.nextPulse = currentFrame;
         this.pending.push(0xfb);
-      } else if (m.type === "stop") {
+      } else if (m.type === "stop" && m.epoch === this.epoch) {
+        // The host sends MIDI Stop synchronously to each receiver already.
         this.running = false;
-        this.pending.push(0xfc);
+        this.pending.length = 0;
       } else if (m.type === "tempo") {
         const old = this.period(), next = this.clamp(m.bpm);
         // Preserve fractional time to the next tick on a tempo change.
@@ -46,7 +50,7 @@ class DuoHostClock extends AudioWorkletProcessor {
         this.nextPulse += period;
       }
     }
-    if (events.length) this.port.postMessage({ type: "events", events });
+    if (events.length) this.port.postMessage({ type: "events", epoch: this.epoch, events });
     return true;
   }
 }
