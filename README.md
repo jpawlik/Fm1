@@ -11,7 +11,7 @@ A small UI-focused fork of **[Ninjathune-Human/Fm1](https://github.com/Ninjathun
 3. On iPad, use **Safari → Share → Add to Home Screen**. Launch from the icon instead of Safari's fullscreen button.
 4. Open [Duo mode](https://jpawlik.github.io/Fm1/?duo) to run two instances. **MIDI clock B → A** forwards clock and Start/Stop/Continue from FM1-B (FM-1+VA) to FM1-A (any firmware that supports incoming MIDI clock). Native firmware does not yet transmit clock.
 
-Presets and settings are stored in your browser. **Turning the FM-1 off resets the active firmware's saved data.**
+Presets and settings are stored in your browser. **Turning the FM-1 off resets the active firmware's saved data.** Before resetting or switching devices, open **Backup and restore** below the panel in Solo mode and export a JSON backup to iPad Files / iCloud Drive. The file includes native and emulated firmware saves plus Duo settings; it can also include imported firmware, samples and ROM data, so keep it private. To restore, power off, close other tabs, import the file, and confirm replacement.
 
 ## Engines
 
