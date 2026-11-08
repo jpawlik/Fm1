@@ -6507,11 +6507,17 @@ function buildPanel(fw) {
     try { const w = frames[k].contentWindow, e = w.__engine && w.__engine(); return e && e.on ? (e === w.__fw ? { va: e } : e.kind === "natif" ? { natif: e } : e.kind === "emu" ? { emu: e } : null) : null; } catch { return null; }
   };
   const fwOf = (k) => { const e = engOf(k); return e && e.va ? e.va : null; };
-  let was = { a: null, b: null };
+  let was = { a: null, b: null }, clockFrom = null, clockTo = null;
   function tick() {
     const E = { a: engOf("a"), b: engOf("b") };
     const lead = E.b && E.b.va && E.a ? "b" : null, other = "a";
-    const on = linked && !!lead;
+    const source = lead ? E.b.va : null;
+    const target = E.a && (E.a.va || E.a.natif || E.a.emu);
+    const on = linked && !!source && !!target;
+    const changed = clockFrom !== (on ? source : null) || clockTo !== (on ? target : null);
+    // Stop the previous follower BEFORE removing its clock. Applies to unlink,
+    // a power-off, or either firmware changing; otherwise it could keep playing.
+    if (changed && clockTo && clockTo.on) clockTo.midiIn(Uint8Array.of(0xFC));
     linkBtn.setAttribute("aria-checked", on);
     linkBtn.setAttribute("aria-disabled", !lead);
     linkBtn.querySelector(".dir").textContent = " · B → A";
@@ -6530,6 +6536,11 @@ function buildPanel(fw) {
       if (!!e.mi.follow !== isFollow) { e.mi.follow = isFollow; e.sendGlobal(); }
       e.mi.tempo = isFollow && E[lead].va ? E[lead].va.G.tempo : 0;
     }
+    // Joining an already-playing master needs its own Start; otherwise the new
+    // receiver gets Clock pulses forever but never starts its sequencer.
+    if (changed && on && source.S.playing) target.midiIn(Uint8Array.of(0xFA));
+    clockFrom = on ? source : null;
+    clockTo = on ? target : null;
     // le battement de chaque FM-1, sur ses pastilles FM1-A | FM1-B
     const beat = { a: fwOf("a"), b: fwOf("b") };
     for (const k of ["a", "b"]) {
