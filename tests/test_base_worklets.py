@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 from conftest import ROOT
+ROOT = Path(ROOT)
 
 ROOT = Path(ROOT)
 
