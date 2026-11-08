@@ -1,0 +1,97 @@
+{
+ "id": "echofield",
+ "resume": "Playable granular sampler with CLOUD, DUST, TAPE, BLOOM, PULSE and DRIFT modes; 14 factory samples, resampling, MIDI clock and momentary performance effects.",
+ "commandes": [
+  [
+   "OCT-",
+   "Lower octave. OCT- and OCT+ together undo randomization."
+  ],
+  [
+   "OCT+",
+   "Raise octave."
+  ],
+  [
+   "FX",
+   "Effects pages. Hold FX and a black key to play a temporary performance effect."
+  ],
+  [
+   "SEL",
+   "Sample and sweep pages; hold with a key to choose DRIFT ORACLE's key."
+  ],
+  [
+   "ENV",
+   "Envelope controls."
+  ],
+  [
+   "LFO",
+   "Modulation controls."
+  ],
+  [
+   "EDIT",
+   "Grain shaping. Hold EDIT and a white key to audition the unprocessed sample."
+  ],
+  [
+   "GLO",
+   "Global clock, MIDI and performance settings."
+  ],
+  [
+   "HOME",
+   "Overview and playback pages; hold for context-sensitive help."
+  ],
+  [
+   "SAVE",
+   "Sound storage; hold with white keys for user slots 1–16 or black keys for factory presets."
+  ],
+  [
+   "ARP",
+   "Randomize parameters; hold ARP and turn a knob to lock it."
+  ],
+  [
+   "SEQ",
+   "Freeze the granular cloud."
+  ],
+  [
+   "PLAY",
+   "Start or stop continuous playback."
+  ],
+  [
+   "REC",
+   "Resample the current sound."
+  ],
+  [
+   "MASTER",
+   "Master output level."
+  ],
+  [
+   "SELECT",
+   "Sweep the sample playhead."
+  ],
+  [
+   "PRESETS",
+   "Browse factory and user sounds."
+  ],
+  [
+   "ALGORITHM",
+   "Choose CLOUD, DUST, TAPE, BLOOM, PULSE or DRIFT."
+  ],
+  [
+   "Touches",
+   "Play samples chromatically; modifier keys offer live granular effects."
+  ]
+ ],
+ "gestes": [
+  "Select a factory sample, hold a white key and sweep SELECT to move its playhead.",
+  "Hold FX and press a black key for a momentary performance effect.",
+  "Press PLAY to hear a continuous granular cloud; REC captures the sound for resampling."
+ ],
+ "modes": [],
+ "a_savoir": [
+  "ECHOFIELD's upstream companion has a sample editor; the shared FM-1 panel currently exposes the instrument and its factory bank, not the companion's separate sample import UI.",
+  "The existing browser Power Off reset issue still affects saved data."
+ ],
+ "source": {
+  "url": "https://github.com/Philip-Bos/echofield-fm1/blob/27feb2d23dc60bf1f8dbd7209286ee5a15a6b88f/README.md",
+  "commit": "27feb2d23dc60bf1f8dbd7209286ee5a15a6b88f"
+ },
+ "d_apres_le_code": false
+}

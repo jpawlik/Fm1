@@ -1,0 +1,102 @@
+{
+ "id": "graine",
+ "resume": "Six-voice granular instrument with synthesized sources, captured samples, LFO/envelope modulation, pitch and time shifting, rhythmic gestures, delay and reverb. SEQ is a performance TAPIS, not a conventional note sequencer.",
+ "commandes": [
+  [
+   "OCT-",
+   "Lower keyboard octave or cancel a confirmation."
+  ],
+  [
+   "OCT+",
+   "Raise octave or confirm a save."
+  ],
+  [
+   "FX",
+   "Filter, echo, space, halo and texture pages."
+  ],
+  [
+   "SEL",
+   "Select sources and playhead sweep."
+  ],
+  [
+   "ENV",
+   "Envelope pages; hold while turning a knob to add envelope modulation."
+  ],
+  [
+   "LFO",
+   "LFO pages; hold while turning a knob to add LFO modulation."
+  ],
+  [
+   "EDIT",
+   "Grain, texture, drone and chaos pages."
+  ],
+  [
+   "GLO",
+   "Global tempo and clock, capture and randomization controls."
+  ],
+  [
+   "HOME",
+   "Cloud view and performance; hold to freeze the playhead."
+  ],
+  [
+   "SAVE",
+   "Save the current patch into a chosen preset slot."
+  ],
+  [
+   "ARP",
+   "Arpeggiator and rhythmic rain modes."
+  ],
+  [
+   "SEQ",
+   "Toggle TAPIS, making white keys sample positions and black keys performance pads."
+  ],
+  [
+   "PLAY",
+   "Start or stop the clock used for rhythmic effects."
+  ],
+  [
+   "REC",
+   "Capture the sound; hold and turn a knob to record a looping gesture."
+  ],
+  [
+   "MASTER",
+   "Overall output level."
+  ],
+  [
+   "SELECT",
+   "Choose a sound source."
+  ],
+  [
+   "PRESETS",
+   "Choose among available factory and user presets."
+  ],
+  [
+   "ALGORITHM",
+   "Adjust playback speed, including reverse and frozen-position settings."
+  ],
+  [
+   "Touches",
+   "Play notes or, in TAPIS, select sample positions and temporary granular effects."
+  ]
+ ],
+ "gestes": [
+  "Hold LFO or ENV and turn one of the four knobs to modulate that destination.",
+  "Toggle SEQ: sixteen white keys become sample positions and eleven black keys become performance effects.",
+  "Press REC to capture the current output or hold REC while turning a knob to record its movement."
+ ],
+ "modes": [
+  {
+   "nom": "TAPIS",
+   "texte": "The keyboard acts as a playable sample map and performance pad bank, rather than an ordinary step sequencer."
+  }
+ ],
+ "a_savoir": [
+  "This build pins the public 0.2 development snapshot; upstream has not published a tagged stable 0.2 release.",
+  "Captured sound and other saved data may be affected by the FM-1 app's known Power Off persistence bug."
+ ],
+ "source": {
+  "url": "https://github.com/omnipotard/Granular-FM1/blob/40a9a99abfbd03b3c837c98fdea2fab50c169ed3/app/docs/MANUAL.md",
+  "commit": "40a9a99abfbd03b3c837c98fdea2fab50c169ed3"
+ },
+ "d_apres_le_code": false
+}
