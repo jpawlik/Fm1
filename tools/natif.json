@@ -75,9 +75,8 @@
    "depot": "charlesvestal/fm1-loom",
    "commit": "faf459d1f9cea3e634b6e2622a1c3e91d58b3452",
    "script": "build.sh",
-   "construction": "sh build.sh --web && python3 \"$HERE/tools/worklets/fm1base_bundle.py\" app/build/emu natif-loom",
-   "wasm": "app/build/emu/app.wasm",
-   "dialecte": "base"
+   "construction": "sh build.sh --web",
+   "wasm": "app/build/emu/app.wasm"
   },
   {
    "id": "loomfm1",

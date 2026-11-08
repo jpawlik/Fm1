@@ -164,7 +164,11 @@ def test_every_native_boots(page):
         for _ in range(10):                         # jusqu'à 5 s : un écran de démarrage sombre (386DX) s'allume plus tard
             page.wait_for_timeout(500)
             if lit_pixels(page) >= 500: break
-        else: bad.append((i, "écran"))
+        else:
+            diag = page.evaluate("""() => { const e = window.__engine();
+              return { node: !!e.node, on: e.on, failure: e.failure, fb: e.fb?.length || 0,
+                context: e.ac?.state, load: e.load, error: String(e.bootError || "") }; }""")
+            bad.append((i, "écran", diag))
     assert not bad, bad
 
 

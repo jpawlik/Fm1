@@ -54,7 +54,7 @@ def test_only_pinned_licenced_base_engines_use_the_new_protocol():
     import json
     builds = json.loads((ROOT / "tools/natif.json").read_text())["firmwares"]
     native = {b["id"]: b for b in builds}
-    for id_ in ("echofield", "graine", "loom"):
+    for id_ in ("echofield", "graine"):
         assert native[id_]["dialecte"] == "base"
         assert len(native[id_]["commit"]) == 40
         assert 'fm1base_bundle.py' in native[id_]["construction"]
@@ -70,3 +70,13 @@ def test_base_worklet_without_app_clears_stale_global_and_binds_callback(tmp_pat
     assert 'globalThis.fm1App = {};' in bundle
     assert 'const __fm1ScopedApp = globalThis.fm1App || {};' in bundle
     assert 'return __fm1ScopedApp;' in bundle
+
+def test_loom_uses_upstream_worklet_with_isolated_empty_callbacks():
+    import json
+    builds = json.loads((ROOT / "tools/natif.json").read_text())["firmwares"]
+    loom = next(f for f in builds if f["id"] == "loom")
+    assert loom["construction"] == "sh build.sh --web"
+    assert "dialecte" not in loom
+    script = (ROOT / "tools/natif_build.sh").read_text()
+    assert 'if [ "$ID" = "loom" ]; then' in script
+    assert "globalThis.fm1App = {};" in script
