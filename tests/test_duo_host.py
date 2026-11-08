@@ -158,11 +158,18 @@ def test_unlink_cancels_worklet_start_in_progress(page):
     page.click(".duo-link")
     page.click(".duo-play")
     page.click(".duo-link")
-    page.wait_for_timeout(500)
+    page.wait_for_timeout(200)
     assert page.get_attribute(".duo-link", "aria-checked") == "false"
     assert not page.evaluate("window.__duo.playing")
+    counts = [frame.evaluate("window.__clockBytes.length") for frame in (a,b)]
+    # A fast browser might complete Start before the second click. In that
+    # case it must send Stop; no additional messages may arrive after unlink.
     for frame in (a,b):
-        assert 0xFA not in frame.evaluate("window.__clockBytes")
+        messages = frame.evaluate("window.__clockBytes")
+        if 0xFA in messages:
+            assert 0xFC in messages and messages.index(0xFC) > messages.index(0xFA)
+    page.wait_for_timeout(450)
+    assert [frame.evaluate("window.__clockBytes.length") for frame in (a,b)] == counts
 
 
 def test_poweroff_stops_host_clock_and_old_receiver(page):
