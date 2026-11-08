@@ -1933,7 +1933,15 @@ class EmuFirmware {
 
   async attach(ac, wasm) {
     if (!this.mod) this.mod = await import("./runtime/persistence.js");
-    if (!this.saveStore) this.saveStore = new this.mod.SaveStore();
+    if (!this.saveStore) {
+      // FM1-B gets a separate IndexedDB database: Joakim's SaveStore keys states
+      // by firmware hash, so using the default database in both iframes silently
+      // shares/overwrites presets when they load the same .fwsc package.
+      const factory = FM1_ID === "b" ? {
+        open: (name, version) => indexedDB.open(name === "fm1-emulator" ? "fm1-emulator-b" : name, version)
+      } : indexedDB;
+      this.saveStore = new this.mod.SaveStore(factory);
+    }
     this.wasm = wasm;
     if (this.moduleOf !== ac) { await ac.audioWorklet.addModule("runtime/worklet.js"); this.moduleOf = ac; }
     if (!this.node) {
