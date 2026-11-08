@@ -16,13 +16,14 @@ def frames_accepted(page):
 
 
 def test_failed_emu_switch_keeps_screen(page):
-    """Felucca puis un paquet en ligne injoignable : Felucca reste affiché et mis à jour."""
+    """Failed online package fetch keeps the prior emulated firmware running."""
+    page.route("**/natif/manifest.json", lambda r: r.fulfill(status=200, body="{}", content_type="application/json"))
     page.route("https://thefirmwarehub.com/**", lambda r: r.fulfill(status=503, body="indisponible"))
     power_on(page)
     page.set_default_timeout(30000)
-    assert use(page, "gator") is True
+    assert use(page, "fizz") is True
     page.wait_for_timeout(2000)
-    assert use(page, "kawa") is False
+    assert use(page, "skiff") is False
     page.wait_for_timeout(1500)
     assert lit_pixels(page) >= 2000
     assert frames_accepted(page)
@@ -32,7 +33,7 @@ def test_failed_emu_boot_keeps_screen(page):
     """Felucca puis un paquet invalide : même chose après un échec de démarrage."""
     power_on(page)
     page.set_default_timeout(30000)
-    assert use(page, "gator") is True
+    assert use(page, "fizz") is True
     page.wait_for_timeout(2000)
     ok = page.evaluate("""async () => window.__useEngine({ id: 'local', nom: 'x', bytes: new Uint8Array(1000) })""")
     assert ok is False
@@ -45,7 +46,7 @@ def test_key_during_switch_not_stuck(page):
     """Une touche jouée pendant le passage de FM-1+VA à un firmware émulé ne reste pas tenue."""
     power_on(page)
     page.set_default_timeout(30000)
-    page.evaluate("""() => { window.__p = window.__useEngine(window.__catalogue.find((e) => e.id === 'zp12'));
+    page.evaluate("""() => { window.__p = window.__useEngine(window.__catalogue.find((e) => e.id === 'sloop'));
       setTimeout(() => window.__host.keyDown(16, 'late'), 20); }""")
     assert page.evaluate("window.__p") is True
     page.evaluate("window.__host.keyUp('late')")
@@ -60,7 +61,7 @@ def test_boot_exception_falls_back_to_va(page):
     power_on(page)
     page.set_default_timeout(30000)
     page.evaluate("() => { crypto.subtle.digest = () => { throw new Error('refusé'); }; }")
-    ok = page.evaluate("""async () => { try { return await window.__useEngine(window.__catalogue.find((e) => e.id === 'gator')); }
+    ok = page.evaluate("""async () => { try { return await window.__useEngine(window.__catalogue.find((e) => e.id === 'fizz')); }
       catch (err) { return 'rejet'; } }""")
     assert ok is False
     assert page.evaluate("window.__engine() === window.__fw")

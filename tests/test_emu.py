@@ -24,7 +24,7 @@ def stored_sectors(page):
 def test_boot_felucca(page):
     power_on(page)
     page.set_default_timeout(30000)
-    assert use(page, "monohull") is True
+    assert use(page, "fizz") is True
     page.wait_for_timeout(3000)
     assert lit_pixels(page) >= 2000
     page.evaluate("window.__host.keyDown(12, 't')")
@@ -37,7 +37,7 @@ def test_boot_felucca(page):
 def test_same_audiocontext(page):
     power_on(page)
     page.evaluate("window.__ac0 = window.__ac")
-    assert use(page, "monohull") is True
+    assert use(page, "fizz") is True
     assert use(page, "fm1va") is True
     assert use(page, "sloop") is True                    # (un émulé : zp12 est natif)
     assert page.evaluate("window.__ac === window.__ac0")
@@ -47,14 +47,14 @@ def test_no_stuck_key(page):
     power_on(page)
     page.evaluate("window.__host.keyDown(5, 's')")
     assert page.evaluate("window.__engine().keyNotes.size") == 1
-    assert use(page, "monohull") is True
+    assert use(page, "fizz") is True
     assert use(page, "fm1va") is True
     assert page.evaluate("window.__engine().keyNotes.size") == 0
 
 
 def test_crisp_lcd(page):
     power_on(page)
-    assert use(page, "monohull") is True
+    assert use(page, "fizz") is True
     page.wait_for_timeout(1000)
     smooth = page.evaluate("""() => { const c = document.getElementById('screen'); c.width = c.height = 731;
       window.__engine().draw(); return c.getContext('2d').imageSmoothingEnabled; }""")
@@ -71,10 +71,10 @@ def _seed_sector(page, fid):
 
 def test_saves_kept(page):
     power_on(page)
-    assert use(page, "monohull") is True
+    assert use(page, "fizz") is True
     assert use(page, "sloop") is True                    # (un émulé : zp12 est natif)
-    _seed_sector(page, "monohull")
-    assert use(page, "monohull") is True
+    _seed_sector(page, "fizz")
+    assert use(page, "fizz") is True
     page.wait_for_timeout(500)
     # le secteur a été restauré dans la flash au démarrage, puis réenregistré par l'instantané de démarrage
     assert FLASH - SECTOR in stored_sectors(page)
@@ -82,13 +82,13 @@ def test_saves_kept(page):
 
 def test_factory_reset_emu(page):
     power_on(page)
-    assert use(page, "monohull") is True
+    assert use(page, "fizz") is True
     assert use(page, "sloop") is True                    # (un émulé : zp12 est natif)
-    _seed_sector(page, "monohull")
-    assert use(page, "monohull") is True
+    _seed_sector(page, "fizz")
+    assert use(page, "fizz") is True
     page.wait_for_timeout(500)
     assert FLASH - SECTOR in stored_sectors(page)
-    ok = page.evaluate("async () => window.__engine().boot(window.__catalogue.find((e) => e.id === 'monohull'), { reset: true })")
+    ok = page.evaluate("async () => window.__engine().boot(window.__catalogue.find((e) => e.id === 'fizz'), { reset: true })")
     assert ok is True
     page.wait_for_timeout(500)
     assert stored_sectors(page) == []
@@ -96,7 +96,7 @@ def test_factory_reset_emu(page):
 
 def test_va_still_works(page):
     power_on(page)
-    assert use(page, "monohull") is True
+    assert use(page, "fizz") is True
     assert use(page, "fm1va") is True
     assert page.evaluate("window.__engine() === window.__fw")
     page.evaluate("window.__host.keyDown(12, 't')")
@@ -127,7 +127,7 @@ def test_screen_60fps(page):
     """Le cœur envoie l'écran environ 60 fois par seconde et la page le redessine à chaque image."""
     power_on(page)
     page.set_default_timeout(30000)
-    assert use(page, "monohull") is True
+    assert use(page, "fizz") is True
     page.wait_for_timeout(1000)
     rates = page.evaluate("""() => new Promise((done) => {
       const e = window.__engine(), o = e.onWorklet.bind(e), d = e.draw.bind(e); let frames = 0, draws = 0;

@@ -32,7 +32,7 @@ def test_popover_and_light(page):
 def test_emulated_takes_midi(page):
     power_on(page)
     page.set_default_timeout(30000)
-    assert use(page, "gator") is True
+    assert use(page, "fizz") is True
     page.evaluate("() => { const e = window.__engine(), s = e.send.bind(e); window.__sent = []; e.send = (m) => { if (m.type === 'midi') window.__sent.push(m.bytes); return s(m); }; }")
     page.evaluate("window.__midiRoute({ name: 'x' }, Uint8Array.from([0x90, 60, 100]))")
     assert page.evaluate("window.__engine().kind") == "emu"
