@@ -13,6 +13,16 @@ A small UI-focused fork of **[Ninjathune-Human/Fm1](https://github.com/Ninjathun
 
 Presets and settings are stored in your browser. **Turning the FM-1 off resets the active firmware's saved data.** Before resetting or switching devices, open **Backup and restore** below the panel in Solo mode and export a JSON backup to iPad Files / iCloud Drive. The file includes native and emulated firmware saves plus Duo settings; it can also include imported firmware, samples and ROM data, so keep it private. To restore, power off, close other tabs, import the file, and confirm replacement.
 
+## Curated firmware collection
+
+The main picker includes **18 curated firmware entries**, plus FM-1+VA, in just three categories:
+
+- **Drums & Samplers:** Hortator, PIGEON, FOMAJAM.
+- **Grooveboxes:** Skiff, MONO2K, X0X, Chipbox, LOOM-8, Ravel, SLOOP, FIZZ, ORBIT, Loom FM-1.
+- **System & Tools:** stock M-VAVE V15, Felucca, Dinghy, fm1-dock, CTL-1.
+
+Eleven of these have **native WebAssembly builds**; the others use the CPU emulator. The native archive `natif-curated-v1` contains only these 11 builds. The earlier `natif` release remains available for rollback. Original authors, exact pinned revisions and licences remain recorded in the catalogue. Firmware versions are not upgraded as part of this cleanup.
+
 ## Engines
 
 - **FM-1+VA:** independent browser reimplementation based on [Baud Girl's manual](https://baudgirl.com/work/FM-1+VA/manual). Her compiled firmware is **not redistributed** here.

@@ -1751,8 +1751,8 @@ const LIT = 0.25;
 const EMU_COLS = 11;
 const emuLevel = (leds, id) => (leds && id >= 0 ? Math.min(1, leds[id] * EMU_COLS) : 0);
 const isLit = (leds, id) => emuLevel(leds, id) > LIT;
-const CATEGORY_ORDER = ["FM-1+VA", "Officiel", "Groovebox", "Synthé", "Accords", "Boîte à rythmes", "Tracker", "Autre"];
-const HIDDEN = new Set(["bubba"]);
+const CATEGORY_ORDER = ["FM-1+VA", "Drums & Samplers", "Grooveboxes", "System & Tools"];
+const HIDDEN = new Set();
 // zones sensibles agrandies : chaque boîte [x, y, w, h] gagne jusqu'à `pad` de chaque côté, sans dépasser
 // le milieu de l'espace qui la sépare d'une voisine en face d'elle ; plus de zone morte entre deux touches
 function widenBoxes(boxes, pad) {
@@ -6174,7 +6174,7 @@ function buildPanel(fw) {
       const open = expanded.has(g.cle);
       head.setAttribute("aria-expanded", open);
       head.innerHTML = `<span></span><span class="count">${g.items.length}</span><span class="notch" aria-hidden="true"></span>`;
-      head.firstChild.textContent = ({ "Officiel": "Official", "Synthé": "Synth", "Accords": "Chords", "Boîte à rythmes": "Drum machines", "Autre": "Other", "Base de développement": "Development base" })[g.categorie] || g.categorie;
+      head.firstChild.textContent = g.categorie;
       ul.className = "fw-items"; ul.hidden = !open;
       ul.append(...g.items.map(row));
       head.addEventListener("click", () => {
