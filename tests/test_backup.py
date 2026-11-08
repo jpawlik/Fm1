@@ -16,6 +16,8 @@ def test_backup_round_trip_all_storage_families(page):
       localStorage.setItem("fm1.duo.link", "1");
       localStorage.setItem("unrelated", "leave alone");
       const mod = await import("./backup.js");
+      // Initialize both IndexedDB schemas before populating synthetic firmware saves.
+      await mod.createBackup();
       const native = await new Promise((ok, ko) => {
         const r = indexedDB.open("fm1-natif", 1);
         r.onsuccess = () => ok(r.result); r.onerror = () => ko(r.error);
