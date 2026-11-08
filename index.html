@@ -124,6 +124,12 @@ a:focus-visible, button:focus-visible, summary:focus-visible, .file:focus-within
   padding: 0 16px; min-height: 40px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
 .bar button:hover, .file:hover { border-color: var(--accent); }
 .file input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.backup-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.backup-actions button, .backup-import { font: 500 0.9375rem var(--body); border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); color: var(--ink); min-height: 40px; padding: 8px 14px; cursor: pointer; }
+.backup-actions button:disabled { opacity: 0.6; cursor: progress; }
+.backup-import { position: relative; display: inline-flex; align-items: center; }
+.backup-import input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.backup-actions button:hover, .backup-import:hover { border-color: var(--accent); }
 /* MIDI : un bouton à encoche, son voyant ambre quand un message arrive, et sa bulle au-dessus (l'entrée, le canal) */
 .midi { position: relative; }
 #midi-btn .rxdot { width: 7px; height: 7px; border-radius: 50%; background: var(--rule); transition: background 80ms; }
@@ -396,12 +402,24 @@ html.embed .duo-tabs { margin-left: auto; }                              /* FM1-
           <dt>Firmware</dt><dd>Open the Firmware picker to choose optimized versions (FM-1+VA and firmware compiled for the browser) or original packages running on the emulated CPU. Search by name, author or description. You can also open your own .fwsc package. If a firmware stops, press Restart.</dd>
           <dt>Firmware-specific controls</dt><dd>Some firmware adds a control below the FM-1, such as Import DX7 patch for FM-1+VA or Samples for Pigeon and zp12. The firmware features panel explains these options.</dd>
           <dt>Colors</dt><dd>Choose one of the six panel colors beneath the FM-1. In FM-1+VA, the screen uses a matching theme.</dd>
-          <dt>Solo and Duo</dt><dd>Run two separate FM-1 instances, each with its own firmware, memory and power. Portrait mode stacks them; landscape lets you show one at a time or, on a large screen, side by side. Linked Tempo uses FM-1+VA as the leader (FM1-A if available). The other device receives MIDI clock and Start/Stop and follows if its firmware supports MIDI sync. FM1-B supports FM-1+VA or native browser firmware.</dd>
+          <dt>Solo and Duo</dt><dd>Run two separate FM-1 instances, each with its own firmware, memory and power. Portrait mode stacks them; landscape lets you show one at a time or, on a large screen, side by side. MIDI clock B → A sends clock and Start/Stop/Continue from FM1-B (FM-1+VA) to FM1-A if its firmware supports external sync. FM1-B supports FM-1+VA or native browser firmware.</dd>
           <dt>MIDI</dt><dd>Where supported by the browser, MIDI lets you choose an input and channel for this FM-1. The indicator blinks when MIDI arrives; a connected keyboard plays the selected firmware.</dd>
           <dt>Full screen</dt><dd>Use the button at top right where browser fullscreen is available. On iPad, use Share → Add to Home Screen and launch the installed web app to avoid Safari's swipe-down-to-exit-fullscreen gesture.</dd>
-          <dt>Browser storage</dt><dd>Presets, patterns, settings, last selected firmware, panel color and MIDI choice are stored in this browser. Powering off clears the active firmware's saved data. FM-1+VA also resets the panel color to Mint.</dd>
+          <dt>Browser storage</dt><dd>Presets, patterns, settings, last selected firmware, panel color and MIDI choice are stored in this browser. Powering off clears the active firmware's saved data. FM-1+VA also resets the panel color to Mint. Use Backup and restore below to export a complete copy before resetting.</dd>
           <dt>Credits and licenses</dt><dd>FM-1+VA is an independent reimplementation based on Baud Girl's <a href="https://baudgirl.com/work/FM-1+VA/manual" target="_blank" rel="noopener">FM-1+VA manual</a>, not her compiled firmware. The panel is adapted from the GPL-3.0 <a href="https://sbegueria.github.io/fm1-dub/emu/" target="_blank" rel="noopener">DUB-1 emulator</a>, as is this page. Emulated firmware runs on Joakim Eriksson's MIT-licensed <a href="https://github.com/joakimeriksson/fm1-emu" target="_blank" rel="noopener">fm1-emu</a>. Each firmware retains its original license, with links in the <a href="https://github.com/Ninjathune-Human/Fm1/tree/main/firmwares/licences" target="_blank" rel="noopener">firmware licenses</a> folder.</dd>
         </dl>
+      </div>
+    </details>
+    <details id="aide-backup">
+      <summary>Backup and restore</summary>
+      <div class="note">
+        <p>Export all FM-1 saves from this browser, including Duo A/B presets, patterns, native firmware projects, emulated firmware saves and imported packages. Save the file in Files or iCloud Drive. It may contain your samples and imported firmware.</p>
+        <p>Save your work first. Restoring replaces existing FM-1 data; power off the instrument and close other FM-1 tabs before importing.</p>
+        <div class="backup-actions">
+          <button id="backup-export" type="button">Export backup…</button>
+          <label for="backup-import" class="backup-import">Restore backup…<input id="backup-import" type="file" accept=".json,application/json"></label>
+        </div>
+        <p id="backup-status" role="status" aria-live="polite"></p>
       </div>
     </details>
     <details id="aide-clavier">
@@ -6553,4 +6571,5 @@ function buildPanel(fw) {
 })();
 </script>
 
+<script type="module" src="./backup.js"></script>
 </body></html>

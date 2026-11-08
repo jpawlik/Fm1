@@ -18,7 +18,9 @@ on:
     paths:
       - ".github/workflows/pages.yml"
       - "index.html"
+      - "backup.js"
       - "tests/test_duo.py"
+      - "tests/test_backup.py"
       - "tools/**"
   workflow_dispatch:
     inputs:
@@ -222,7 +224,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site/runtime _site/natif
-          cp index.html engine.js _site/
+          cp index.html engine.js backup.js _site/
           for d in firmwares assets; do [ -d "$d" ] && cp -r "$d" _site/; done
 
           if [ "$REBUILD_RUNTIME" = "true" ]; then
@@ -244,6 +246,7 @@ jobs:
             tar -xzf natif.tar.gz -C _site
           fi
 
+          test -s _site/backup.js
           test -s _site/runtime/fm1_web.wasm
           test -s _site/runtime/worklet.js
           test -s _site/runtime/persistence.js
@@ -315,7 +318,7 @@ jobs:
         run: tar -xzf natif.tar.gz
       - name: Duo MIDI clock and regression tests
         if: github.event_name == 'pull_request'
-        run: python -m pytest -q tests/test_duo.py
+        run: python -m pytest -q tests/test_duo.py tests/test_backup.py
       - name: Démarrage des firmwares natifs
         if: needs.plan.outputs.native == 'true'
         run: |
