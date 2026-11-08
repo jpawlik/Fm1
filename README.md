@@ -2,7 +2,7 @@
 
 [**Open the web app**](https://jpawlik.github.io/Fm1/) · [Original project](https://github.com/Ninjathune-Human/Fm1) · [Firmware catalogue](firmwares/catalogue.json)
 
-A small UI-focused fork of **[Ninjathune-Human/Fm1](https://github.com/Ninjathune-Human/Fm1)** for the M-VAVE FM-1. English interface, larger LCD and knobs, and white knob indicators. The original controls, touch gestures, sound engines and Duo synchronization are unchanged.
+A small UI-focused fork of **[Ninjathune-Human/Fm1](https://github.com/Ninjathune-Human/Fm1)** for the M-VAVE FM-1. English interface, larger LCD and knobs, and white knob indicators. The original panel controls, touch gestures and sound engines are retained. Duo synchronization is experimental and now uses an independent MIDI host clock.
 
 ## Use
 

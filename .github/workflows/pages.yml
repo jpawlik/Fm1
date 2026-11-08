@@ -25,6 +25,8 @@ on:
       - "backup.js"
       - "tests/test_duo.py"
       - "tests/test_duo_host.py"
+      - "tests/test_duo_webkit.py"
+      - "tests/conftest.py"
       - "tests/test_backup.py"
       - "tools/**"
   workflow_dispatch:
