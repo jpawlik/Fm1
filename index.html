@@ -342,7 +342,7 @@ html.embed .duo-tabs { margin-left: auto; }                              /* FM1-
         <div class="glass"></div>
         <svg id="panel" viewBox="0 0 1640 990" aria-hidden="true" focusable="false"></svg>
         <div class="controls" id="controls" inert></div>
-        <div class="start" id="start"><button id="go" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M4.4 3.9a5.5 5.5 0 1 0 7.2 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span>Allumer</span></button></div>
+        <div class="start" id="start"><button id="go" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M4.4 3.9a5.5 5.5 0 1 0 7.2 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span>Power on</span></button></div>
       </div>
     </div>
     <div class="deck">
@@ -1941,7 +1941,7 @@ class EmuFirmware {
         package: bytes, url: entry.fichier || entry.paquet_en_ligne || null, sectors, revision: record?.revision || 0 } };
     this.sessions.set(seq, session);
     const ready = new Promise((resolve, reject) => {
-      const timer = setTimeout(() => { this.bootWaiters.delete(seq); this.send({ type: "cancel-boot", seq }); reject(new Error("délai dépassé")); }, 30000);
+      const timer = setTimeout(() => { this.bootWaiters.delete(seq); this.send({ type: "cancel-boot", seq }); reject(new Error("Timed out")); }, 30000);
       this.bootWaiters.set(seq, { resolve, reject, timer });
     });
     this.send({ type: "boot", seq, wasm: this.wasm.slice(0), package: bytes.slice().buffer,
@@ -1961,7 +1961,7 @@ class EmuFirmware {
     if (!s || !this.node) return;
     const request = ++this.requestId;
     const done = new Promise((resolve, reject) => {
-      const timer = setTimeout(() => { this.snapshotWaiters.delete(request); this.send({ type: "cancel-snapshot", request }); reject(new Error("sauvegarde : délai dépassé")); }, 10000);
+      const timer = setTimeout(() => { this.snapshotWaiters.delete(request); this.send({ type: "cancel-snapshot", request }); reject(new Error("Save timed out")); }, 10000);
       this.snapshotWaiters.set(request, { seq: s.seq, resolve, reject, timer });
     });
     this.send({ type: "snapshot", seq: s.seq, request, pause });
@@ -2087,8 +2087,8 @@ class EmuFirmware {
     if (lv.some((v) => v > 0.04 && v < 0.8)) this.midUntil = now + 300;
     return now < (this.midUntil || 0) ? lv.map(Math.sqrt) : null;
   }
-  takePatch() { throw new Error("Réservé à FM-1+VA"); }
-  askBank() { throw new Error("Réservé à FM-1+VA"); }
+  takePatch() { throw new Error("Available only in FM-1+VA"); }
+  askBank() { throw new Error("Available only in FM-1+VA"); }
 }
 
 // Un firmware compilé depuis ses sources pour le navigateur (son propre web/emu, GPL-3.0 de son auteur) :
@@ -2224,7 +2224,7 @@ class NativeFirmware {
       this.node = new AudioWorkletNode(ac, this.entry.natif_processeur, this.nodeOptions(wasm, sectors, master));
       this.an = ac.createAnalyser(); this.an.fftSize = 2048; this.an.connect(ac.destination);
       const ready = new Promise((ok, ko) => {
-        const timer = setTimeout(() => ko(new Error("délai dépassé")), 20000);
+        const timer = setTimeout(() => ko(new Error("Timed out")), 20000);
         this.node.port.onmessage = (e) => {
           const t = e.data.type || e.data.t;
           if (t === "ready") { clearTimeout(timer); this.node.port.onmessage = (ev) => this.onWorklet(ev); ok(); }
@@ -2306,7 +2306,7 @@ class NativeFirmware {
     return new Promise((ok, ko) => {
       this.waits ||= new Map();
       const id = this.reqId = (this.reqId || 0) + 1;
-      this.waits.set(id, { ok, ko, timer: setTimeout(() => { this.waits.delete(id); ko(new Error("délai dépassé")); }, 10000) });
+      this.waits.set(id, { ok, ko, timer: setTimeout(() => { this.waits.delete(id); ko(new Error("Timed out")); }, 10000) });
       this.send({ ...m, id });
     });
   }
@@ -2318,21 +2318,21 @@ class NativeFirmware {
     const Z = window.ZP12Link, call = (op, o = {}) => this.ask({ type: "zp12", op, ...o });
     const link = { info: { proto: 5, kit: await call("kit") }, hold: async () => {}, reboot: async () => {},
       erase: (a) => call("erase", { a }), write: (a, data) => call("write", { a, data }), read: (a, n) => call("read", { a, n }),
-      reload: () => call("reload"), assign: async (pad, wave) => { if (await call("assign", { a: (pad & 31) | (wave & 63) << 8 })) throw new Error("pad refusé"); } };
+      reload: () => call("reload"), assign: async (pad, wave) => { if (await call("assign", { a: (pad & 31) | (wave & 63) << 8 })) throw new Error("Pad assignment rejected"); } };
     const d = await Z.readDir(link), names = [];
     for (const f of files.slice(0, 16)) {
-      const buf = await ac.decodeAudioData(await f.arrayBuffer()).catch(() => { throw new Error(`« ${f.name} » n'est pas un son que ce navigateur sait lire`); });
+      const buf = await ac.decodeAudioData(await f.arrayBuffer()).catch(() => { throw new Error(`“${f.name}” is not a supported audio file`); });
       const x = new Float32Array(buf.length);
       for (let c = 0; c < buf.numberOfChannels; c++) { const ch = buf.getChannelData(c); for (let i = 0; i < x.length; i++) x[i] += ch[i] / buf.numberOfChannels; }
       const s = { y: Z.encode(x, buf.sampleRate), rate: Z.RATES[0], name: f.name.replace(/\.[^.]*$/, "") };
       let slot;
       try { slot = await Z.upload(link, d, s); }
-      catch (err) { if (names.length) break; throw new Error(/room|places/.test(err.message) ? "plus de place dans sa mémoire" : err.message); }
+      catch (err) { if (names.length) break; throw new Error(/room|places/.test(err.message) ? "No free sample storage" : err.message); }
       await link.assign(16 + names.length, link.info.kit + slot);
       names.push(Z.cleanName(s.name));
     }
     const pad = (i) => "CD"[i >> 3] + ((i & 7) + 1);
-    return `zp12 : ${names.length} son${names.length > 1 ? "s" : ""} sur ${names.length > 1 ? `les pads ${pad(0)} à ${pad(names.length - 1)}` : "le pad C1"} (${names.join(", ")}).`;
+    return `zp12 : ${names.length} sample${names.length !== 1 ? "s" : ""} on ${names.length > 1 ? `pads ${pad(0)} to ${pad(names.length - 1)}` : "pad C1"} (${names.join(", ")}).`;
   }
   // FMDj : la ROM de l'utilisateur (LSDj ou DMGo!) devient sa cartouche par l'outil de sa propre page (lsdjinstall.js
   // makeCart : le premier démarrage du programme, la chanson de démo tapée, un essai d'écoute), gardée dans ce
@@ -2342,22 +2342,22 @@ class NativeFirmware {
     const L = await import(base + "lsdjinstall.js");
     const [w, demo] = await Promise.all([fetch(base + "lsdj_emu.wasm").then((r) => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }),
       fetch(base + "demo.json").then((r) => (r.ok ? r.json() : null), () => null)]);
-    const steps = { "LSDj's first start": "premier démarrage de LSDj", "typing the demo song": "la chanson de démo",
-      "playing it": "écoute", "DMGo's first start": "premier démarrage de DMGo!", "playing a step": "écoute d'un pas" };
+    const steps = { "LSDj's first start": "starting LSDj", "typing the demo song": "entering the demo song",
+      "playing it": "playing", "DMGo's first start": "starting DMGo!", "playing a step": "playing a step" };
     const cart = await L.makeCart(await L.loadEmu(w), new Uint8Array(await f.arrayBuffer()), demo, 1 << 20,
       (what, done, total) => { st.textContent = `ROM : ${steps[what] || what}, ${Math.round((100 * done) / total)} %`; },
       () => new Promise((r) => setTimeout(r)));
     this.cart = cart;
     this.save(cart, "fmdj/cartouche");
     this.send({ type: "cart", cart: cart.slice() });
-    return `FMDj : ${L.cartProg(cart) === "dmgo" ? "DMGo!" : "LSDj"} est prêt, « ${f.name} » est gardé dans ce navigateur. PLAY le lance.`;
+    return `FMDj: ${L.cartProg(cart) === "dmgo" ? "DMGo!" : "LSDj"} is ready. “${f.name}” is saved in this browser. Press PLAY to start.`;
   }
   async takeSamples(files, ac) {
     if (this.entry.id === "zp12") return this.takeZp12(files, ac);
     if (this.entry.id === "fmdj") return this.takeRom(files);
     let image, what;
     if (files.length === 1 && /\.kob$/i.test(files[0].name)) {
-      image = new Uint8Array(await files[0].arrayBuffer()); what = `banque « ${files[0].name} »`;
+      image = new Uint8Array(await files[0].arrayBuffer()); what = `bank “${files[0].name}”`;
     } else {
       const L = await import(new URL(this.entry.natif + this.entry.natif_echantillons, location.href).href), all = [];
       for (const f of files) all.push(await L.decodeSample(f, ac));
@@ -2365,19 +2365,19 @@ class NativeFirmware {
       const pads = all.filter((x) => !songs.includes(x)).slice(0, 16);
       if (!songs.length) songs.push(pads.shift());
       try { image = L.buildBank(songs, pads, false); } catch (err) { if (!/500 KiB/.test(err.message)) throw err; image = L.buildBank(songs, pads, true); }
-      what = (songs.length > 1 ? "chansons " : "chanson ") + songs.map((x) => `« ${x.name} »`).join(" et ") +
-        (pads.length ? ` et ${pads.length} pad${pads.length > 1 ? "s" : ""}` : "");
+      what = (songs.length > 1 ? "songs " : "song ") + songs.map((x) => `“${x.name}”`).join(" and ") +
+        (pads.length ? ` and ${pads.length} pad${pads.length > 1 ? "s" : ""}` : "");
     }
     const unlimited = new DataView(image.buffer, image.byteOffset).getUint32(8, true) > 0x7E000;
     await new Promise((ok, ko) => {
       this.waits ||= new Map();
       const id = this.reqId = (this.reqId || 0) + 1, copy = image.slice();
-      this.waits.set(id, { ok, ko, timer: setTimeout(() => { this.waits.delete(id); ko(new Error("délai dépassé")); }, 30000) });
+      this.waits.set(id, { ok, ko, timer: setTimeout(() => { this.waits.delete(id); ko(new Error("Timed out")); }, 30000) });
       this.send({ type: "bank", id, image: copy, unlimited }, [copy.buffer]);
     });
     this.bank = { image, unlimited };
     this.save(this.bank, this.entry.id + "/banque");
-    return `Échantillons chargés : ${what}${unlimited ? ", au-delà des 500 Kio du FM-1" : ""}.`;
+    return `Samples loaded: ${what}${unlimited ? ", beyond the FM-1 500 KiB limit" : ""}.`;
   }
   save(saved, key = this.entry.id) {
     const p = nativeFlash.put(key, saved).catch((err) => { this.storageError = err; })
@@ -2470,8 +2470,8 @@ class NativeFirmware {
     if (this.x0x) return b & (1 << 10) ? "green" : null;
     return b & (1 << 14) ? "green" : b & (1 << 10) ? "red" : null;
   }
-  takePatch() { throw new Error("Réservé à FM-1+VA"); }
-  askBank() { throw new Error("Réservé à FM-1+VA"); }
+  takePatch() { throw new Error("Available only in FM-1+VA"); }
+  askBank() { throw new Error("Available only in FM-1+VA"); }
 }
 </script>
 <script>
@@ -5880,7 +5880,7 @@ function buildPanel(fw) {
       document.addEventListener("visibilitychange", () => { if (!document.hidden && ac.state !== "running") ac.resume(); });
     } catch (err) {
       go.disabled = false; go.lastChild.textContent = "Allumer";
-      status.textContent = "Audio could not start: " + (err && err.message ? err.message : err) + ". Chrome, Edge, Firefox et Safari récents conviennent.";
+      status.textContent = "Audio could not start: " + (err && err.message ? err.message : err) + ". Recent Chrome, Edge, Firefox and Safari versions are supported.";
     }
   }
   $("go").addEventListener("click", switchOn);
@@ -5956,7 +5956,7 @@ function buildPanel(fw) {
       if (typeof WebAssembly !== "object") throw new Error("WebAssembly absent");
       new WebAssembly.Module(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0]));   // refusé là où le WebAssembly est interdit
       const r = await fetch("runtime/fm1_web.wasm");
-      if (!r.ok) throw new Error("cœur d'émulation indisponible (" + r.status + ")");
+      if (!r.ok) throw new Error("emulation core unavailable (" + r.status + ")");
       wasm = await r.arrayBuffer();
     }
     return wasm;
@@ -6461,7 +6461,7 @@ function buildPanel(fw) {
     let t = deck.querySelector(".duo-tabs");
     if (!t) {
       t = d.createElement("div");
-      t.className = "seg duo-tabs"; t.setAttribute("role", "tablist"); t.setAttribute("aria-label", "Le FM-1 affiché");
+      t.className = "seg duo-tabs"; t.setAttribute("role", "tablist"); t.setAttribute("aria-label", "Displayed FM-1");
       t.innerHTML = '<button type="button" role="tab" data-k="a"><span class="beat"></span>FM1-A</button><button type="button" role="tab" data-k="b"><span class="beat"></span>FM1-B</button>';
       t.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(b.dataset.k); });
       deck.querySelector(".skins").after(t);
