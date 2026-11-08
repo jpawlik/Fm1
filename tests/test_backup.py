@@ -42,6 +42,20 @@ def test_backup_round_trip_all_storage_families(page):
         tx.oncomplete = ok; tx.onerror = () => ko(tx.error);
       });
       emu.close();
+      // B's CPU emulator must be isolated even when the same firmware hash loads.
+      const emuB = await new Promise((ok, ko) => {
+        const r = indexedDB.open("fm1-emulator-b", 2);
+        r.onsuccess = () => ok(r.result); r.onerror = () => ko(r.error);
+      });
+      await new Promise((ok, ko) => {
+        const tx = emuB.transaction(["packages","states","entries"],"readwrite");
+        tx.objectStore("packages").put(new Uint8Array([0, 1, 2, 3]), hash);
+        tx.objectStore("states").put({version:1, revision:12,
+          sectors:[{at:0, data:new Uint8Array([9, 8, 7])}]}, hash);
+        tx.objectStore("entries").put({hash}, "fm1.hortator");
+        tx.oncomplete = ok; tx.onerror = () => ko(tx.error);
+      });
+      emuB.close();
       const backup = await mod.createBackup();
       const data = JSON.parse(JSON.stringify(backup));
       localStorage.setItem("fm1va.bank", '["changed"]');
@@ -59,6 +73,8 @@ def test_backup_round_trip_all_storage_families(page):
         unrelated: localStorage.getItem("unrelated"),
         nativeUnchanged: JSON.stringify(afterNative) === JSON.stringify(backup.databases["fm1-natif"].flash.find(([key]) => key[1] === "hortator")),
         emuUnchanged: JSON.stringify(afterEmu) === JSON.stringify(backup.databases["fm1-emulator"]),
+        duoEmuUnchanged: JSON.stringify(final.databases["fm1-emulator-b"]) === JSON.stringify(backup.databases["fm1-emulator-b"]),
+        separateSaves: JSON.stringify(afterEmu.states) !== JSON.stringify(final.databases["fm1-emulator-b"].states),
       };
       return snap;
     }""")
@@ -67,6 +83,7 @@ def test_backup_round_trip_all_storage_families(page):
         "local": '["my patch"]', "duo": '["duo pattern"]', "link": "1",
         "removed": None, "unrelated": "leave alone",
         "nativeUnchanged": True, "emuUnchanged": True,
+        "duoEmuUnchanged": True, "separateSaves": True,
     }
 
 
@@ -98,7 +115,7 @@ def test_backup_export_button_downloads_json(page):
         data = json.load(file)
     assert data["format"] == "fm1-fork-backup"
     assert ["fm1va.global", '{"tempo":123}'] in data["local"]
-    assert set(data["databases"]) == {"fm1-natif", "fm1-emulator"}
+    assert set(data["databases"]) == {"fm1-natif", "fm1-emulator", "fm1-emulator-b"}
 
 
 def test_restore_blocked_when_synth_running(page):
@@ -110,3 +127,63 @@ def test_restore_blocked_when_synth_running(page):
       catch (e) { return e.message; }
     }""")
     assert "Power off" in result
+
+
+def test_legacy_backup_restores_without_erasing_existing_duo_emulator(page):
+    """Old version-1 backups lack the B database; preserve it instead of clearing it."""
+    page.goto(page.base + "index.html")
+    result = run(page, """async () => {
+      const mod = await import("./backup.js");
+      await mod.createBackup();
+      const b = await new Promise((ok, ko) => {
+        const r = indexedDB.open("fm1-emulator-b", 2);
+        r.onsuccess = () => ok(r.result); r.onerror = () => ko(r.error);
+      });
+      await new Promise((ok, ko) => {
+        const tx = b.transaction("entries", "readwrite");
+        tx.objectStore("entries").put({hash: "f".repeat(64)}, "fm1.preserve");
+        tx.oncomplete = ok; tx.onerror = () => ko(tx.error);
+      });
+      b.close();
+      const backup = await mod.createBackup();
+      delete backup.databases["fm1-emulator-b"]; // exported by previous main version
+      await mod.restoreBackup(backup);
+      const after = await mod.createBackup();
+      return {
+        oldVersionAccepted: backup.version === 1,
+        retained: after.databases["fm1-emulator-b"].entries.some(([key]) => key[1] === "fm1.preserve")
+      };
+    }""")
+    assert result == {"oldVersionAccepted": True, "retained": True}
+
+
+def test_restored_duo_emulator_flash_is_independent(page):
+    """Restoring a modern backup can replace B's states without altering A's."""
+    page.goto(page.base + "index.html")
+    result = run(page, """async () => {
+      const mod = await import("./backup.js");
+      await mod.createBackup();
+      const insert = async (name, number) => {
+        const db = await new Promise((ok, ko) => {
+          const r = indexedDB.open(name, 2);
+          r.onsuccess = () => ok(r.result); r.onerror = () => ko(r.error);
+        });
+        await new Promise((ok, ko) => {
+          const tx = db.transaction("entries", "readwrite");
+          tx.objectStore("entries").put({hash: "a".repeat(64), revision: number}, "fm1.amb");
+          tx.oncomplete = ok; tx.onerror = () => ko(tx.error);
+        });
+        db.close();
+      };
+      await insert("fm1-emulator", 1);
+      await insert("fm1-emulator-b", 2);
+      const backup = await mod.createBackup();
+      await insert("fm1-emulator", 3);
+      await insert("fm1-emulator-b", 4);
+      await mod.restoreBackup(backup);
+      const after = await mod.createBackup();
+      const from = (name) => after.databases[name].entries.find(([key]) => key[1] === "fm1.amb")[1][1];
+      return [from("fm1-emulator").find(([key]) => key === "revision")[1][1],
+              from("fm1-emulator-b").find(([key]) => key === "revision")[1][1]];
+    }""")
+    assert result == [1, 2]
