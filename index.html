@@ -6269,12 +6269,13 @@ function buildPanel(fw) {
     if (e.id === "local") return "This is not an FM-1 firmware package.";
     return `${e.nom} could not start.`;
   }
-  // en Duo, FM1-B prend FM-1+VA ou un firmware natif : un firmware émulé de plus serait trop lourd (et partagerait sa mémoire)
-  function emuBarred(e) { return FM1_ID === "b" && e.id !== "fm1va" && !e.natif; }
+  // Duo supports CPU-emulated firmware on either side. Two emulators can exceed iPad CPU
+  // capacity and crackle; this is a performance warning, not an arbitrary restriction.
+  function emuBarred(_entry) { return false; }
   async function pick(e) {
     closeSheet();
     restartBtn.hidden = true;
-    if (emuBarred(e)) { status.textContent = "In Duo, FM1-B supports FM-1+VA or native firmware."; return; }
+    if (emuBarred(e)) return;
     if (e.id !== "fm1va" && coreError) { status.textContent = "Emulation core unavailable."; return; }
     if (!ac) {
       active = { id: e.id, nom: e.nom }; nameEl.textContent = e.nom; showFiche();
@@ -6288,7 +6289,8 @@ function buildPanel(fw) {
     if (my !== pickSeq) return;
     if (ok) {
       active = { id: e.id, nom: e.nom }; nameEl.textContent = e.nom; showFiche();
-      status.textContent = current !== va && current.storageError ? `${e.nom} · Saves are unavailable in this browser.` : "";
+      status.textContent = current !== va && current.storageError ? `${e.nom} · Saves are unavailable in this browser.` :
+        (FM1_ID === "b" && current.kind === "emu" ? "CPU-emulated firmware in Duo may crackle on iPad." : "");
       if (e.id !== "local") try { localStorage.setItem(SKEY(LAST), JSON.stringify(active)); } catch { /* cette session */ }
       renderSections();
     } else status.textContent = failureText(e);
