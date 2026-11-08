@@ -81,28 +81,28 @@ def test_enter_picks_first(page):
 def test_last_wins(page):
     power_on(page)
     page.evaluate("""() => { document.querySelector('.fw-item[data-id="x0x"]').click();
-      setTimeout(() => document.querySelector('.fw-item[data-id="monohull"]').click(), 30); }""")
-    ready(page, "Monohull", timeout=60000)
+      setTimeout(() => document.querySelector('.fw-item[data-id="fizz"]').click(), 30); }""")
+    ready(page, "FIZZ", timeout=60000)
     page.wait_for_timeout(500)
-    assert page.evaluate("window.__engine().name") == "Monohull"
+    assert page.evaluate("window.__engine().name") == "FIZZ"
     assert page.evaluate("window.__nodes().length") == 1
 
 
 def test_restore_last(page):
     power_on(page)
-    click_row(page, "monohull")
-    ready(page, "Monohull")
+    click_row(page, "fizz")
+    ready(page, "FIZZ")
     page.reload()
-    assert page.inner_text("#fw-name") == "Monohull"
+    assert page.inner_text("#fw-name") == "FIZZ"
     page.click("#go")
-    page.wait_for_function("window.__engine && window.__engine().name === 'Monohull'", timeout=30000)
-    assert page.evaluate("window.__engine().name") == "Monohull"
+    page.wait_for_function("window.__engine && window.__engine().name === 'FIZZ'", timeout=30000)
+    assert page.evaluate("window.__engine().name") == "FIZZ"
 
 
 def test_sections_fold(page):
     page.goto(page.base + "index.html")
     page.click("#fw-picker")
-    head = '.fw-sec[data-tier="emule"][data-cat="Synthé"] .fw-sec-head'
+    head = '.fw-sec[data-tier="emule"][data-cat="Grooveboxes"] .fw-sec-head'
     before = page.get_attribute(head, "aria-expanded")
     notch = notch_transform(page, head + " .notch")
     page.click(head)
@@ -110,7 +110,7 @@ def test_sections_fold(page):
     assert page.get_attribute(head, "aria-expanded") != before
     assert notch_transform(page, head + " .notch") != notch
     expanded = page.get_attribute(head, "aria-expanded") == "true"
-    assert page.is_visible('.fw-sec[data-tier="emule"][data-cat="Synthé"] .fw-items') == expanded
+    assert page.is_visible('.fw-sec[data-tier="emule"][data-cat="Grooveboxes"] .fw-items') == expanded
 
 
 def test_optimised_first(page):
@@ -125,7 +125,7 @@ def test_optimised_first(page):
     assert set(order[1:k]) == {"optimise"} and set(order[k + 1:]) == {"emule"}
     tier = lambda i: page.evaluate("(id) => document.querySelector(`.fw-item[data-id=\"${id}\"]`).closest('.fw-sec').dataset.tier", i)
     assert tier("fm1va") == "optimise" and tier("x0x") == "optimise" and tier("felucca") == "optimise"
-    assert tier("sloop") == "emule" and tier("monohull") == "emule" and tier("obervave") == "optimise"
+    assert tier("sloop") == "emule" and tier("fizz") == "emule" and tier("skiff") == "optimise"
 
 
 def test_layouts(browser, base_url):
@@ -164,9 +164,9 @@ def test_contextual_controls(page):
 def test_open_local(page):
     power_on(page)
     n = page.evaluate("window.__catalogue.length")
-    page.set_input_files("#fw-file", os.path.join(ROOT, "firmwares", "gator.fwsc"))
-    ready(page, "gator")
-    assert page.inner_text("#fw-name") == "gator"
+    page.set_input_files("#fw-file", os.path.join(ROOT, "firmwares", "fizz.fwsc"))
+    ready(page, "fizz")
+    assert page.inner_text("#fw-name") == "fizz"
     page.wait_for_timeout(3000)
     assert lit_pixels(page) >= 2000
     assert page.evaluate("window.__catalogue.length") == n

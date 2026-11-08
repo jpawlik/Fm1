@@ -1,65 +1,6 @@
 {
  "firmwares": [
   {
-   "id": "386dx",
-   "depot": "seajaysec/386-DX-FM1-KaraokeBot",
-   "commit": "2caa8fbb990a108d1856496b54d83519bb0f2ba8",
-   "script": "tools/build_web.py",
-   "avant": "git clone --branch 1.52.0 --depth 1 https://github.com/espeak-ng/espeak-ng.git vendor/espeak-ng",
-   "construction": "python3 tools/build_web.py",
-   "wasm": "web/emu/app.wasm"
-  },
-  {
-   "id": "amb",
-   "depot": "charlesvestal/fm1-amb",
-   "commit": "188b0a42f20a547864e732ae5ea1339d0fbcf395",
-   "script": "web/app/build.sh"
-  },
-  {
-   "id": "arctic",
-   "depot": "PolarPatch/Arctic-scream-FM-1",
-   "commit": "7b5b8b261bf8ea4d5d64485c082636c5b1579854",
-   "script": "web/build_web.sh"
-  },
-  {
-   "id": "berlinan",
-   "depot": "jiripisa/fm1-berlinan",
-   "commit": "afe2d937442fd248d145a34e8907d1c67ee4c3d6",
-   "script": "build.sh",
-   "construction": "sh build.sh --web",
-   "wasm": "app/build/emu/app.wasm"
-  },
-  {
-   "id": "bunker",
-   "depot": "kidbee85-beep/bunker-evolved",
-   "commit": "c9bb0b1ac4a7dbb420a3f452fc75b705981ab0f4",
-   "script": "firmware/web/emu/build.sh"
-  },
-  {
-   "id": "bytemania",
-   "depot": "llozd/bytemania",
-   "commit": "e670b35369f8556ee82683f35c6b8bfbcb366155",
-   "script": "build.sh",
-   "zig": "0.17.0",
-   "avant": "cp \"$HERE/tools/worklets/dinghy_host.c\" tests/host.c",
-   "construction": "\"$HERE/tools/worklets/asyncify.sh\" build/natif/bytemania.wasm -DDINGHY_HOST '-DAPP_VER=\"1.2.0\"' -Ifirmware/src -Ifirmware/gen firmware/src/bytemania.c",
-   "wasm": "build/natif/bytemania.wasm",
-   "worklet": "tools/worklets/dinghy.js",
-   "dialecte": "felucca"
-  },
-  {
-   "id": "caravel",
-   "depot": "bonszaimusic/caravel",
-   "commit": "b50bad57dcf32862f36661a5fc2996e13392b93e",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "carnac",
-   "depot": "OwenKirby/carnac-os",
-   "commit": "be8cc104f3618ba9b12c834827abfdbb4e1686af",
-   "script": "web/emu/build.sh"
-  },
-  {
    "id": "chipbox",
    "depot": "pbarilla/chipbox",
    "commit": "48510318cffe4db2a5ceccfc153a65dcd6c8d6ff",
@@ -71,25 +12,6 @@
    "zig": "0.17.0"
   },
   {
-   "id": "choralroot",
-   "depot": "Quixotic7/ChoralRootFM1",
-   "commit": "070bd306ed63c7d08f09bb6ea937262b52b1a6c0",
-   "script": "tools/emu/web/build_web.sh",
-   "wasm": "build/emu-web/choralroot.wasm"
-  },
-  {
-   "id": "coralflower",
-   "depot": "FicusFicusov/CoralFlower",
-   "commit": "b5ceb997be330c8a420958eb8f4e0f4b3ca084c2",
-   "script": "tools/emu/web/build_web.sh"
-  },
-  {
-   "id": "cs1",
-   "depot": "twochannels/CS-1",
-   "commit": "5dce8fadd3aa86cf47a3290289ee1c10b7c102e4",
-   "script": "web/emu/build.sh"
-  },
-  {
    "id": "ctl",
    "depot": "charlesvestal/fm1-ctl",
    "commit": "c3c2a7e51f3d14dd7a94f8b3775e838f097ec367",
@@ -98,189 +20,10 @@
    "wasm": "app/build/emu/app.wasm"
   },
   {
-   "id": "cutador",
-   "depot": "kidbee85-beep/cut-a-dor-release",
-   "commit": "d9799abb84fef0cc59deb05e2f6a4c41032c32f1",
-   "script": "build.sh",
-   "construction": "bash \"$HERE/tools/worklets/cutador.sh\" build/natif/cutador.wasm",
-   "wasm": "build/natif/cutador.wasm",
-   "worklet": "tools/worklets/cutador.js",
-   "dialecte": "felucca"
-  },
-  {
-   "id": "delrio",
-   "depot": "jsopdebeeck/fm1-delrio",
-   "commit": "c604e5659b4505c98788b30982364289a8348178",
-   "script": "build.sh",
-   "construction": "sh build.sh --web",
-   "wasm": "app/build/emu/app.wasm"
-  },
-  {
-   "id": "drift",
-   "depot": "FBNFRTG/drift-fm1",
-   "commit": "09b5b981f350a37055467d560702af8608f65ad1",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "dub",
-   "depot": "sbegueria/fm1-dub",
-   "commit": "e6fe7b8f8f3114019bb36b5b536ad458eacd2c2d",
-   "script": "web/emu/build.sh",
-   "avant": "mkdir -p build/gen build/emu && (python3 tools/gen_font.py build/gen/felucca_font.h || python3 tools/gen_font_noraqm.py tools/gen_font.py build/gen/felucca_font.h) && python3 tools/gen_words.py firmware/words.tsv web/words build/gen/ann_words.h",
-   "construction": "$ZIG cc -target wasm32-wasi -mexec-model=reactor -O2 -g0 -ffp-contract=off -std=gnu99 -w -DEN_HOST -DEN_WEB '-DEN_VERSION=\"1.3.0\"' -Ifirmware/src -Ifirmware/src/dsp -Ibuild/gen -Wl,--strip-debug -Wl,--export-dynamic -Wl,-z,stack-size=1048576 -Wl,--initial-memory=33554432 -o build/emu/amb.wasm web/emu/amb_web.c firmware/src/dsp/amb.c && cp web/emu/worklet.js build/emu/",
-   "wasm": "build/emu/amb.wasm",
-   "zig": "0.17.0"
-  },
-  {
-   "id": "duell",
-   "depot": "oscillr/DUELL",
-   "commit": "33e2e2ed36a9d1a33a39ac1d1f06282c9045aab0",
-   "script": "felucca-base/web/emu/build.sh"
-  },
-  {
-   "id": "estampie",
-   "depot": "ocean/estampie",
-   "commit": "b6be8f78adcee97d4b217db7b81f6a4eb02445e8",
-   "script": "web/emu/build.sh",
-   "zig": "0.17.0"
-  },
-  {
-   "id": "fart",
-   "depot": "adamcharleswilsonmusic-code/Fart-Machine-One",
-   "commit": "5e49a216c18c6e0a7e5e42bef43843b40ad9ea5f",
-   "script": "web/emu/build.sh"
-  },
-  {
    "id": "felucca",
    "depot": "hugelton/Felucca",
    "commit": "a53ecf428c29c780108fd70a31b71a32a6b5c313",
    "script": "web/emu/build.sh"
-  },
-  {
-   "id": "felucca8",
-   "depot": "echoe/Felucca_8_patterns",
-   "commit": "21fc592dab76907b6bea34d97950dfe129ad9fd8",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "fimba",
-   "depot": "jadamsowers/fm1-fimba",
-   "commit": "0485ed0d387ce78216428c7b19f97d77bbe10b4d",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "flyfish",
-   "depot": "delirioux/flyfish",
-   "commit": "4e5efb8a7623cfb19a55fdc08cb12e8cfdfce578",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "fm106",
-   "depot": "PatttF/fm-106",
-   "commit": "3833499bfd0f2f4df522793526690f743b7164c9",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "fmdj",
-   "depot": "DeadActive/FMDj",
-   "commit": "10f98c0cc24677f3bdf0f89570bffdb033d3a68b",
-   "script": "web/sim/build.sh",
-   "construction": "sh web/sim/build.sh && sh web/lsdj_wasm.sh && cp build/web/lsdj_emu.wasm web/lsdj_emu.wasm && python3 -c \"import json, sys; sys.path.insert(0, 'tools'); import lsdj_demo; a, e = lsdj_demo.key_args(60); json.dump({'keys': [[int(x), int(y), k] for x, y, k in (s.split(':') for s in a[1::2])], 'frames': e + 60}, open('web/demo.json', 'w'))\"",
-   "wasm": "build/web/sim/lsdjsim.wasm",
-   "worklet": "tools/worklets/fmdj.js",
-   "dialecte": "felucca",
-   "outils": [
-    "web/lsdjinstall.js",
-    "web/fm1pkg.js",
-    "web/lsdj_emu.wasm",
-    "web/demo.json"
-   ],
-   "echantillons": "web/lsdjinstall.js"
-  },
-  {
-   "id": "fmel",
-   "depot": "AntonioAltea/fmel-1",
-   "commit": "2d69b3892a2eac2ed6f4eef1d82cf5d6de9c87a8",
-   "script": "web/emu/build.sh",
-   "zig": "0.17.0"
-  },
-  {
-   "id": "fmini",
-   "depot": "ruppert/fmini-1",
-   "commit": "ab0f5c83d9c3b8cf10fd2f9ef3dc760a06c3abb3",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "fomni",
-   "depot": "charlesvestal/fm1-fomni",
-   "commit": "6ecd227013cc18def0e89d035b3760eb268b342b",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "frodhes",
-   "depot": "leonardoMirabal/frodhes",
-   "commit": "33c9730c04f1c72b1319aec68124b8759419fd68",
-   "script": "web/build.sh",
-   "construction": "\"$HERE/tools/worklets/asyncify.sh\" build/natif/frodhes.wasm -DDINGHY_HOST -DDINGHY_WEB -DHOST_SAVE_MS=1u '-DAPP_VER=\"web\"' -Ifirmware/src -Ifirmware/gen firmware/src/frodhes.c",
-   "wasm": "build/natif/frodhes.wasm",
-   "worklet": "tools/worklets/frodhes.js",
-   "dialecte": "felucca",
-   "zig": "0.17.0"
-  },
-  {
-   "id": "fumi",
-   "depot": "cartesive/fumi-1",
-   "commit": "6a20fa387cf6bc28a33309a09aaa94a108325e2e",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "gammawave",
-   "depot": "fvalente/GammaWave-FM1",
-   "commit": "8bf1a12cdb7c70e86eba81e63cb374d14f9d43e2",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "gator",
-   "depot": "npi3pak/fm1-gator",
-   "commit": "92f923e0b9fe6101d5cd422cffa5946ce20d785a",
-   "script": "tools/sim.py",
-   "construction": "bash \"$HERE/tools/worklets/gator.sh\" build/natif/gator.wasm",
-   "wasm": "build/natif/gator.wasm",
-   "worklet": "tools/worklets/gator.js",
-   "dialecte": "felucca"
-  },
-  {
-   "id": "ghoulbox",
-   "depot": "jasonpersinger/ghoulbox-fm1-dungeon-synth",
-   "commit": "9f2b9a22e456d7fe9552b40f7a1d0c13200913bb",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "golana",
-   "depot": "Gadlele/Golana",
-   "commit": "472914d794fb879eb502f62d3380a3b674ab2547",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "golanadz",
-   "depot": "dzwerg/Golana-DZ",
-   "commit": "858e3f2f9e018f01a1c87451c712193869f0324b",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "grimm",
-   "depot": "GRiMMBIENT/grimm",
-   "commit": "815ca6be81d973445851238dbaf12b4536d1e6d8",
-   "script": "web/build_web.sh"
-  },
-  {
-   "id": "hera",
-   "depot": "benbadio/hera-fm1",
-   "commit": "2c99af2141217e1e0083da39049ace432efa1cd1",
-   "script": "web/build.sh",
-   "wasm": "web/hera.wasm",
-   "worklet": "tools/worklets/hera.js",
-   "dialecte": "felucca"
   },
   {
    "id": "hortator",
@@ -291,21 +34,6 @@
    "wasm": "build/natif/hortator.wasm",
    "worklet": "tools/worklets/hortator.js",
    "dialecte": "felucca"
-  },
-  {
-   "id": "hyp1",
-   "depot": "RustyPawz/fm1-HYP1",
-   "commit": "57c456db61826331d356458c9c1a136517da7cbf",
-   "script": "web/emu/build_clang.sh",
-   "avant": "mkdir -p build/gen && python3 tools/gen_font.py build/gen/felucca_font.h",
-   "construction": "EN_VERSION=1.5.54 sh web/emu/build_clang.sh",
-   "wasm": "build/emu/amb.wasm"
-  },
-  {
-   "id": "jiant",
-   "depot": "juanjiant-bit/JIANT",
-   "commit": "c6e7aa189525043806e6b3052dd1f8b3c39c3e33",
-   "script": "web/emu/build.sh"
   },
   {
    "id": "loom",
@@ -322,122 +50,10 @@
    "script": "web/emu/build.sh"
   },
   {
-   "id": "makohai",
-   "depot": "delirioux/makohai",
-   "commit": "800edc8a88d2a883fbeb2cf198a976d7769f3707",
-   "script": "web/emu/makohai_build.sh"
-  },
-  {
-   "id": "maku",
-   "depot": "okumurari2/maku",
-   "commit": "5671198f1989cbd4a0e674b2059e7f8316faf37d",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "melodee",
-   "depot": "keremimo/melodee",
-   "commit": "f40dd70fd8b497b5372ee5de886e4dfae1cd8062",
-   "script": "tools/build.py",
-   "construction": "bash \"$HERE/tools/worklets/melodee.sh\" build/natif/melodee.wasm",
-   "wasm": "build/natif/melodee.wasm",
-   "worklet": "tools/worklets/melodee.js",
-   "dialecte": "felucca"
-  },
-  {
-   "id": "min1",
-   "depot": "Reytian/fm1-min1",
-   "commit": "8d6dd77d34cde4f980bd84e726d6a923f951a0dd",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "minitone",
-   "depot": "eldontyrellcorp/Mini-Tone",
-   "commit": "6803c6c29e3402fcc0c4af7c2050df987d9b66b5",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "mnm1",
-   "depot": "galfaroth/mnm1",
-   "commit": "2c7aee4c277bb642404c4638dbc77a360d36cf55",
-   "script": "tools/build_sim.sh",
-   "construction": "SIM_PREFIX=MNM1 bash \"$HERE/tools/worklets/hortator.sh\" build/natif/mnm1.wasm",
-   "wasm": "build/natif/mnm1.wasm",
-   "worklet": "tools/worklets/hortator.js",
-   "dialecte": "felucca"
-  },
-  {
-   "id": "modelar",
-   "depot": "hirakos999/MODELAR",
-   "commit": "89475ca2586d6861cc35cd62ea2e1f23a574d9cc",
-   "script": "build.sh",
-   "construction": "sh build.sh --web",
-   "wasm": "app/build/emu/app.wasm"
-  },
-  {
-   "id": "monk",
-   "depot": "charlesvestal/fm1-monk",
-   "commit": "b21a361ea43b04b38b7598d35eb1ca651baaa661",
-   "script": "web/emu/build.sh"
-  },
-  {
    "id": "mono2k",
    "depot": "InigoHernandez/mono2k",
    "commit": "b52d67703d4728c176c685c27d213f0c4da52232",
    "script": "web/build.sh"
-  },
-  {
-   "id": "mope1",
-   "depot": "slothpallas/mope-1",
-   "commit": "59be1e7a5d01b94ba039f4c1c50d32cb734fc1c1",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "mycelium",
-   "depot": "megagott/mycelium-fm1",
-   "commit": "750eb125e2850acc62a8391cb742246a7c437745",
-   "script": "Mycelium-FM1-1.0-Quellcode.zip",
-   "construction": "bash \"$HERE/tools/worklets/mycelium.sh\" build/natif/mycelium.wasm",
-   "wasm": "build/natif/mycelium.wasm",
-   "worklet": "tools/worklets/mycelium.js",
-   "dialecte": "felucca"
-  },
-  {
-   "id": "nachtfahrt",
-   "depot": "fartypants/fm1-nachtfahrt",
-   "commit": "ba0728378f9a9aa5ef1f69027c42d03319f7ef8e",
-   "script": "web/emu/build.sh",
-   "avant": "mkdir -p build/gen build/emu && (python3 tools/gen_font.py build/gen/felucca_font.h || python3 tools/gen_font_noraqm.py tools/gen_font.py build/gen/felucca_font.h) && python3 tools/gen_words.py firmware/words.tsv web/words build/gen/ann_words.h",
-   "construction": "$ZIG cc -target wasm32-wasi -mexec-model=reactor -O2 -g0 -ffp-contract=off -std=gnu99 -w -DEN_HOST -DEN_WEB '-DEN_VERSION=\"1.0.0\"' -Ifirmware/src -Ifirmware/src/dsp -Ibuild/gen -Wl,--strip-debug -Wl,--export-dynamic -Wl,-z,stack-size=1048576 -Wl,--initial-memory=33554432 -o build/emu/amb.wasm web/emu/amb_web.c firmware/src/dsp/amb.c && cp web/emu/worklet.js build/emu/",
-   "wasm": "build/emu/amb.wasm",
-   "zig": "0.17.0"
-  },
-  {
-   "id": "niagara",
-   "depot": "evanyerburgh/niagara-drift",
-   "commit": "802daa818af060293cae77afec013df3dec0a060",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "noizdemons",
-   "depot": "SPIKE-the-Percussionist/noiz_demons",
-   "commit": "4fe0f1afb4d97f56dfb763c176679fe6e059ecec",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "obervave",
-   "depot": "zvenson/obervave",
-   "commit": "dc4e5d33b09f5e3f927801d78085f26171e9c7b8",
-   "script": "web/sim/build.sh",
-   "zig": "0.17.0"
-  },
-  {
-   "id": "perf1",
-   "depot": "deamonSLINKY/PERF-1",
-   "commit": "d2ed6aa95867dd5b395eee36fb447bcb99b9949b",
-   "script": "web/emu/build_clang.sh",
-   "avant": "mkdir -p build/gen && python3 tools/gen_font.py build/gen/felucca_font.h",
-   "construction": "EN_VERSION=0.13.0 sh web/emu/build_clang.sh",
-   "wasm": "build/emu/amb.wasm"
   },
   {
    "id": "pigeon",
@@ -454,24 +70,6 @@
    "echantillons": "emu/loader.js"
   },
   {
-   "id": "polly",
-   "depot": "charlesvestal/fm1-polly",
-   "commit": "62cd07ea7c95c30021c31e957cea8be448415fa7",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "purplemonkey",
-   "depot": "Quixotic7/PurpleMonkeyFM1",
-   "commit": "7590d4a5205bd4932b206d676c09b9521843a023",
-   "script": "tools/emu/web/build_pm_web.sh"
-  },
-  {
-   "id": "rainbow",
-   "depot": "joshbartlettband-web/felucca-rainbow",
-   "commit": "0baf362731c65398ad963229a3fe5500c75c6e3e",
-   "script": "web/emu/build.sh"
-  },
-  {
    "id": "ravel",
    "depot": "De-Pattern/Ravel_FM1",
    "commit": "6a7696d75ae4ffaeff21827f973abf2b93771326",
@@ -481,82 +79,9 @@
    "dialecte": "felucca"
   },
   {
-   "id": "s1vave",
-   "depot": "AndrewGG88/S1Vave",
-   "commit": "97303378678c247ca1d005ae641114f4544acf65",
-   "script": "web/sim/build.sh",
-   "zig": "0.17.0"
-  },
-  {
-   "id": "scintilla",
-   "depot": "joakimeriksson/scintilla-fm1",
-   "commit": "83b375200caa281c22be840970c921efdce0a7fc",
-   "script": "firmware/build.sh",
-   "zig": "0.17.0",
-   "avant": "cp \"$HERE/tools/worklets/dinghy_host.c\" firmware/tests/host.c",
-   "construction": "cd firmware && \"$HERE/tools/worklets/asyncify.sh\" ../build/natif/scintilla.wasm -DDINGHY_HOST -DDH_LIBC=1 -DDH_CV_ROWS=64u '-DAPP_VER=\"0.2.0\"' -Ifirmware/src -Ifirmware/gen -I../engine firmware/src/scintilla.c ../engine/sc_voice.c ../engine/sc_synth.c",
-   "wasm": "build/natif/scintilla.wasm",
-   "worklet": "tools/worklets/dinghy.js",
-   "dialecte": "felucca"
-  },
-  {
-   "id": "shineon",
-   "depot": "zvenson/shineon",
-   "commit": "2f37738d690a628e0ae1d23d07ea5ee3eeda2de7",
-   "script": "web/sim/build.sh",
-   "zig": "0.17.0"
-  },
-  {
    "id": "skiff",
    "depot": "illuminus5/skiff",
    "commit": "c01fa1ed619266d770ea6552b153612e1b77d0a9",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "spampy",
-   "depot": "Spampy-Droid/SPAMPY-0.0-r949",
-   "commit": "2890828d80fea234b28244ef482b9532f77ef8c7",
-   "script": "build.sh",
-   "construction": "bash \"$HERE/tools/worklets/spampy.sh\" build/natif/spampy.wasm https://github.com/Spampy-Droid/SPAMPY-0.0-r949/releases/download/v1.0/SPAMPY-r1007-SPAMPY-1.0-ABOUT-FM1-036-SOURCE.zip",
-   "wasm": "build/natif/spampy.wasm",
-   "worklet": "tools/worklets/spampy.js",
-   "dialecte": "felucca"
-  },
-  {
-   "id": "tessera",
-   "depot": "Rastapopolix/tessera",
-   "commit": "094f53582cc4bc04d62e95537eb2ff22264f4819",
-   "script": "web/sim/build.sh",
-   "avant": "python3 tools/gen_909_tables.py build/gen/x0x_drum_tables.h"
-  },
-  {
-   "id": "tribe",
-   "depot": "apiel/fm1-tribe",
-   "commit": "29664b28c9d8b8eb043de0739bf9dd64869958c4",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "tuna",
-   "depot": "delirioux/tuna",
-   "commit": "f06047dc7e4a4c061818b9a29f5412359a2fb607",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "unholy",
-   "depot": "actuallysparky/FM-1-Unholy-Union-generative-drone-firmware",
-   "commit": "3c0dfd93571774a0a2386bd1d2bc2b80de48fdfb",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "vector37",
-   "depot": "genkigenki/Vector37",
-   "commit": "08742a4198f99e2db2846b00b70ed6808239c447",
-   "script": "web/sim/build.sh"
-  },
-  {
-   "id": "waveloop",
-   "depot": "ELI7VH/Felucca",
-   "commit": "7bce76090a076cf488ac03b53c83960b7c14e81e",
    "script": "web/emu/build.sh"
   },
   {
@@ -564,33 +89,6 @@
    "depot": "charlesvestal/fm1-x0x",
    "commit": "27f6fac7e07ce97b5de158b45aec99f59a9e23fd",
    "script": "web/emu/build.sh"
-  },
-  {
-   "id": "x0xrmx",
-   "depot": "Mr-Roboto/fm1-x0x-rmx",
-   "commit": "a4e78f3a6e16fa310b7614e5876d07e16a0020f9",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "zen",
-   "depot": "aceyprime/zen-1",
-   "commit": "ec9295233ea64ddac224b58b4d07216706c1b8ee",
-   "script": "web/emu/build.sh"
-  },
-  {
-   "id": "zp12",
-   "depot": "zvenson/zp12",
-   "commit": "7b8b97586ef87854d1859aad907e5f10ca49898d",
-   "script": "sim/build.sh",
-   "zig": "0.17.0",
-   "avant": "bash \"$HERE/tools/worklets/zp12_avant.sh\"",
-   "wasm": "docs/sim/zp12.wasm",
-   "worklet": "tools/worklets/zp12.js",
-   "dialecte": "felucca",
-   "outils": [
-    "web/zp12link.js"
-   ],
-   "echantillons": "web/zp12link.js"
   }
  ]
 }

@@ -47,7 +47,7 @@ def test_launch_state(page):
 def test_emulated_play_colours(page):
     power_on(page)
     page.set_default_timeout(30000)
-    assert use(page, "monohull") is True                                # (un émulé : zp12 et gator sont natifs maintenant)
+    assert use(page, "fizz") is True                                # (un émulé : zp12 et gator sont natifs maintenant)
     r = page.evaluate("""() => { const e = window.__engine(); e.onHalt = null; const seq = e.running.seq;
       const leds = new Float32Array(41), out = [];
       e.onWorklet({ data: { type: 'frame', seq, leds: leds.slice(), green: 0.9 } }); out.push(e.playLight());
@@ -87,7 +87,7 @@ def test_emulated_levels(page):
     1/11 est allumée ; un tiers de cela, une lueur que le panneau dessine à son niveau."""
     power_on(page)
     page.set_default_timeout(30000)
-    assert use(page, "monohull") is True
+    assert use(page, "fizz") is True
     r = page.evaluate("""() => { const e = window.__engine(); e.onHalt = null; const seq = e.running.seq, leds = new Float32Array(41);
       leds[8] = 1 / 11; e.onWorklet({ data: { type: 'frame', seq, leds: leds.slice(), green: 0 } });
       const full = [e.buttonLit('HOME'), e.ledLevels()];

@@ -44,12 +44,12 @@ def test_fm1_b_can_select_cpu_emulated_firmware(page):
     """Duo does not require FM-1+VA or a native engine on either side."""
     _, b = open_duo(page)
     power(b)
-    b.wait_for_function("window.__catalogue && window.__catalogue.some(e => e.id === 'gator')")
+    b.wait_for_function("window.__catalogue && window.__catalogue.some(e => e.id === 'fizz')")
     disabled = b.evaluate("""() => {
       document.getElementById('fw-picker').click();
-      document.getElementById('fw-search').value = 'GATOR';
+      document.getElementById('fw-search').value = 'FIZZ';
       document.getElementById('fw-search').dispatchEvent(new Event('input'));
-      return document.querySelector("#fw-results .fw-item[data-id='gator']").getAttribute('aria-disabled');
+      return document.querySelector("#fw-results .fw-item[data-id='fizz']").getAttribute('aria-disabled');
     }""")
     assert disabled != "true"
 

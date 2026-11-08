@@ -218,9 +218,9 @@ def test_cpu_emulator_on_b_uses_separate_save_store_and_receives_clock(page):
     power(a)
     power(b)
     native(a, "hortator")
-    b.wait_for_function("window.__catalogue && window.__catalogue.some(e => e.id === 'gator')")
+    b.wait_for_function("window.__catalogue && window.__catalogue.some(e => e.id === 'fizz')")
     ok = b.evaluate("""() => {
-      const e = window.__catalogue.find(e => e.id === 'gator');
+      const e = window.__catalogue.find(e => e.id === 'fizz');
       return window.__useEngine({ ...e, natif: null, natif_wasm: null });
     }""")
     assert ok
